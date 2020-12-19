@@ -1,6 +1,8 @@
 # dotfiles
 yuucu new dotfiles
 
+sh -c "$(curl https://raw.githubusercontent.com/yuucu/dotfiles/master/install.sh)"
+
 
 
 # Require
@@ -16,3 +18,8 @@ https://github.com/neoclide/coc.nvim
 
 
 
+
+### memo
+
+- dotfiles-old
+https://github.com/yuucu/dotfiles-old
