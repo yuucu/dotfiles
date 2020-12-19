@@ -21,3 +21,9 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set autoindent
+
+" search
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase

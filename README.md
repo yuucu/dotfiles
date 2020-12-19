@@ -17,9 +17,7 @@ https://github.com/neoclide/coc.nvim
 - nodejs
 
 
-
-
-### memo
+# memo
 
 - dotfiles-old
 https://github.com/yuucu/dotfiles-old
