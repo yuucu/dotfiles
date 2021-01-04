@@ -26,6 +26,8 @@ set hlsearch
 set ignorecase
 set smartcase
 
+set number
+
 
 " fzf settings
 nnoremap <silent> <leader>f :Files<CR>
