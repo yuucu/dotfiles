@@ -1,3 +1,5 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
+. "$HOME/.cargo/env"
 
 ### func or alias
 function cd_ghq_list() {
@@ -58,3 +60,5 @@ fi
 ### paths
 #### goenv
 export PATH="$PATH:$(go env GOPATH)/bin"
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh

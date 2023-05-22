@@ -30,8 +30,6 @@ set clipboard+=unnamed
 " docker run -d -p 7843:8080 plantuml/plantuml-server:jetty
 let g:preview_uml_url='http://localhost:7843'
  
-let g:vimo_target_path = "/Users/yuucu/.ghq/github.com/yuucu/life/_posts/2022/"
-
 
 " rust
 syntax enable
@@ -58,7 +56,3 @@ autocmd BufReadPost *.kt setlocal filetype=kotlin
 
 let g:git_commit_prefix_lang = 'ja'
 
-
-
-set runtimepath^=~/workspace/deno/dps-helloworld
-let g:denops#debug = 1
