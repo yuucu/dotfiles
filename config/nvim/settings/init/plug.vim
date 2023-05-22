@@ -55,5 +55,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'jjo/vim-cue'
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'github/copilot.vim'
+
+  Plug 'sainnhe/sonokai'
+  Plug 'nordtheme/vim'
 
 call plug#end()

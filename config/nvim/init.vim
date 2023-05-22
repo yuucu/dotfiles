@@ -56,3 +56,4 @@ autocmd BufReadPost *.kt setlocal filetype=kotlin
 
 let g:git_commit_prefix_lang = 'ja'
 
+colorscheme nord

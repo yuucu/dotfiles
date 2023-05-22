@@ -57,8 +57,14 @@ then
   source /tmp/anyenv.cache
 fi
 
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
 ### paths
 #### goenv
 export PATH="$PATH:$(go env GOPATH)/bin"
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/s09104/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/s09104/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/s09104/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/s09104/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
