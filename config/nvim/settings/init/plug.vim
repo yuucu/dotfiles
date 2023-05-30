@@ -2,8 +2,6 @@
 call plug#begin('~/.vim/plugged')                                        
   Plug 'vim-jp/vimdoc-ja'
 
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'junegunn/fzf.vim'
   Plug 'mattn/vim-goimports'                                                
   Plug 'tyru/open-browser.vim'                                              
   Plug 'mechatroner/rainbow_csv'
@@ -59,5 +57,17 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'sainnhe/sonokai'
   Plug 'nordtheme/vim'
+
+  Plug 'kosayoda/nvim-lightbulb'
+  Plug 'antoinemadec/FixCursorHold.nvim'
+  Plug 'folke/trouble.nvim'
+
+  Plug 'folke/lsp-colors.nvim'
+
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+
+  Plug 'sebdah/vim-delve'
+  Plug 'nvim-tree/nvim-web-devicons'
 
 call plug#end()
