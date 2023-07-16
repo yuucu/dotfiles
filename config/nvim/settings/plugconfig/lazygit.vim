@@ -5,4 +5,4 @@ let g:lazygit_floating_window_use_plenary = 0 " use plenary.nvim to manage float
 let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not installed
 
 " setup mapping to call :LazyGit
-nnoremap <silent> <leader>l :LazyGit<CR>
+nnoremap <silent> <leader>l :LazyGitCurrentFile<CR>

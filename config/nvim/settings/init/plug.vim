@@ -55,8 +55,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'github/copilot.vim'
 
-  Plug 'sainnhe/sonokai'
-  Plug 'nordtheme/vim'
 
   Plug 'kosayoda/nvim-lightbulb'
   Plug 'antoinemadec/FixCursorHold.nvim'
@@ -66,8 +64,23 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+  Plug 'nvim-telescope/telescope-frecency.nvim'
+  Plug 'kkharji/sqlite.lua'
 
   Plug 'sebdah/vim-delve'
   Plug 'nvim-tree/nvim-web-devicons'
 
+  " memo
+  Plug 'glidenote/memolist.vim'
+  "  go install github.com/mattn/memo@latest
+  Plug 'delphinus/telescope-memo.nvim'
+
+  " theme
+  Plug 'sainnhe/sonokai'
+  Plug 'nordtheme/vim'
+  Plug 'cocopon/iceberg.vim'
+  Plug 'AlexvZyl/nordic.nvim'
+  Plug 'junegunn/seoul256.vim'
+  Plug 'raphamorim/lucario'
+  Plug 'preservim/vim-colors-pencil'
 call plug#end()

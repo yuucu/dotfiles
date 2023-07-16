@@ -1,7 +1,7 @@
 window:
   decorations: none
   startup_mode: Windowed
-  opacity: 0.80
+  opacity: 0.85
 live_config_reload: true
 colors:
   # Default colors

@@ -16,6 +16,7 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias atheme="npx alacritty-themes"
+alias memomv="cd ~/.memolist"
 
 
 ### Added by Zinit's installer
