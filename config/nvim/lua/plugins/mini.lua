@@ -15,7 +15,7 @@ return {
   },
   {
     'echasnovski/mini.splitjoin',
-    version = '*',
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
     },
   },

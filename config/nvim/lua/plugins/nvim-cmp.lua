@@ -16,14 +16,17 @@ return {
     -- Adds a number of user-friendly snippets
     'rafamadriz/friendly-snippets',
 
-    'onsails/lspkind.nvim',
+    {
+      'onsails/lspkind.nvim',
+    },
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     {
       "zbirenbaum/copilot.lua",
-      cmd = "Copilot",
+      -- cmd = "Copilot",
       build = ":Copilot auth",
       opts = {
+        cond = false,
         suggestion = { enabled = false },
         panel = { enabled = false },
         filetypes = {
@@ -35,6 +38,8 @@ return {
     {
       "zbirenbaum/copilot-cmp",
       dependencies = "copilot.lua",
+      -- 使ってない
+      cond = false,
       opts = {},
       config = function(_, opts)
         local copilot_cmp = require("copilot_cmp")
@@ -78,7 +83,7 @@ return {
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
-        { name = "copilot" },
+        -- { name = "copilot" },
       }),
       formatting = {
         fields = { 'abbr', 'kind', 'menu' },
@@ -91,7 +96,26 @@ return {
             nvim_lsp = "[LSP]",
             luasnip = "[LuaSnip]",
           }),
-          symbol_map = { Copilot = "" }
+
+          symbol_map = {
+            Constructor = "",
+            Field = "ﰠ",
+            Variable = "",
+            Class = "ﴯ",
+            Interface = "",
+            Module = "",
+            Property = "ﰠ",
+            Unit = "塞",
+            Value = "",
+            Enum = "",
+            Keyword = "",
+            Snippet = "",
+            EnumMember = "",
+            Struct = "פּ",
+            Event = "",
+            TypeParameter = "",
+            Copilot = "",
+          }
         }),
       },
       experimental = {

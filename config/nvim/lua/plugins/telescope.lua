@@ -1,6 +1,9 @@
 return {
   'nvim-telescope/telescope.nvim',
-  event = "VeryLazy",
+  cmd = {
+    "Telescope",
+  },
+  event = { "BufReadPre", "BufNewFile" },
   keys = {
     { "<leader>m", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
   },
@@ -8,6 +11,9 @@ return {
     'nvim-lua/plenary.nvim',
     {
       "nvim-telescope/telescope-frecency.nvim",
+      config = function()
+        require "telescope".load_extension("frecency")
+      end,
       dependencies = { "kkharji/sqlite.lua" }
     },
     {
@@ -46,7 +52,6 @@ return {
 
     -- Enable telescope fzf native, if installed
     pcall(require('telescope').load_extension, 'fzf')
-    require('telescope').load_extension 'frecency'
 
     -- See `:help telescope.builtin`
     vim.keymap.set('n', '<leader>f', require('telescope.builtin').find_files, { desc = 'search [F]iles' })

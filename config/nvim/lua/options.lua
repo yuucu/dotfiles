@@ -38,7 +38,7 @@ vim.o.timeoutlen = 300
 vim.o.termguicolors = true
 
 -- vim doc ja
-vim.o.helplang='ja,en'
+vim.o.helplang = 'ja,en'
 
 -- tab
 vim.o.expandtab = true
@@ -55,4 +55,3 @@ vim.o.laststatus = 2
 -- vim.cmd([[runtime! settings/init/*.vim]])
 -- vim.cmd([[runtime! settings/plugconfig/*.vim]])
 -- vim.cmd([[runtime! settings/plugconfig/*.lua]])
-

@@ -131,7 +131,8 @@ return {
             type = "group",
             val = {
                 button("f", "󰱼  Search", ":Telescope find_files<CR>"),
-                button("e", "󰈔  New", ":ene<CR>"),
+                button("e", "  New", ":ene<CR>"),
+                -- button("b", " Jump to bookmarks", ":Telescope marks<CR>"),
                 button("c", "  Config", ":e $HOME/.config/nvim/init.lua | :cd %:p:h | pwd<CR>"),
                 button("q", "  Quit", ":qa<CR>"),
             },
@@ -175,7 +176,7 @@ return {
                 local stats = require("lazy").stats()
                 -- local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
                 local ms = stats.startuptime
-                local version = "󰥱 v" ..
+                local version = " v" ..
                     vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
                 local plugins = "⚡plugins " .. stats.loaded .. "/" .. stats.count .. " in " .. ms .. "ms"
                 local footer = version .. "\t" .. plugins .. "\n"
