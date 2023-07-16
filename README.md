@@ -3,7 +3,7 @@
 ## install
 
 ```
-git clone https://github.com/yuucu/dotfiles/tree/main
+git clone git@github.com:yuucu/dotfiles.git
 cd dotfiles
 ln -sfnv $(pwd)/.zshrc ~/ 
 mkdir -p ~/.config/tmux/ && ln -sfnv $(pwd)/config/tmux/tmux.conf ~/.config/tmux/
