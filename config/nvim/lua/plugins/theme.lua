@@ -2,7 +2,6 @@ return {
   {
     -- Theme inspired by Atom
     'navarasu/onedark.nvim',
-    lazy = true,
   },
   {
     'rebelot/kanagawa.nvim',
@@ -11,10 +10,11 @@ return {
     -- Theme inspired by Atom
     'ayu-theme/ayu-vim',
     priority = 1000,
+    event = "VimEnter",
     config = function()
       -- 背景透過
       -- vim.cmd([[hi! Normal ctermbg=NONE guibg=NONE]])
-      vim.g.ayucolor = "dark"   -- for dark version of theme
+      vim.g.ayucolor = "dark" -- for dark version of theme
       vim.cmd.colorscheme "ayu"
       vim.cmd([[hi! Visual cterm=reverse gui=reverse]])
       vim.cmd([[highlight FernRootSymbol ctermfg=White guifg=#ffffff]])
@@ -22,7 +22,6 @@ return {
   },
   {
     'catppuccin/nvim',
-    lazy = true,
     name = "catppuccin",
     opts = {
       term_colors = true,
@@ -39,4 +38,3 @@ return {
     end,
   }
 }
-

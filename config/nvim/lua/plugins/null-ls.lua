@@ -1,7 +1,8 @@
 return {
     "jose-elias-alvarez/null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    config = function ()
+    config = function()
+        local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
         local null_ls = require('null-ls')
         local sources = {
             null_ls.builtins.diagnostics.cspell.with({
@@ -19,9 +20,10 @@ return {
             null_ls.builtins.diagnostics.hadolint,
             null_ls.builtins.formatting.terraform_fmt,
             null_ls.builtins.diagnostics.terraform_validate,
+            null_ls.builtins.formatting.stylua,
         }
         null_ls.setup({
-            sources = sources
+            sources = sources,
         })
     end,
     dependencies = {

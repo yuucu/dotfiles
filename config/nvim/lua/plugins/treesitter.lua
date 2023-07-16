@@ -1,13 +1,12 @@
 return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
-	event = "VeryLazy",
+  event = "VeryLazy",
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
   },
   build = ':TSUpdate',
   config = function()
-
     -- require("nvim-treesitter.configs").setup({
     -- auto_install = true,
     -- highlight = {

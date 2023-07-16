@@ -26,7 +26,7 @@ return {
     -- you can use <C-t> to jump back
     keymap("n", "gh", "<cmd>Lspsaga finder<CR>")
 
-    keymap({"n","v"}, "ga", "<cmd>Lspsaga code_action<CR>")
+    keymap({ "n", "v" }, "ga", "<cmd>Lspsaga code_action<CR>")
 
     -- Peek definition
     -- You can edit the file containing the definition in the floating window
@@ -36,7 +36,7 @@ return {
     keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
 
     -- Go to definition
-    keymap("n","gd", "<cmd>Lspsaga goto_definition<CR>")
+    keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
 
     -- Show line diagnostics
     -- You can pass argument ++unfocus to
@@ -58,7 +58,7 @@ return {
     keymap("n", "g[", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 
     -- Toggle outline
-    keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>")
+    keymap("n", "<leader>o", "<cmd>Lspsaga outline<CR>")
 
     -- Hover Doc
     -- If there is no hover doc,

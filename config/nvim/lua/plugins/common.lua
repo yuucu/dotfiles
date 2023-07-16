@@ -1,7 +1,10 @@
 return {
   {
     'vim-jp/vimdoc-ja',
-    event = "VeryLazy",
+    lazy = true,
+    ft = {
+      "help",
+    },
   },
 
   -- Git related plugins

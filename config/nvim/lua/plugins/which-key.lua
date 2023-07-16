@@ -1,5 +1,8 @@
-  return {
-      'folke/which-key.nvim',
-      event = "VeryLazy",
-      opts = {},
-  }
+return {
+    'folke/which-key.nvim',
+    lazy = true,
+    cmd = {
+        "WhichKey",
+    },
+    opts = {},
+}

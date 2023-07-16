@@ -16,8 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {
   defaults = {
-    -- lazy = true,
-    -- cond = false,
+    lazy = true,
   },
   performance = {
     cache = {
@@ -28,4 +27,3 @@ local opts = {
 
 -- Any lua file in ~/.config/nvim/lua/plugins/*.lua will be automatically merged in the main plugin spec
 require('lazy').setup('plugins', opts)
-

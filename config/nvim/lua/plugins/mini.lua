@@ -1,7 +1,7 @@
-
 return {
   {
-    'echasnovski/mini.indentscope', version = '*',
+    'echasnovski/mini.indentscope',
+    version = '*',
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       require('mini.indentscope').setup(
@@ -14,7 +14,8 @@ return {
     end
   },
   {
-    'echasnovski/mini.splitjoin', version = '*',
+    'echasnovski/mini.splitjoin',
+    version = '*',
     opts = {
     },
   },

@@ -8,7 +8,7 @@ return {
     'nvim-lua/plenary.nvim',
     {
       "nvim-telescope/telescope-frecency.nvim",
-      dependencies = {"kkharji/sqlite.lua"}
+      dependencies = { "kkharji/sqlite.lua" }
     },
     {
       "nvim-telescope/telescope-fzf-native.nvim",
@@ -24,7 +24,7 @@ return {
   config = function()
     -- [[ Configure Telescope ]]
     -- See `:help telescope` and `:help telescope.setup()`
-    require("telescope").setup{
+    require("telescope").setup {
       defaults = {
         mappings = {
           i = {
@@ -35,10 +35,10 @@ return {
       },
       extensions = {
         fzf = {
-          fuzzy = true,                    -- false will only do exact matching
-          override_generic_sorter = true,  -- override the generic sorter
-          override_file_sorter = true,     -- override the file sorter
-          case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+          fuzzy = true,                   -- false will only do exact matching
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true,    -- override the file sorter
+          case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
           -- the default case_mode is "smart_case"
         }
       }
@@ -56,6 +56,7 @@ return {
     -- vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
     vim.keymap.set('n', '<leader>d', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers, { desc = 'Find existing [B]uffers' })
-    vim.api.nvim_set_keymap("n", "<leader><leader>", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>", {noremap = true, silent = true})
+    vim.api.nvim_set_keymap("n", "<leader><leader>", "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
+      { noremap = true, silent = true })
   end,
 }

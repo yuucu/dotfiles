@@ -1,7 +1,6 @@
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 
-
 return {
   -- Autocompletion
   'hrsh7th/nvim-cmp',
@@ -51,6 +50,9 @@ return {
     luasnip.config.setup {}
     cmp.setup({
       enabled = true,
+      completion = {
+        completeopt = 'menu,menuone,noinsert',
+      },
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
@@ -66,24 +68,6 @@ return {
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
         },
-        ['<Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
       }),
       window = {
         completion = cmp.config.window.bordered(),
@@ -94,13 +78,13 @@ return {
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
-        { name = "copilot", group_index = 2 },
+        { name = "copilot" },
       }),
       formatting = {
         fields = { 'abbr', 'kind', 'menu' },
         format = lspkind.cmp_format({
           mode = 'symbol_text',
-          maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+          maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
           ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
           menu = ({
             buffer = "[Buffer]",

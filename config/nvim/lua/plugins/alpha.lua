@@ -61,7 +61,7 @@ local function getGreeting()
         [6] = "今日も一日がんばるぞい!",
     }
     local greetingIndex = 0
-    if 2 < hour  or hour < 8 then
+    if 2 < hour or hour < 8 then
         greetingIndex = 1
     elseif hour < 12 then
         greetingIndex = 2
@@ -105,7 +105,7 @@ return {
     'goolord/alpha-nvim',
     event = "VimEnter",
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function ()
+    config = function()
         local present, alpha = pcall(require, "alpha")
         if not present then
             return
@@ -121,7 +121,7 @@ return {
         -- local greeting = getGreeting()
         local greetHeading = {
             type = "text",
-            val = {"今日も1日がんばるぞい！", "涼風青葉" } ,
+            val = { "今日も1日がんばるぞい！", "涼風青葉" },
             opts = {
                 position = "center",
                 hl = "String",
@@ -130,9 +130,9 @@ return {
         local buttons = {
             type = "group",
             val = {
-                button("e", "󰈔  New", ":ene<CR>"),
                 button("f", "󰱼  Search", ":Telescope find_files<CR>"),
-                button("c", "  Config" , ":e $HOME/.config/nvim/init.lua | :cd %:p:h | pwd<CR>"),
+                button("e", "󰈔  New", ":ene<CR>"),
+                button("c", "  Config", ":e $HOME/.config/nvim/init.lua | :cd %:p:h | pwd<CR>"),
                 button("q", "  Quit", ":qa<CR>"),
             },
             opts = {
@@ -168,14 +168,15 @@ return {
             },
         }
         alpha.setup(opts)
-        local autocmd = vim.api.nvim_create_autocmd   -- Create autocommand
+        local autocmd = vim.api.nvim_create_autocmd -- Create autocommand
         autocmd("User", {
             pattern = "LazyVimStarted",
             callback = function()
                 local stats = require("lazy").stats()
                 -- local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
                 local ms = stats.startuptime
-                local version = "󰥱 v" .. vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
+                local version = "󰥱 v" ..
+                    vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
                 local plugins = "⚡plugins " .. stats.loaded .. "/" .. stats.count .. " in " .. ms .. "ms"
                 local footer = version .. "\t" .. plugins .. "\n"
                 section.footer.val = footer
