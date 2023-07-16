@@ -1,0 +1,116 @@
+Extra options: []
+Measured: 10 times
+
+Total Average: 18.591300 msec
+Total Max:     22.050000 msec
+Total Min:     17.663000 msec
+
+ AVERAGE       MAX      MIN
+----------------------------
+9.074600 10.543000 8.447000: /Users/s09104/.config/nvim/init.lua
+8.804400 10.242000 8.189000: require('lazyvim')
+5.580100  6.896000 5.267000: inits 1
+1.749900  2.015000 1.657000: reading ShaDa
+1.365600  1.508000 1.247000: require('lazy.view.commands')
+1.043700  1.131000 0.924000: require('lazy.view')
+0.641800  0.718000 0.554000: require('lazy.view.render')
+0.591800  0.663000 0.566000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/matchit.vim
+0.559600  0.652000 0.527000: sourcing vimrc file(s)
+0.341500  0.414000 0.313000: require('lazy')
+0.311500  0.365000 0.292000: require('lazy.core.loader')
+0.286300  0.335000 0.244000: require('lazy.manage.git')
+0.285900  0.349000 0.252000: locale set
+0.252800  0.315000 0.194000: require('lazy.manage')
+0.250400  0.282000 0.229000: inits 3
+0.165200  0.208000 0.152000: init lua interpreter
+0.155000  0.205000 0.138000: expanding arguments
+0.152500  0.231000 0.123000: require('lazy.manage.runner')
+0.147900  0.174000 0.136000: require('lazy.stats')
+0.147800  0.177000 0.137000: init highlight
+0.146000  0.167000 0.139000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/syntax/syntax.vim
+0.145700  0.170000 0.112000: require('lazy.view.float')
+0.144100  0.161000 0.134000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/netrwPlugin.vim
+0.110300  0.185000 0.077000: require('lazy.manage.process')
+0.104800  0.146000 0.087000: require('lazy.core.handler')
+0.104750  0.216000 0.023000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/filetype.lua
+0.103500  0.121000 0.095000: require('lazy.core.util')
+0.103100  0.125000 0.096000: require('vim._init_packages')
+0.100700  0.116000 0.089000: require('lazy.core.config')
+0.094200  0.132000 0.073000: require('lazy.view.diff')
+0.092600  0.149000 0.074000: require('lazy.manage.semver')
+0.090700  0.151000 0.063000: require('lazy.core.handler.ft')
+0.088700  0.103000 0.084000: require('keys')
+0.087900  0.100000 0.080000: require('options')
+0.087700  0.115000 0.070000: require('lazy.core.handler.event')
+0.087200  0.113000 0.063000: require('lazy.core.handler.cmd')
+0.086900  0.099000 0.071000: require('lazy.view.config')
+0.086500  0.099000 0.082000: require('lazy.core.plugin')
+0.086300  0.126000 0.069000: require('lazy.core.handler.keys')
+0.085800  0.131000 0.055000: require('plugins.lspsaga')
+0.082800  0.105000 0.071000: require('lazy.view.text')
+0.078900  0.108000 0.071000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/rplugin.vim
+0.077900  0.110000 0.062000: require('plugins.alpha')
+0.077900  0.101000 0.071000: require('lazy.util')
+0.075800  0.147000 0.058000: require('lazy.manage.task')
+0.075600  0.168000 0.056000: require('plugins.fern')
+0.075000  0.117000 0.062000: require('plugins.telescope')
+0.074600  0.085000 0.071000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+0.073300  0.106000 0.062000: require('plugins.treesitter')
+0.072800  0.081000 0.066000: require('theme')
+0.071600  0.099000 0.058000: require('plugins.bufpreview')
+0.071500  0.083000 0.068000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/matchparen.vim
+0.070700  0.088000 0.059000: require('plugins.lualine')
+0.069900  0.078000 0.067000: opening buffers
+0.069900  0.082000 0.059000: require('plugins.mason')
+0.068700  0.085000 0.059000: require('lazy.view.sections')
+0.068000  0.102000 0.055000: require('plugins.nvim-cmp')
+0.067300  0.077000 0.063000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/gzip.vim
+0.066800  0.081000 0.059000: early init
+0.066800  0.081000 0.060000: init default mappings & autocommands
+0.066100  0.117000 0.051000: require('plugins.mini')
+0.065600  0.115000 0.053000: require('plugins.nvim-lspconfig')
+0.065500  0.077000 0.056000: require('plugins.theme')
+0.065300  0.095000 0.056000: require('plugins.copilot')
+0.064800  0.096000 0.052000: require('plugins.bufferline')
+0.064300  0.106000 0.051000: require('plugins.nvim-dap')
+0.064200  0.097000 0.048000: require('plugins.neodev')
+0.063600  0.101000 0.049000: require('plugins.sleuth')
+0.063300  0.103000 0.050000: require('plugins.null-ls')
+0.062200  0.084000 0.051000: require('plugins.fugitive')
+0.061700  0.077000 0.054000: require('plugins.todo-comments')
+0.061000  0.073000 0.051000: require('plugins.gitssigns')
+0.060600  0.096000 0.049000: require('plugins.modes')
+0.060600  0.082000 0.051000: require('plugins.which-key')
+0.060000  0.091000 0.050000: require('plugins.noice')
+0.060000  0.071000 0.054000: require('plugins.vimdoc-ja')
+0.059500  0.074000 0.054000: require('plugins.trouble')
+0.057000  0.066000 0.055000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/zipPlugin.vim
+0.054900  0.060000 0.052000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/tarPlugin.vim
+0.054400  0.062000 0.048000: require('plugins.neotest')
+0.049000  0.061000 0.045000: require('vim._editor')
+0.045300  0.055000 0.041000: event init
+0.039500  0.045000 0.038000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/tohtml.vim
+0.039300  0.047000 0.035000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/editorconfig.lua
+0.038600  0.046000 0.035000: require('vim.shared')
+0.036300  0.045000 0.032000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/man.lua
+0.033700  0.037000 0.031000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/nvim.lua
+0.032900  0.037000 0.030000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/syntax/synload.vim
+0.028800  0.033000 0.026000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/shada.vim
+0.025100  0.031000 0.022000: init first window
+0.024400  0.029000 0.023000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/ftplugin.vim
+0.017000  0.021000 0.016000: require('vim._meta')
+0.016100  0.020000 0.014000: require('vim.loader')
+0.014700  0.019000 0.013000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/indent.vim
+0.011000  0.015000 0.009000: require('vim.fs')
+0.009600  0.015000 0.008000: inits 2
+0.008300  0.010000 0.008000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/spellfile.vim
+0.007100  0.008000 0.007000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/tutor.vim
+0.006700  0.011000 0.005000: window checked
+0.006500  0.009000 0.006000: clear screen
+0.006300  0.008000 0.006000: require('ffi')
+0.006200  0.007000 0.006000: BufEnter autocommands
+0.004200  0.005000 0.004000: /opt/homebrew/Cellar/neovim/0.9.1/share/nvim/runtime/plugin/health.vim
+0.004200  0.005000 0.004000: require('vim.keymap')
+0.002000  0.002000 0.002000: --- NVIM STARTING ---
+0.001100  0.002000 0.001000: parsing arguments
+0.001000  0.001000 0.001000: editing files in windows

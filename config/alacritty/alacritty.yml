@@ -1,3 +1,7 @@
+shell:
+  program: /bin/zsh
+  args:
+    - --login
 window:
   decorations: none
   startup_mode: Windowed
