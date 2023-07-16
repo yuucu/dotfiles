@@ -13,18 +13,27 @@ return {
           ensure_installed = { "lua_ls" },
         })
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
-        mason_lspconfig.setup_handlers({ function(server)
-          local opt = {
-            -- -- Function executed when the LSP server startup
-            -- on_attach = function(client, bufnr)
-            --   local opts = { noremap=true, silent=true }
-            --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-            --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
-            -- end,
-            capabilities = capabilities,
-          }
-          require("lspconfig")[server].setup(opt)
-        end,
+        mason_lspconfig.setup_handlers({
+          function(server)
+            local opt = { capabilities = capabilities, }
+            require("lspconfig")[server].setup(opt)
+          end,
+          -- lspで絞る or patternで絞るのどちらでもかけそう
+          ["gopls"] = function()
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              -- pattern = '*.go',
+              callback = function()
+                vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+              end
+            })
+            local on_attach = function(client, bufnr)
+              -- Enable completion triggered by <c-x><c-o>
+              vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+            end
+            require('lspconfig').gopls.setup({
+              on_attach = on_attach
+            })
+          end
         })
       end,
     },
@@ -60,8 +69,8 @@ return {
         vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = true })
     -- Reference highlight
     vim.cmd([[
-                                                                set updatetime=500
-                                                                highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+    set updatetime=500
+    highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
     highlight LspReferenceRead  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
     highlight LspReferenceWrite cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
     ]])
