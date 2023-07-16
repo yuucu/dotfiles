@@ -1,8 +1,10 @@
 # dotfiles
 
-## memo
+## install
 
 ```
+git clone https://github.com/yuucu/dotfiles/tree/main
+cd dotfiles
 ln -sfnv $(pwd)/.zshrc ~/ 
 mkdir -p ~/.config/tmux/ && ln -sfnv $(pwd)/config/tmux/tmux.conf ~/.config/tmux/
 ln -sfnv $(pwd)/config/starship.toml ~/.config/ 
