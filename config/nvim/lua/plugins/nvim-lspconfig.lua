@@ -1,31 +1,72 @@
 return {
   -- LSP Configuration & Plugins
   "neovim/nvim-lspconfig",
-  -- event = "VeryLazy",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     {
+      "lvimuser/lsp-inlayhints.nvim",
+      event = "VeryLazy",
+      config = function()
+        -- vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+        -- vim.api.nvim_create_autocmd("LspAttach", {
+        --   group = "LspAttach_inlayhints",
+        --   callback = function(args)
+        --     if not (args.data and args.data.client_id) then
+        --       return
+        --     end
+        --     local bufnr = args.buf
+        --     local client = vim.lsp.get_client_by_id(args.data.client_id)
+        --     require("lsp-inlayhints").on_attach(client, bufnr)
+        --   end,
+        -- })
+        require("lsp-inlayhints").setup()
+      end
+    },
+    {
       "williamboman/mason-lspconfig.nvim",
       cmd = { "LspInstall", "LspUninstall" },
+      dependencies = {
+        'williamboman/mason.nvim',
+      },
       config = function()
+        require("mason").setup()
         local mason_lspconfig = require("mason-lspconfig")
         mason_lspconfig.setup({
-          ensure_installed = { "lua_ls" },
+          ensure_installed = {
+            "gopls", -- WARNING: This could be an issue with goenv switching.
+            "marksman",
+            "lua_ls",
+            "terraformls",
+            "tflint",
+            "tsserver",
+            "yamlls",
+          }
         })
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
+        local lspconfig = require('lspconfig')
         mason_lspconfig.setup_handlers({
           function(server)
-            local opt = { capabilities = capabilities, }
-            require("lspconfig")[server].setup(opt)
+            lspconfig[server].setup({
+              capabilities = require("cmp_nvim_lsp").default_capabilities(),
+              settings = ({
+                lua_ls = {
+                  Lua = {
+                    hint = { enable = true },
+                  },
+                },
+              })
+            })
           end,
-          -- lspで絞る or patternで絞るのどちらでもかけそう
           ["gopls"] = function()
             vim.api.nvim_create_autocmd('BufWritePre', {
+              -- NOTE: lspで絞る or patternで絞るのどちらでもかけそう
               -- pattern = '*.go',
               callback = function()
                 vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
               end
             })
+            --
+            --            require('lspconfig').gopls.setup(vim.tbl_deep_extend("force", { capabilities = capabilities }, gopls_settings))
+            --
             -- local on_attach = function(client, bufnr)
             -- Enable completion triggered by <c-x><c-o>
             -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
