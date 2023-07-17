@@ -1,45 +1,100 @@
 return {
   -- LSP Configuration & Plugins
   "neovim/nvim-lspconfig",
-  -- event = "VeryLazy",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     {
-      "williamboman/mason-lspconfig.nvim",
-      cmd = { "LspInstall", "LspUninstall" },
+      "lvimuser/lsp-inlayhints.nvim",
+      event = "VeryLazy",
       config = function()
-        local mason_lspconfig = require("mason-lspconfig")
-        mason_lspconfig.setup({
-          ensure_installed = { "lua_ls" },
+        vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+        vim.api.nvim_create_autocmd("LspAttach", {
+          group = "LspAttach_inlayhints",
+          callback = function(args)
+            if not (args.data and args.data.client_id) then
+              return
+            end
+            local bufnr = args.buf
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            require("lsp-inlayhints").on_attach(client, bufnr)
+          end,
         })
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
-        mason_lspconfig.setup_handlers({ function(server)
-          local opt = {
-            -- -- Function executed when the LSP server startup
-            -- on_attach = function(client, bufnr)
-            --   local opts = { noremap=true, silent=true }
-            --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-            --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
-            -- end,
-            capabilities = capabilities,
-          }
-          require("lspconfig")[server].setup(opt)
-        end,
-        })
+        require("lsp-inlayhints").setup()
       end,
     },
     {
-      "lukas-reineke/lsp-format.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      dependencies = {
+        'williamboman/mason.nvim',
+        "lukas-reineke/lsp-format.nvim",
+      },
       config = function()
-        require("lsp-format").setup {}
+        require("mason").setup()
+        local mason_lspconfig = require("mason-lspconfig")
 
-        local on_attach = function(client)
-          require("lsp-format").on_attach(client)
-          -- ... custom code ...
-        end
-        require("lspconfig").gopls.setup { on_attach = on_attach }
-        require("lspconfig").lua_ls.setup { on_attach = on_attach }
-      end
+        local handlers = {
+          function(server)
+            require('lspconfig')[server].setup({
+              capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            })
+          end,
+          ["lua_ls"] = function()
+            local on_attach = function(client)
+              require("lsp-format").on_attach(client)
+            end
+            require('lspconfig').lua_ls.setup({
+              on_attach = on_attach,
+              settings = {
+                Lua = {
+                  runtime = {
+                    -- LuaJIT in the case of Neovim
+                    version = 'LuaJIT',
+                    path = vim.split(package.path, ';'),
+                  },
+                  diagnostics = {
+                    -- Get the language server to recognize the `vim` global
+                    globals = { 'vim' },
+                  },
+                  workspace = {
+                    -- Make the server aware of Neovim runtime files
+                    library = {
+                      [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                      [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                    },
+                  },
+                },
+              }
+            })
+          end,
+          ["gopls"] = function()
+            local on_attach = function(client)
+              require("lsp-format").on_attach(client)
+            end
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              callback = function()
+                vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+              end
+            })
+            require('lspconfig').gopls.setup({
+              on_attach = on_attach,
+              settings = {
+              },
+            })
+          end
+        }
+        mason_lspconfig.setup({
+          ensure_installed = {
+            "gopls", -- WARNING: This could be an issue with goenv switching.
+            "marksman",
+            "lua_ls",
+            "terraformls",
+            "tflint",
+            "tsserver",
+            "yamlls",
+          },
+          handlers = handlers,
+        })
+      end,
     },
   },
   config = function()
@@ -60,8 +115,8 @@ return {
         vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = true })
     -- Reference highlight
     vim.cmd([[
-                                                                set updatetime=500
-                                                                highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+    set updatetime=500
+    highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
     highlight LspReferenceRead  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
     highlight LspReferenceWrite cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
     ]])

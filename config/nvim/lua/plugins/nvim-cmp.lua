@@ -23,10 +23,10 @@ return {
     "hrsh7th/cmp-path",
     {
       "zbirenbaum/copilot.lua",
-      -- cmd = "Copilot",
+      cmd = "Copilot",
       build = ":Copilot auth",
+      cond = false,
       opts = {
-        cond = false,
         suggestion = { enabled = false },
         panel = { enabled = false },
         filetypes = {
