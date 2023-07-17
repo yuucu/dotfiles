@@ -7,18 +7,18 @@ return {
       "lvimuser/lsp-inlayhints.nvim",
       event = "VeryLazy",
       config = function()
-        -- vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-        -- vim.api.nvim_create_autocmd("LspAttach", {
-        --   group = "LspAttach_inlayhints",
-        --   callback = function(args)
-        --     if not (args.data and args.data.client_id) then
-        --       return
-        --     end
-        --     local bufnr = args.buf
-        --     local client = vim.lsp.get_client_by_id(args.data.client_id)
-        --     require("lsp-inlayhints").on_attach(client, bufnr)
-        --   end,
-        -- })
+        vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+        vim.api.nvim_create_autocmd("LspAttach", {
+          group = "LspAttach_inlayhints",
+          callback = function(args)
+            if not (args.data and args.data.client_id) then
+              return
+            end
+            local bufnr = args.buf
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            require("lsp-inlayhints").on_attach(client, bufnr)
+          end,
+        })
         require("lsp-inlayhints").setup()
       end
     },
@@ -27,6 +27,7 @@ return {
       cmd = { "LspInstall", "LspUninstall" },
       dependencies = {
         'williamboman/mason.nvim',
+        "lukas-reineke/lsp-format.nvim",
       },
       config = function()
         require("mason").setup()
@@ -58,8 +59,6 @@ return {
           end,
           ["gopls"] = function()
             vim.api.nvim_create_autocmd('BufWritePre', {
-              -- NOTE: lspで絞る or patternで絞るのどちらでもかけそう
-              -- pattern = '*.go',
               callback = function()
                 vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
               end
@@ -79,7 +78,6 @@ return {
       end,
     },
     {
-      "lukas-reineke/lsp-format.nvim",
       config = function()
         require("lsp-format").setup {}
 
