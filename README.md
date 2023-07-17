@@ -16,3 +16,5 @@ ln -sfnv $(pwd)/config/nvim/ ~/.config/
 
 ### アイコン探し
 https://www.nerdfonts.com/cheat-sheet
+
+https://tech-unlimited.com/escape-unicode.html
