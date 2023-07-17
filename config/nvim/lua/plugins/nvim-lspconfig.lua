@@ -20,7 +20,7 @@ return {
           end,
         })
         require("lsp-inlayhints").setup()
-      end
+      end,
     },
     {
       "williamboman/mason-lspconfig.nvim",
@@ -101,18 +101,6 @@ return {
           handlers = handlers,
         })
       end,
-    },
-    {
-      config = function()
-        require("lsp-format").setup {}
-
-        local on_attach = function(client)
-          require("lsp-format").on_attach(client)
-          -- ... custom code ...
-        end
-        require("lspconfig").gopls.setup { on_attach = on_attach }
-        require("lspconfig").lua_ls.setup { on_attach = on_attach }
-      end
     },
   },
   config = function()
