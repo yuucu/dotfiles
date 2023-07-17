@@ -66,10 +66,28 @@ return {
               }
             })
           end,
+          ["gopls"] = function()
+            local on_attach = function(client)
+              require("lsp-format").on_attach(client)
+            end
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              callback = function()
+                vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+              end
+            })
+            require('lspconfig').gopls.setup({
+              on_attach = on_attach,
+              settings = {
+                gopls = {
+                  analyses = {
+                    unusedparams = true,
+                  },
+                  staticcheck = true,
+                },
+              },
+            })
+          end
         }
-
-
-
         mason_lspconfig.setup({
           ensure_installed = {
             "gopls", -- WARNING: This could be an issue with goenv switching.
@@ -79,39 +97,8 @@ return {
             "tflint",
             "tsserver",
             "yamlls",
-          }
-        })
-        local lspconfig = require('lspconfig')
-        mason_lspconfig.setup_handlers({
-          function(server)
-            lspconfig[server].setup({
-              capabilities = require("cmp_nvim_lsp").default_capabilities(),
-              settings = ({
-                lua_ls = {
-                  Lua = {
-                    hint = { enable = true },
-                  },
-                },
-              })
-            })
-          end,
-          ["gopls"] = function()
-            vim.api.nvim_create_autocmd('BufWritePre', {
-              callback = function()
-                vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
-              end
-            })
-            --
-            --            require('lspconfig').gopls.setup(vim.tbl_deep_extend("force", { capabilities = capabilities }, gopls_settings))
-            --
-            -- local on_attach = function(client, bufnr)
-            -- Enable completion triggered by <c-x><c-o>
-            -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-            -- end
-            -- require('lspconfig').gopls.setup({
-            -- on_attach = on_attach
-            -- })
-          end
+          },
+          handlers = handlers,
         })
       end,
     },
