@@ -24,7 +24,6 @@ return {
     },
     {
       "williamboman/mason-lspconfig.nvim",
-      cmd = { "LspInstall", "LspUninstall" },
       dependencies = {
         'williamboman/mason.nvim',
         "lukas-reineke/lsp-format.nvim",
@@ -32,6 +31,45 @@ return {
       config = function()
         require("mason").setup()
         local mason_lspconfig = require("mason-lspconfig")
+
+        local handlers = {
+          function(server)
+            require('lspconfig')[server].setup({
+              capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            })
+          end,
+          ["lua_ls"] = function()
+            local on_attach = function(client)
+              require("lsp-format").on_attach(client)
+            end
+            require('lspconfig').lua_ls.setup({
+              on_attach = on_attach,
+              settings = {
+                Lua = {
+                  runtime = {
+                    -- LuaJIT in the case of Neovim
+                    version = 'LuaJIT',
+                    path = vim.split(package.path, ';'),
+                  },
+                  diagnostics = {
+                    -- Get the language server to recognize the `vim` global
+                    globals = { 'vim' },
+                  },
+                  workspace = {
+                    -- Make the server aware of Neovim runtime files
+                    library = {
+                      [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                      [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                    },
+                  },
+                },
+              }
+            })
+          end,
+        }
+
+
+
         mason_lspconfig.setup({
           ensure_installed = {
             "gopls", -- WARNING: This could be an issue with goenv switching.
