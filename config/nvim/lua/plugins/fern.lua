@@ -1,7 +1,7 @@
 return {
   'lambdalisue/fern.vim',
   keys = {
-    { "<C-n>", ":Fern . -reveal=% -drawer -toggle -width=40<CR>", desc = "toggle fern" },
+    { "<C-n>", ":Fern . -reveal=% -drawer -toggle -width=40<CR>", desc = "toggle [F]ern" },
   },
   dependencies = {
     { 'lambdalisue/nerdfont.vim', },

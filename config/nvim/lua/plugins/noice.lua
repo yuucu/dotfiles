@@ -25,12 +25,12 @@ return {
       cmdline = {
         view = "cmdline",
         format = {
-          cmdline = { icon = "|ω·`)" },
-          search_down = { icon = "|ω·`)⌄?" },
+          cmdline = { icon = "|ω·`):" },
+          search_down = { icon = "|ω·`)⌄/" },
           search_up = { icon = "|ω·`)⌃?" },
           filter = { icon = "|ω·`)$" },
           lua = { icon = "" },
-          help = { icon = "|ω·`)?" },
+          help = { icon = "|ω·`)h:" },
         },
       },
       -- you can enable a preset for easier configuration
