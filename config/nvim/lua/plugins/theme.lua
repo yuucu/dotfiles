@@ -1,27 +1,27 @@
 return {
   {
-    -- Theme inspired by Atom
     'navarasu/onedark.nvim',
+    cond = false,
   },
   {
     'rebelot/kanagawa.nvim',
+    cond = false,
   },
   {
-    -- Theme inspired by Atom
     'ayu-theme/ayu-vim',
-    priority = 1000,
     event = "VimEnter",
+    -- cond = false,
+    priority = 1000,
     config = function()
       -- 背景透過
       -- vim.cmd([[hi! Normal ctermbg=NONE guibg=NONE]])
       vim.g.ayucolor = "dark" -- for dark version of theme
       vim.cmd.colorscheme "ayu"
-      vim.cmd([[hi! Visual cterm=reverse gui=reverse]])
-      vim.cmd([[highlight FernRootSymbol ctermfg=White guifg=#ffffff]])
     end,
   },
   {
     'catppuccin/nvim',
+    cond = false,
     name = "catppuccin",
     opts = {
       term_colors = true,
@@ -35,6 +35,28 @@ return {
         cat.compile()
         vim.cmd.colorscheme(vim.g.colors_name)
       end)
+    end,
+  },
+  {
+    '4513ECHO/vim-colors-hatsunemiku',
+    event = "VimEnter",
+    cond = false,
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme "hatsunemiku"
+    end,
+  },
+  {
+    'rose-pine/neovim',
+    event = "VimEnter",
+    priority = 1000,
+    cond = false,
+    name = 'rose-pine',
+    opts = {
+      variant = 'dawn',
+    },
+    config = function()
+      vim.cmd.colorscheme "rose-pine"
     end,
   }
 }
