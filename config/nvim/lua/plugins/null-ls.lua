@@ -19,7 +19,7 @@ return {
             -- null_ls.builtins.diagnostics.terraform_validate,
             -- null_ls.builtins.formatting.stylua,
             -- null_ls.builtins.formatting.gofumpt,
-            null_ls.builtins.diagnostics.golangci_lint,
+            -- null_ls.builtins.diagnostics.golangci_lint,
         }
         null_ls.setup({
             sources = sources,
