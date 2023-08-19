@@ -1,16 +1,18 @@
 return {
   {
     'navarasu/onedark.nvim',
+    event = "VimEnter",
     cond = false,
   },
   {
     'rebelot/kanagawa.nvim',
+    event = "VimEnter",
     cond = false,
   },
   {
     'ayu-theme/ayu-vim',
-    event = "VimEnter",
     -- cond = false,
+    event = "VimEnter",
     priority = 1000,
     config = function()
       -- 背景透過
@@ -25,6 +27,7 @@ return {
   {
     'catppuccin/nvim',
     cond = false,
+    event = "VimEnter",
     name = "catppuccin",
     opts = {
       term_colors = true,
