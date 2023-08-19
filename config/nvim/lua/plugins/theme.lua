@@ -17,6 +17,9 @@ return {
       -- vim.cmd([[hi! Normal ctermbg=NONE guibg=NONE]])
       vim.g.ayucolor = "dark" -- for dark version of theme
       vim.cmd.colorscheme "ayu"
+      vim.api.nvim_exec([[
+        highlight Visual guibg=#555555
+      ]], false)
     end,
   },
   {
@@ -58,5 +61,10 @@ return {
     config = function()
       vim.cmd.colorscheme "rose-pine"
     end,
-  }
+  },
+  {
+    'kyoh86/momiji',
+    cond = false,
+    priority = 1000,
+  },
 }

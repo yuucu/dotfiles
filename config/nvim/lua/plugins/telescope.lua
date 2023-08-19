@@ -12,6 +12,7 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     {
+      cond = false,
       "nvim-telescope/telescope-frecency.nvim",
       config = function()
         require "telescope".load_extension("frecency")

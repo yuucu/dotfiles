@@ -127,9 +127,16 @@ return {
     }
 
     ins_left {
+      'filename',
+      file_status = true, -- displays file status (readonly status, modified status)
+      path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
+      color = { gui = 'bold' },
+    }
+
+    ins_left {
       'branch',
       icon = '',
-      color = { fg = colors.violet, gui = 'bold' },
+      color = { fg = colors.violet },
     }
 
     ins_left {
