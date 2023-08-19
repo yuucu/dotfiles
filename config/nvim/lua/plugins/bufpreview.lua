@@ -6,5 +6,5 @@ return {
     },
     dependencies = {
         'vim-denops/denops.vim'
-    }
+    },
 }

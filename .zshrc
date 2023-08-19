@@ -73,3 +73,4 @@ if [ -f '/Users/s09104/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . 
 
 eval "$(direnv hook zsh)"
 
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
