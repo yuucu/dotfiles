@@ -5,6 +5,6 @@
 --
 
 require('keys')
+require('autocmd')
 require('lazyvim')
 require('options')
-require('theme')
