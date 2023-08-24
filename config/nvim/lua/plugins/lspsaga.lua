@@ -1,5 +1,6 @@
 return {
   'nvimdev/lspsaga.nvim',
+  -- cond = false,
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("lspsaga").setup({
@@ -9,6 +10,7 @@ return {
       },
       symbol_in_winbar = {
         enable = true,
+        priority = 1000,
       },
       code_action_lightbulb = {
         enable = true,
@@ -36,7 +38,7 @@ return {
     keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
 
     -- Go to definition
-    keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
+    -- keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
 
     -- Show line diagnostics
     -- You can pass argument ++unfocus to
