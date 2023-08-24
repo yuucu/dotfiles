@@ -141,7 +141,7 @@ return {
                 button("f", "󰱼  Search", ":Telescope find_files<CR>"),
                 button("e", "  New", ":ene<CR>"),
                 -- button("b", " Jump to bookmarks", ":Telescope marks<CR>"),
-                button("c", "  Config", ":e $HOME/.config/nvim/init.lua | :cd %:p:h | pwd<CR>"),
+                button("c", "  Config", ":e $HOME/.config/nvim/init.lua | :cd %:p:h | :silent !pwd<CR>"),
                 button("q", "  Quit", ":qa<CR>"),
             },
             opts = {

@@ -2,7 +2,7 @@ return {
   -- See `:help lualine.txt`
   -- Set lualine as statusline
   'nvim-lualine/lualine.nvim',
-  event = { "BufReadPre", "BufNewFile" },
+  -- event = { "BufReadPre", "BufNewFile" },
   config = function()
     -- Eviline config for lualine
     -- Author: shadmansaleh
