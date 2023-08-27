@@ -13,10 +13,4 @@ return {
       )
     end
   },
-  {
-    'echasnovski/mini.splitjoin',
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-    },
-  },
 }
