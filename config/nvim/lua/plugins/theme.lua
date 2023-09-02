@@ -7,13 +7,21 @@ return {
   {
     'rebelot/kanagawa.nvim',
     event = "VimEnter",
+    priority = 1000,
     cond = false,
+    config = function()
+      vim.cmd.colorscheme "kanagawa"
+    end,
   },
   {
     'ayu-theme/ayu-vim',
     -- cond = false,
     event = "VimEnter",
     priority = 1000,
+    cond = function()
+      -- return not vim.g.vscode
+      return false
+    end,
     config = function()
       -- 背景透過
       -- vim.cmd([[hi! Normal ctermbg=NONE guibg=NONE]])
@@ -26,21 +34,19 @@ return {
   },
   {
     'catppuccin/nvim',
-    cond = false,
     event = "VimEnter",
+    priority = 1000,
     name = "catppuccin",
     opts = {
       term_colors = true,
       transparent_background = true,
     },
     config = function()
-      -- vim.cmd.colorscheme "catppuccin"
-      vim.keymap.set("n", "<leader>v", function()
-        local cat = require("catppuccin")
-        cat.options.transparent_background = not cat.options.transparent_background
-        cat.compile()
-        vim.cmd.colorscheme(vim.g.colors_name)
-      end)
+      if vim.g.vscode then
+        vim.cmd.colorscheme ""
+      else
+        vim.cmd.colorscheme "catppuccin"
+      end
     end,
   },
   {
