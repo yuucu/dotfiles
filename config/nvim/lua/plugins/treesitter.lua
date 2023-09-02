@@ -2,6 +2,9 @@ return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   event = "VeryLazy",
+  cond = function()
+    return not vim.g.vscode
+  end,
   dependencies = {
     {
       'nvim-treesitter/nvim-treesitter-textobjects',

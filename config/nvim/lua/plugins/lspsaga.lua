@@ -2,6 +2,9 @@ return {
   'nvimdev/lspsaga.nvim',
   -- cond = false,
   event = { "BufReadPre", "BufNewFile" },
+  cond = function()
+    return not vim.g.vscode
+  end,
   config = function()
     require("lspsaga").setup({
       ui = {
