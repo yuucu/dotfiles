@@ -9,43 +9,13 @@ return {
     -- Snippet Engine & its associated nvim-cmp source
     'L3MON4D3/LuaSnip',
     'saadparwaiz1/cmp_luasnip',
-
     -- Adds LSP completion capabilities
     'hrsh7th/cmp-nvim-lsp',
-
     -- Adds a number of user-friendly snippets
     'rafamadriz/friendly-snippets',
-
-    {
-      'onsails/lspkind.nvim',
-    },
+    'onsails/lspkind.nvim',
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
-    {
-      "zbirenbaum/copilot.lua",
-      cmd = "Copilot",
-      build = ":Copilot auth",
-      cond = false,
-      opts = {
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-        filetypes = {
-          markdown = true,
-          help = true,
-        },
-      },
-    },
-    {
-      "zbirenbaum/copilot-cmp",
-      dependencies = "copilot.lua",
-      -- 使ってない
-      cond = false,
-      opts = {},
-      config = function(_, opts)
-        local copilot_cmp = require("copilot_cmp")
-        copilot_cmp.setup(opts)
-      end,
-    }
   },
   config = function()
     local cmp = require('cmp')
@@ -56,7 +26,7 @@ return {
     cmp.setup({
       enabled = true,
       completion = {
-        completeopt = 'menu,menuone,noinsert',
+        completeopt = "menu,menuone,preview,noselect",
       },
       snippet = {
         expand = function(args)
@@ -69,10 +39,7 @@ return {
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete {},
-        ['<CR>'] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        },
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
       }),
       window = {
         completion = cmp.config.window.bordered(),
@@ -83,7 +50,6 @@ return {
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
-        -- { name = "copilot" },
       }),
       formatting = {
         fields = { 'abbr', 'kind', 'menu' },
@@ -96,7 +62,6 @@ return {
             nvim_lsp = "[LSP]",
             luasnip = "[LuaSnip]",
           }),
-
           symbol_map = {
             Constructor = "",
             Field = "ﰠ",
