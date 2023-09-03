@@ -14,8 +14,8 @@ live_config_reload: true
 colors:
   # Cursor colors
   cursor:
-    text: '#FF261E'
-    cursor: '#FF261E'
+    text: '#CCD0DA'
+    cursor: '#E64553'
 font:
   normal:
     family: Hack Nerd Font
