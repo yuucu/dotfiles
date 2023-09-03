@@ -23,10 +23,6 @@ local lazyOpts = {
       enabled = true,
     },
   },
-  checker = {
-    enabled = true,
-    notify = true,
-  },
   change_detection = {
     notify = false,
   },
