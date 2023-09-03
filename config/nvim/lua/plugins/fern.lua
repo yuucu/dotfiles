@@ -5,7 +5,6 @@ return {
   },
   cond = function()
     return false
-    -- return not vim.g.vscode
   end,
   dependencies = {
     { 'lambdalisue/nerdfont.vim', },
