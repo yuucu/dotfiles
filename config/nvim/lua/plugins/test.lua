@@ -28,5 +28,12 @@ return {
     config = function()
       require "octo".setup()
     end
-  }
+  },
+  {
+    'VidocqH/lsp-lens.nvim',
+    event = "LspAttach",
+    config = function()
+      require 'lsp-lens'.setup({})
+    end
+  },
 }

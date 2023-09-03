@@ -4,7 +4,8 @@ return {
     { "<C-n>", ":Fern . -reveal=% -drawer -toggle -width=40<CR>", desc = "toggle [F]ern" },
   },
   cond = function()
-    return not vim.g.vscode
+    return false
+    -- return not vim.g.vscode
   end,
   dependencies = {
     { 'lambdalisue/nerdfont.vim', },

@@ -4,7 +4,7 @@
 -- /_/_//_/_/\__(_)_/\_,_/\_,_/
 --
 
-require('keys')
-require('autocmd')
-require('lazyvim')
-require('options')
+require('core/keymaps')
+require('core/autocmd')
+require('core/lazyvim')
+require('core/options')
