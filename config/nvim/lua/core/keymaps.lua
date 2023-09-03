@@ -9,4 +9,3 @@ vim.g.maplocalleader = ' '
 -- for US keyboard
 vim.keymap.set('n', ';', ':', { noremap = true })
 vim.keymap.set('n', ':', ';', { noremap = true })
-
