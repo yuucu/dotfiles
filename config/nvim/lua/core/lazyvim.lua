@@ -14,7 +14,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local opts = {
+local lazyOpts = {
   defaults = {
     lazy = true,
   },
@@ -23,7 +23,14 @@ local opts = {
       enabled = true,
     },
   },
+  checker = {
+    enabled = true,
+    notify = true,
+  },
+  change_detection = {
+    notify = false,
+  },
 }
 
 -- Any lua file in ~/.config/nvim/lua/plugins/*.lua will be automatically merged in the main plugin spec
-require('lazy').setup('plugins', opts)
+require('lazy').setup('plugins', lazyOpts)
