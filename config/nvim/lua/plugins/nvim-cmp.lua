@@ -22,7 +22,27 @@ return {
     local luasnip = require 'luasnip'
     local lspkind = require('lspkind')
     require('luasnip.loaders.from_vscode').lazy_load()
-    luasnip.config.setup {}
+
+    local icon = {
+      Constructor = "",
+      Field = "ﰠ",
+      Variable = "",
+      Class = "ﴯ",
+      Interface = "",
+      Module = "",
+      Property = "ﰠ",
+      Unit = "塞",
+      Value = "",
+      Enum = "",
+      Keyword = "",
+      Snippet = "",
+      EnumMember = "",
+      Struct = "פּ",
+      Event = "",
+      TypeParameter = "",
+      Copilot = "",
+    }
+
     cmp.setup({
       enabled = true,
       completion = {
@@ -62,25 +82,7 @@ return {
             nvim_lsp = "[LSP]",
             luasnip = "[LuaSnip]",
           }),
-          symbol_map = {
-            Constructor = "",
-            Field = "ﰠ",
-            Variable = "",
-            Class = "ﴯ",
-            Interface = "",
-            Module = "",
-            Property = "ﰠ",
-            Unit = "塞",
-            Value = "",
-            Enum = "",
-            Keyword = "",
-            Snippet = "",
-            EnumMember = "",
-            Struct = "פּ",
-            Event = "",
-            TypeParameter = "",
-            Copilot = "",
-          }
+          symbol_map = icon,
         }),
       },
       experimental = {

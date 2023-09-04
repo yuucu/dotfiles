@@ -2,6 +2,9 @@
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
+-- :help options
+vim.opt.backup = false -- creates a backup file
+
 -- Set highlight on search
 vim.o.hlsearch = true
 
@@ -50,8 +53,3 @@ vim.o.autoread = true
 vim.o.incsearch = true
 vim.o.autoindent = true
 vim.o.laststatus = 2
-
-
--- vim.cmd([[runtime! settings/init/*.vim]])
--- vim.cmd([[runtime! settings/plugconfig/*.vim]])
--- vim.cmd([[runtime! settings/plugconfig/*.lua]])
