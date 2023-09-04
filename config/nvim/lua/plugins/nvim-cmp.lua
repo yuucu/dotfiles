@@ -6,16 +6,22 @@ return {
   'hrsh7th/nvim-cmp',
   event = "InsertEnter",
   dependencies = {
-    -- Snippet Engine & its associated nvim-cmp source
-    'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip',
-    -- Adds LSP completion capabilities
-    'hrsh7th/cmp-nvim-lsp',
+    -- cmp plugins
+    "hrsh7th/nvim-cmp",         -- The completion plugin
+    "hrsh7th/cmp-buffer",       -- buffer completions
+    "hrsh7th/cmp-path",         -- path completions
+    "hrsh7th/cmp-cmdline",      -- cmdline completions
+    "saadparwaiz1/cmp_luasnip", -- snippet completions
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lua",
+
+    -- snippets
+    "L3MON4D3/LuaSnip",             --snippet engine
+    "rafamadriz/friendly-snippets", -- a bunch of snippets to use
+
     -- Adds a number of user-friendly snippets
-    'rafamadriz/friendly-snippets',
     'onsails/lspkind.nvim',
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
+
   },
   config = function()
     local cmp = require('cmp')
@@ -42,7 +48,6 @@ return {
       TypeParameter = "",
       Copilot = "",
     }
-
     cmp.setup({
       enabled = true,
       completion = {
@@ -67,6 +72,7 @@ return {
       },
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
+        { name = "nvim_lua" },
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
@@ -78,15 +84,30 @@ return {
           maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
           ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
           menu = ({
-            buffer = "[Buffer]",
             nvim_lsp = "[LSP]",
-            luasnip = "[LuaSnip]",
+            nvim_lua = "[NVIM_LUA]",
+            luasnip = "[Snippet]",
+            buffer = "[Buffer]",
+            path = "[Path]",
           }),
           symbol_map = icon,
         }),
       },
       experimental = {
         ghost_text = true,
+      },
+    })
+    cmp.setup.cmdline('/', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = 'buffer' }
+      }
+    })
+    cmp.setup.cmdline(":", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = "path" },
+        { name = "cmdline" },
       },
     })
   end
