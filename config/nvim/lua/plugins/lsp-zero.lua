@@ -71,6 +71,7 @@ return {
           { name = 'path' },
         },
         fields = { 'abbr', 'kind', 'menu' },
+        -- TODO: lsp-kind動いてなさそうなので直したい
         format = require('lspkind').cmp_format({
           mode = 'symbol_text',
           maxwidth = 50,         -- prevent the popup from showing more than provided characters
@@ -116,6 +117,14 @@ return {
         "yamlls",
       })
 
+      -- TODO: gopls設定拡張できるか確認する
+      -- TODO: 雑にここに置いているので、適切な場所に移動する
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = '*.go',
+        callback = function()
+          vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+        end
+      })
       lsp.format_on_save({
         format_opts = {
           async = false,
