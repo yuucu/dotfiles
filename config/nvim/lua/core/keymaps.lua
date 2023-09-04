@@ -6,6 +6,16 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+local opts = { noremap = true, silent = true }
+
+-- Modes
+--   normal_mode = "n",
+--   insert_mode = "i",
+--   visual_mode = "v",
+--   visual_block_mode = "x",
+--   term_mode = "t",
+--   command_mode = "c",
+
 -- for US keyboard
-vim.keymap.set('n', ';', ':', { noremap = true })
-vim.keymap.set('n', ':', ';', { noremap = true })
+vim.keymap.set('n', ';', ':', opts)
+vim.keymap.set('n', ':', ';', opts)
