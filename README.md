@@ -5,6 +5,8 @@
 ```
 git clone git@github.com:yuucu/dotfiles.git
 cd dotfiles
+make install
+---
 ln -sfnv $(pwd)/.zshrc ~/ 
 mkdir -p ~/.config/tmux/ && ln -sfnv $(pwd)/config/tmux/tmux.conf ~/.config/tmux/
 ln -sfnv $(pwd)/config/starship.toml ~/.config/ 
