@@ -4,7 +4,11 @@
 -- /_/_//_/_/\__(_)_/\_,_/\_,_/
 --
 
-require('core/keymaps')
-require('core/autocmd')
-require('core/lazyvim')
-require('core/options')
+if vim.g.vscode then
+  require('core/vscode')
+else
+  require('core/keymaps')
+  require('core/autocmd')
+  require('core/lazyvim')
+  require('core/options')
+end
