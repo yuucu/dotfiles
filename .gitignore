@@ -9,6 +9,7 @@ raycast/
 .config/gitui/
 .config/op/
 .config/alacritty/
+.config/tmux/plugins/
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/vim,lua,windows,macos,intellij,go
