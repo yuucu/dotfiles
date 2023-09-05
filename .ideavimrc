@@ -1,0 +1,27 @@
+let mapleader = "\<Space>"
+
+set laststatus=2  
+
+" for US keyboard
+nnoremap ; :
+nnoremap : ;
+ 
+" tab indend
+set expandtab
+set tabstop=2
+set shiftwidth=2
+set autoindent
+ 
+" search
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+ 
+" other
+set number
+set autoread
+
+syntax enable
+filetype plugin indent on
+
