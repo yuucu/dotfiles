@@ -1,3 +1,16 @@
+
+*.log
+raycast/
+.config/gcloud/
+.config/configstore/zenn-cli.json
+.config/gh/
+.config/gh-dash/
+.config/github-copilot/
+.config/gitui/
+.config/op/
+.config/alacritty/
+
+
 # Created by https://www.toptal.com/developers/gitignore/api/vim,lua,windows,macos,intellij,go
 # Edit at https://www.toptal.com/developers/gitignore?templates=vim,lua,windows,macos,intellij,go
 
