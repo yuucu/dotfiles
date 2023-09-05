@@ -4,6 +4,9 @@ return {
   event = { "BufReadPost", "BufNewFile" },
   build = ':TSUpdate',
   cmd = { "TSUpdateSync" },
+  cond = function()
+    return not vim.g.vscode
+  end,
   opts = {
     ensure_installed = {
       "go",
