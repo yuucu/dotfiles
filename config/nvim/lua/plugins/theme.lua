@@ -37,6 +37,9 @@ return {
     event = "VimEnter",
     priority = 1000,
     name = "catppuccin",
+    cond = function()
+      return not vim.g.vscode
+    end,
     opts = {
       term_colors = true,
       transparent_background = true,
