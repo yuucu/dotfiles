@@ -24,3 +24,8 @@ rafamadriz
 qusecase
 cusecase
 Usecasse
+yamlls
+tflint
+gopls
+terraformls
+bufnr
