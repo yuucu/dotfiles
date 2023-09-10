@@ -138,14 +138,6 @@ return {
             end
           })
         end,
-        settings = {
-          gopls = {
-            -- analyses = {
-            --   unusedparams = true,
-            -- },
-            -- staticcheck = true,
-          },
-        }
       })
 
       lsp.setup()

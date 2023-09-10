@@ -1,35 +1,5 @@
 return {
   {
-    "olexsmir/gopher.nvim",
-    cond = false,
-    ft = "go",
-    config = function()
-      require("gopher").setup()
-    end
-  },
-  {
-    "m4xshen/hardtime.nvim",
-    event = "VimEnter",
-    cond = false,
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    opts = {}
-  },
-  {
-    'pwntester/octo.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons',
-    },
-    cond = false,
-    cmd = {
-      "Octo",
-    },
-    config = function()
-      require "octo".setup()
-    end
-  },
-  {
     "cshuaimin/ssr.nvim",
     module = "ssr",
     -- Calling setup is optional.
@@ -53,9 +23,29 @@ return {
     end
   },
   {
-    "mbbill/undotree",
-    cmd = {
-      "UndotreeToggle",
+    "ggandor/leap.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      -- makes some plugins dot-repeatable like leap
+      { "tpope/vim-repeat", event = "VeryLazy" },
     },
+    keys = {
+      { "s", mode = { "n", "x", "o" }, desc = "Leap forward to" },
+      { "S", mode = { "n", "x", "o" }, desc = "Leap backward to" },
+    },
+    config = function(_, opts)
+      require('leap').add_default_mappings()
+    end,
   },
+  {
+    event = { "BufReadPre", "BufNewFile" },
+    "shortcuts/no-neck-pain.nvim",
+    opts = {
+      buffers = {
+        wo = {
+          fillchars = "eob: ",
+        },
+      },
+    },
+  }
 }
