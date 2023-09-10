@@ -78,8 +78,8 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       { 'hrsh7th/cmp-nvim-lsp' },
-      { 'williamboman/mason-lspconfig.nvim' },
       { 'williamboman/mason.nvim' },
+      { 'williamboman/mason-lspconfig.nvim' },
 
       -- null-ls
       { 'jose-elias-alvarez/null-ls.nvim' },
@@ -89,15 +89,21 @@ return {
       -- This is where all the LSP shenanigans will live
 
       local lsp = require('lsp-zero')
-      lsp.ensure_installed({
-        "gopls",
-        "marksman",
-        "lua_ls",
-        "terraformls",
-        "tflint",
-        "tsserver",
-        "yamlls",
-        "dagger",
+      require('mason').setup({})
+      require('mason-lspconfig').setup({
+        ensure_installed = {
+          "gopls",
+          "marksman",
+          "lua_ls",
+          "terraformls",
+          "tflint",
+          "tsserver",
+          "yamlls",
+          "dagger",
+        },
+        handlers = {
+          lsp.default_setup,
+        }
       })
 
       lsp.set_sign_icons({
