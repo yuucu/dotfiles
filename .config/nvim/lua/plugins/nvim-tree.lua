@@ -10,13 +10,28 @@ return {
     -- configure nvim-tree
     nvimtree.setup({
       view = {
-        width = 35,
+        width = 38,
         relativenumber = false,
       },
       -- change folder arrow icons
       renderer = {
         indent_markers = {
           enable = false
+        },
+        highlight_git = true,
+        highlight_opened_files = 'name',
+        icons = {
+          glyphs = {
+            git = {
+              unstaged = '!',
+              renamed = '»',
+              untracked = '?',
+              deleted = '✘',
+              staged = '✓',
+              unmerged = '',
+              ignored = '◌',
+            },
+          },
         },
       },
       -- disable window_picker for
