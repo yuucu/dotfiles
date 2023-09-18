@@ -23,23 +23,6 @@ return {
     end
   },
   {
-    "ggandor/leap.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      -- makes some plugins dot-repeatable like leap
-      { "tpope/vim-repeat", event = "VeryLazy" },
-    },
-    keys = {
-      { "s", mode = { "n", "x", "o" }, desc = "Leap forward to" },
-      { "S", mode = { "n", "x", "o" }, desc = "Leap backward to" },
-    },
-    config = function(_, opts)
-      require('leap').add_default_mappings()
-      vim.keymap.del({ 'x', 'o' }, 'x')
-      vim.keymap.del({ 'x', 'o' }, 'X')
-    end,
-  },
-  {
     event = { "BufReadPre", "BufNewFile" },
     "shortcuts/no-neck-pain.nvim",
     opts = {
