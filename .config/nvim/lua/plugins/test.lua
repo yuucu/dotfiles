@@ -3,7 +3,7 @@ return {
     "cshuaimin/ssr.nvim",
     module = "ssr",
     -- Calling setup is optional.
-    lazy = false,
+    cond = false,
     config = function()
       require("ssr").setup {
         border = "rounded",
