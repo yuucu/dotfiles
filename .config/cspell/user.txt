@@ -29,3 +29,13 @@ tflint
 gopls
 terraformls
 bufnr
+catppuccin
+navarasu
+kanagawa
+ctermbg
+nvim_exec
+ayucolor
+rebelot
+hatsunemiku
+momiji
+folke
