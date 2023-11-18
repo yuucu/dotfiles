@@ -74,3 +74,18 @@ if [ -f '/Users/s09104/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . 
 eval "$(direnv hook zsh)"
 
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+# bun completions
+[ -s "/Users/s09104/.bun/_bun" ] && source "/Users/s09104/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/s09104/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
