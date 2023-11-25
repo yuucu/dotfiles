@@ -23,9 +23,10 @@ make install
 
 ### colorscheme
 
++ [folke/tokyonight.nvim](https://dotfyle.com/plugins/folke/tokyonight.nvim)
 + [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
-+ [rose-pine/neovim](https://dotfyle.com/plugins/rose-pine/neovim)
 + [rebelot/kanagawa.nvim](https://dotfyle.com/plugins/rebelot/kanagawa.nvim)
++ [rose-pine/neovim](https://dotfyle.com/plugins/rose-pine/neovim)
 + [navarasu/onedark.nvim](https://dotfyle.com/plugins/navarasu/onedark.nvim)
 ### comment
 
@@ -35,6 +36,7 @@ make install
 + [hrsh7th/nvim-cmp](https://dotfyle.com/plugins/hrsh7th/nvim-cmp)
 ### debugging
 
++ [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
 + [rcarriga/nvim-dap-ui](https://dotfyle.com/plugins/rcarriga/nvim-dap-ui)
 + [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
 ### diagnostics
@@ -43,10 +45,12 @@ make install
 ### editing-support
 
 + [shortcuts/no-neck-pain.nvim](https://dotfyle.com/plugins/shortcuts/no-neck-pain.nvim)
++ [cshuaimin/ssr.nvim](https://dotfyle.com/plugins/cshuaimin/ssr.nvim)
 + [Wansmer/treesj](https://dotfyle.com/plugins/Wansmer/treesj)
 ### fuzzy-finder
 
 + [nvim-telescope/telescope.nvim](https://dotfyle.com/plugins/nvim-telescope/telescope.nvim)
++ [fdschmidt93/telescope-egrepify.nvim](https://dotfyle.com/plugins/fdschmidt93/telescope-egrepify.nvim)
 ### git
 
 + [lewis6991/gitsigns.nvim](https://dotfyle.com/plugins/lewis6991/gitsigns.nvim)
