@@ -53,3 +53,5 @@ vim.o.autoread = true
 vim.o.incsearch = true
 vim.o.autoindent = true
 vim.o.laststatus = 2
+
+vim.cmd("set t_Co=256")
