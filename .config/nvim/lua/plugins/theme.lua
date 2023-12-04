@@ -99,12 +99,4 @@ return {
     cond = false,
     priority = 1000,
   },
-  {
-    "folke/tokyonight.nvim",
-    priority = 1000,
-    opts = {},
-    cond = function()
-      return false
-    end,
-  }
 }

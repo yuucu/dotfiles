@@ -145,6 +145,11 @@ return {
           })
         end,
       })
+      require('lspconfig').denols.setup({
+        init_options = {
+          lint = true,
+        },
+      })
 
       lsp.setup()
 
