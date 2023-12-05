@@ -62,6 +62,7 @@ return {
         telescope = true,
         treesitter = true,
         which_key = true,
+        nvimtree = true,
       },
     },
     config = function()
