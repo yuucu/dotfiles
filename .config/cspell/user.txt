@@ -44,3 +44,4 @@ nums
 noice
 Deno
 deno
+gofeed
