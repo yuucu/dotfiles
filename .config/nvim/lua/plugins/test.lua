@@ -23,17 +23,6 @@ return {
     end
   },
   {
-    event = { "BufReadPre", "BufNewFile" },
-    "shortcuts/no-neck-pain.nvim",
-    opts = {
-      buffers = {
-        wo = {
-          fillchars = "eob: ",
-        },
-      },
-    },
-  },
-  {
     'kat0h/bufpreview.vim',
     build = 'deno task prepare',
     ft = {
