@@ -1,14 +1,16 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds {
-    unbind "Ctrl n" // unbind resize mode
-    unbind "Ctrl g" // unbind lock mode
-    unbind "Ctrl h" // unbind move mode
-    unbind "Ctrl p" // unbind page mode
-    unbind "Ctrl t" // unbind tab mode
-    unbind "Ctrl o" // unbind session mode
     normal {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
+        unbind "Ctrl n" // unbind resize mode
+        unbind "Ctrl g" // unbind lock mode
+        unbind "Ctrl h" // unbind move mode
+        unbind "Ctrl p" // unbind page mode
+        unbind "Ctrl t" // unbind tab mode
+        unbind "Ctrl o" // unbind session mode
+        unbind "Ctrl s" // unbind search mode
+        unbind "Ctrl q" // unbind quit
     }
     scroll {
         bind "Ctrl s" { SwitchToMode "Normal"; }
@@ -64,8 +66,6 @@ keybinds {
         }
     }
     tmux {
-        bind "s" { SwitchToMode "Session"; }
-
         bind "[" { SwitchToMode "Scroll"; }
         bind "Ctrl b" { Write 2; SwitchToMode "Normal"; }
         bind "\"" { NewPane "Down"; SwitchToMode "Normal"; }
@@ -202,27 +202,41 @@ pane_frames false
 // For more examples, see: https://github.com/zellij-org/zellij/tree/main/example/themes
 // Once these themes are defined, one of them should to be selected in the "theme" section of this file
 //
-// themes {
-//     dracula {
-//         fg 248 248 242
-//         bg 40 42 54
-//         red 255 85 85
-//         green 80 250 123
-//         yellow 241 250 140
-//         blue 98 114 164
-//         magenta 255 121 198
-//         orange 255 184 108
-//         cyan 139 233 253
-//         black 0 0 0
-//         white 255 255 255
-//     }
-// }
+themes {
+  cat_me {
+    bg "#585b70" // Surface2
+    fg "#cdd6f4"
+    red "#f38ba8"
+    green "#a6e3a1"
+    blue "#89b4fa"
+    yellow "#f9e2af"
+    magenta "#f5c2e7" // Pink
+    orange "#fab387" // Peach
+    cyan "#89dceb" // Sky
+    black "#181825" // Mantle
+    white "#cdd6f4"
+  }
+  nord_me {
+    fg 216 222 233 // #D8DEE9
+    bg 46 52 64 // #2E3440
+    black 59 66 82 // #3B4252
+    red 191 97 106 // #BF616A
+    green "#89b4fa"
+    yellow 235 203 139 // #EBCB8B
+    blue 129 161 193 // #81A1C1
+    magenta 180 142 173 // #B48EAD
+    cyan 136 192 208 // #88C0D0
+    white 229 233 240 // #E5E9F0
+    orange 208 135 112 // #D08770
+  }
+}
 
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
 // theme "default"
-theme "catppuccin-mocha"
+// theme "catppuccin-mocha"
+theme "nord_me"
 
 // The name of the default layout to load on startup
 // Default: "default"
