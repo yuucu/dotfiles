@@ -1,8 +1,8 @@
 return {
-    'folke/which-key.nvim',
-    lazy = true,
-    cmd = {
-        "WhichKey",
-    },
-    opts = {},
+  'folke/which-key.nvim',
+  lazy = true,
+  cmd = {
+    "WhichKey",
+  },
+  opts = {},
 }
