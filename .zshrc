@@ -90,3 +90,5 @@ case ":$PATH:" in
 esac
 # pnpm end
 ulimit -n 1024
+
+export XDG_CONFIG_HOME="$HOME/.config"
