@@ -16,20 +16,20 @@ return {
       -- change folder arrow icons
       renderer = {
         indent_markers = {
-          enable = false
+          enable = false,
         },
         highlight_git = true,
-        highlight_opened_files = 'name',
+        highlight_opened_files = "name",
         icons = {
           glyphs = {
             git = {
-              unstaged = '!',
-              renamed = '»',
-              untracked = '?',
-              deleted = '✘',
-              staged = '✓',
-              unmerged = '',
-              ignored = '◌',
+              unstaged = "!",
+              renamed = "»",
+              untracked = "?",
+              deleted = "✘",
+              staged = "✓",
+              unmerged = "",
+              ignored = "◌",
             },
           },
         },
@@ -53,10 +53,14 @@ return {
     })
 
     -- set keymaps
-    vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer" })  -- toggle file explorer
-    vim.keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>",
-      { desc = "Toggle file explorer on current file" })                                                -- toggle file explorer on current file
+    vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
+    vim.keymap.set(
+      "n",
+      "<leader>ef",
+      "<cmd>NvimTreeFindFileToggle<CR>",
+      { desc = "Toggle file explorer on current file" }
+    ) -- toggle file explorer on current file
     vim.keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
-    vim.keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" })   -- refresh file explorer
-  end
+    vim.keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
+  end,
 }
