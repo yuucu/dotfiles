@@ -5,18 +5,18 @@ return {
     -- makes some plugins dot-repeatable like leap
     { "tpope/vim-repeat", event = "VeryLazy" },
   },
-  keys = {
-    { "s", mode = { "n", "x", "o" }, desc = "Leap forward to" },
-    { "S", mode = { "n", "x", "o" }, desc = "Leap backward to" },
-  },
   config = function(_, opts)
     require('leap').add_default_mappings()
     vim.keymap.del({ 'x', 'o' }, 'x')
     vim.keymap.del({ 'x', 'o' }, 'X')
 
+    vim.keymap.set('n', 's', function()
+      local current_window = vim.fn.win_getid()
+      require('leap').leap { target_windows = { current_window } }
+    end)
+
     -- The below settings make Leap's highlighting closer to what you've been
     -- used to in Lightspeed.
-
     vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' }) -- or some grey
     vim.api.nvim_set_hl(0, 'LeapMatch', {
       -- For light themes, set to 'black' or similar.
