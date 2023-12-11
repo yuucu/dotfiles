@@ -45,3 +45,5 @@ noice
 Deno
 deno
 gofeed
+zenn
+apbdx
