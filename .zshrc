@@ -89,6 +89,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-ulimit -n 1024
+ulimit -n 65536
 
 export XDG_CONFIG_HOME="$HOME/.config"
