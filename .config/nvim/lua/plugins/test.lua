@@ -23,13 +23,13 @@ return {
     end
   },
   {
-    'kat0h/bufpreview.vim',
-    build = 'deno task prepare',
-    ft = {
-      "markdown",
-    },
-    dependencies = {
-      'vim-denops/denops.vim'
-    }
+    "iamcco/markdown-preview.nvim",
+    ft = { "markdown" },
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
   },
 }
