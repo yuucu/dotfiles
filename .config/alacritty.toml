@@ -1,0 +1,27 @@
+import = ["/Users/s09104/.config/alacritty/catppuccin/catppuccin-mocha.yml"]
+live_config_reload = true
+
+[colors.cursor]
+cursor = "#E64553"
+text = "#CCD0DA"
+
+[font.bold]
+family = "Hack Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "Hack Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "Hack Nerd Font"
+style = "Regular"
+
+[shell]
+args = ["--login"]
+program = "/bin/zsh"
+
+[window]
+decorations = "none"
+opacity = 0.85
+startup_mode = "Windowed"

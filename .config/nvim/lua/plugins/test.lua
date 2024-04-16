@@ -32,4 +32,8 @@ return {
     end,
     ft = { "markdown" },
   },
+  {
+    "nvim-pack/nvim-spectre",
+    cmd = "Spectre",
+  },
 }
