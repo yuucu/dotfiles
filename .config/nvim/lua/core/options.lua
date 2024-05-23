@@ -55,3 +55,5 @@ vim.o.autoindent = true
 vim.o.laststatus = 2
 
 vim.cmd("set t_Co=256")
+
+vim.o.nofixeol = false
