@@ -10,6 +10,7 @@ return {
     opts = {
       term_colors = true,
       transparent_background = true,
+      transparent_panel = true,
       integrations = {
         alpha = true,
         cmp = true,
@@ -29,7 +30,10 @@ return {
         telescope = true,
         treesitter = true,
         which_key = true,
-        nvimtree = true,
+        nvimtree = {
+          enabled = true,
+          transparent_panel = true,
+        }
       },
     },
     config = function()
@@ -37,6 +41,16 @@ return {
         vim.cmd.colorscheme ""
       else
         vim.cmd.colorscheme "catppuccin"
+      end
+      if vim.g.vscode then
+        vim.cmd.colorscheme ""
+      else
+        vim.cmd.colorscheme "catppuccin"
+        vim.cmd [[highlight Normal guibg=NONE ctermbg=NONE]]
+        vim.cmd [[highlight NonText guibg=NONE ctermbg=NONE]]
+        vim.cmd [[highlight LineNr guibg=NONE ctermbg=NONE]]
+        vim.cmd [[highlight Folded guibg=NONE ctermbg=NONE]]
+        vim.cmd [[highlight EndOfBuffer guibg=NONE ctermbg=NONE]]
       end
     end,
   },
