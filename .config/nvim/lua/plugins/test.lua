@@ -60,4 +60,11 @@ return {
     opts = {},
     lazy = false,
   },
+  {
+    "maan2003/lsp_lines.nvim",
+    lazy = false,
+    config = function()
+      require("lsp_lines").setup()
+    end
+  },
 }
