@@ -1,5 +1,5 @@
-import = ["/Users/s09104/.config/alacritty/catppuccin/catppuccin-mocha.yml"]
-live_config_reload = true
+general.import = ["/Users/s09104/.config/alacritty/catppuccin/catppuccin-mocha.yml"]
+general.live_config_reload = true
 
 [colors.cursor]
 cursor = "#E64553"
@@ -17,7 +17,7 @@ style = "Italic"
 family = "Hack Nerd Font"
 style = "Regular"
 
-[shell]
+[terminal.shell]
 args = ["--login"]
 program = "/bin/zsh"
 

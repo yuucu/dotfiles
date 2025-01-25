@@ -32,10 +32,10 @@ return {
     -- You might want to use either the primary label or the shortcut colors
     -- for Leap primary labels, depending on your taste.
     vim.api.nvim_set_hl(0, 'LeapLabelPrimary', {
-      fg = 'red', bold = true, nocombine = true,
+      bg = 'black', fg = 'red', bold = true, nocombine = true,
     })
     vim.api.nvim_set_hl(0, 'LeapLabelSecondary', {
-      fg = 'blue', bold = true, nocombine = true,
+      bg = 'black', fg = 'blue', bold = true, nocombine = true,
     })
     -- Try it without this setting first, you might find you don't even miss it.
     require('leap').opts.highlight_unlabeled_phase_one_targets = true

@@ -1,8 +1,8 @@
 # https://github.com/catppuccin/alacritty
-import:
+general.import:
   - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
 
-shell:
+terminal.shell:
   program: /bin/zsh
   args:
     - --login
@@ -10,7 +10,7 @@ window:
   decorations: none
   startup_mode: Windowed
   opacity: 0.85
-live_config_reload: true
+general.live_config_reload: true
 colors:
   # Cursor colors
   cursor:
