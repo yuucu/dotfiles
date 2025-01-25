@@ -62,7 +62,7 @@ return {
   },
   {
     "maan2003/lsp_lines.nvim",
-    lazy = false,
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("lsp_lines").setup()
     end
