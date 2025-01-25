@@ -29,7 +29,7 @@ return {
         },
         telescope = true,
         treesitter = true,
-        which_key = true,
+        -- which_key = true,
         nvimtree = {
           enabled = true,
           transparent_panel = true,
