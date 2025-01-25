@@ -5,9 +5,9 @@ return {
     { "lukas-reineke/lsp-format.nvim" },
     { 'folke/neodev.nvim' },
   },
-  cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
-  event = { 'BufReadPre', 'BufNewFile' },
-  config = function()
+  cmd          = { 'LspInfo', 'LspInstall', 'LspStart' },
+  event        = { 'BufReadPre', 'BufNewFile' },
+  config       = function()
     local lspconfig = require('lspconfig')
     -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -16,6 +16,12 @@ return {
       require("lsp-format").on_attach(client, bufnr)
       -- ... custom code ...
     end
+
+    vim.diagnostic.config({
+      virtual_text = false,
+      signs = false,
+      float = false,
+    })
 
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = "*.go",
