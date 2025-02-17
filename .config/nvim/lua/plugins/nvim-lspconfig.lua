@@ -18,9 +18,9 @@ return {
     end
 
     vim.diagnostic.config({
-      virtual_text = false,
-      signs = false,
-      float = false,
+      virtual_text = true,
+      signs = true,
+      float = true,
     })
 
     vim.api.nvim_create_autocmd("BufWritePre", {
