@@ -59,12 +59,5 @@ return {
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     opts = {},
     event = { "BufReadPre", "BufNewFile" },
-  },
-  {
-    "maan2003/lsp_lines.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      require("lsp_lines").setup()
-    end
-  },
+  }
 }
