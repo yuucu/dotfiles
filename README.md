@@ -12,7 +12,7 @@ chezmoi を使った個人開発環境設定です。
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply yuucu/dotfiles
 
 # 必要なツールの確認・追加インストール
-cd ~/.local/share/chezmoi && make install
+cd ~/.local/share/chezmoi && make install && make update
 ```
 
 ## 主な機能
