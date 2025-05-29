@@ -1,0 +1,16 @@
+# Encrypted environment variables managed by chezmoi
+# This file is encrypted with age and safe to commit
+
+# API Tokens
+ZENPAY_REPO_PAT={{ .secrets.zenpay_token | quote }}
+NPM_AUTH_TOKEN={{ .secrets.npm_token | quote }}
+OPENAI_API_KEY={{ .secrets.openai_key | quote }}
+ANTHROPIC_API_KEY={{ .secrets.anthropic_key | quote }}
+
+# Database credentials
+DB_PASSWORD_COMMON={{ .secrets.db_password_common | quote }}
+DB_PASSWORD_DEV={{ .secrets.db_password_dev | quote }}
+
+# Work configurations
+WORK_EMAIL={{ .work.email | quote }}
+PERSONAL_EMAIL={{ .personal.email | quote }} 
