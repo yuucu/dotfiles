@@ -84,15 +84,15 @@ return {
       table.insert(config.sections.lualine_x, component)
     end
 
-    ins_left {
+    ins_left({
       function()
         return '▊'
       end,
-      color = { fg = colors.blue },      -- Sets highlighting of component
+      color = { fg = colors.blue }, -- Sets highlighting of component
       padding = { left = 0, right = 1 }, -- We don't need space before this
-    }
+    })
 
-    ins_left {
+    ins_left({
       -- mode component
       function()
         return '(^-^)/'
@@ -124,22 +124,22 @@ return {
         return { fg = mode_color[vim.fn.mode()] }
       end,
       padding = { right = 1 },
-    }
+    })
 
-    ins_left {
+    ins_left({
       'filename',
       file_status = true, -- displays file status (readonly status, modified status)
-      path = 1,           -- 0 = just filename, 1 = relative path, 2 = absolute path
+      path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
       color = { gui = 'bold' },
-    }
+    })
 
-    ins_left {
+    ins_left({
       'branch',
       icon = '',
       color = { fg = colors.violet },
-    }
+    })
 
-    ins_left {
+    ins_left({
       'diff',
       -- Is it me or the symbol for modified us really weird
       diff_color = {
@@ -150,17 +150,17 @@ return {
       -- symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
       -- cond = conditions.hide_in_width,
       symbols = { added = '+', modified = '~', removed = '-' }, -- Changes the symbols used by the diff.
-    }
+    })
 
     -- Insert mid section. You can make any number of sections in neovim :)
     -- for lualine it's any number greater then 2
-    ins_left {
+    ins_left({
       function()
         return '%='
       end,
-    }
+    })
 
-    ins_right {
+    ins_right({
       'diagnostics',
       sources = { 'nvim_diagnostic' },
       symbols = {
@@ -169,53 +169,53 @@ return {
         warn = ' ',
         -- info = ' ',
         info = ' ',
-        hint = ' '
+        hint = ' ',
       },
       diagnostics_color = {
         color_error = { fg = colors.red },
         color_warn = { fg = colors.yellow },
         color_info = { fg = colors.cyan },
       },
-    }
+    })
 
     -- Add components to right sections
-    ins_right {
+    ins_right({
       'searchcount',
-    }
+    })
 
-    ins_right {
+    ins_right({
       'filetype',
-    }
+    })
 
-    ins_right {
+    ins_right({
       -- filesize component
       'filesize',
       cond = conditions.buffer_not_empty,
-    }
+    })
 
-    ins_right {
-      'o:encoding',       -- option component same as &encoding in viml
+    ins_right({
+      'o:encoding', -- option component same as &encoding in viml
       fmt = string.upper, -- I'm not sure why it's upper case either ;)
       cond = conditions.hide_in_width,
       color = { fg = colors.green, gui = 'bold' },
-    }
+    })
 
-    ins_right {
+    ins_right({
       'fileformat',
       fmt = string.upper,
       icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
       color = { fg = colors.green, gui = 'bold' },
-    }
+    })
 
-    ins_right {
+    ins_right({
       function()
         return '▊'
       end,
       color = { fg = colors.blue },
       padding = { left = 1 },
-    }
+    })
 
     -- Now don't forget to initialize lualine
     lualine.setup(config)
-  end
+  end,
 }

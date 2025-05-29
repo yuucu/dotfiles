@@ -1,9 +1,9 @@
 return {
   {
     'catppuccin/nvim',
-    event = "VimEnter",
+    event = 'VimEnter',
     priority = 1000,
-    name = "catppuccin",
+    name = 'catppuccin',
     cond = function()
       return not vim.g.vscode
     end,
@@ -21,10 +21,10 @@ return {
         native_lsp = {
           enabled = true,
           underlines = {
-            errors = { "undercurl" },
-            hints = { "undercurl" },
-            warnings = { "undercurl" },
-            information = { "undercurl" },
+            errors = { 'undercurl' },
+            hints = { 'undercurl' },
+            warnings = { 'undercurl' },
+            information = { 'undercurl' },
           },
         },
         telescope = true,
@@ -33,24 +33,24 @@ return {
         nvimtree = {
           enabled = true,
           transparent_panel = true,
-        }
+        },
       },
     },
     config = function()
       if vim.g.vscode then
-        vim.cmd.colorscheme ""
+        vim.cmd.colorscheme('')
       else
-        vim.cmd.colorscheme "catppuccin"
+        vim.cmd.colorscheme('catppuccin')
       end
       if vim.g.vscode then
-        vim.cmd.colorscheme ""
+        vim.cmd.colorscheme('')
       else
-        vim.cmd.colorscheme "catppuccin"
-        vim.cmd [[highlight Normal guibg=NONE ctermbg=NONE]]
-        vim.cmd [[highlight NonText guibg=NONE ctermbg=NONE]]
-        vim.cmd [[highlight LineNr guibg=NONE ctermbg=NONE]]
-        vim.cmd [[highlight Folded guibg=NONE ctermbg=NONE]]
-        vim.cmd [[highlight EndOfBuffer guibg=NONE ctermbg=NONE]]
+        vim.cmd.colorscheme('catppuccin')
+        vim.cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
+        vim.cmd([[highlight NonText guibg=NONE ctermbg=NONE]])
+        vim.cmd([[highlight LineNr guibg=NONE ctermbg=NONE]])
+        vim.cmd([[highlight Folded guibg=NONE ctermbg=NONE]])
+        vim.cmd([[highlight EndOfBuffer guibg=NONE ctermbg=NONE]])
       end
     end,
   },

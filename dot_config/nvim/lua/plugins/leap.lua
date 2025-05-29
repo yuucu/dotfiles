@@ -1,9 +1,9 @@
 return {
-  "ggandor/leap.nvim",
-  event = { "BufReadPre", "BufNewFile" },
+  'ggandor/leap.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     -- makes some plugins dot-repeatable like leap
-    { "tpope/vim-repeat", event = "VeryLazy" },
+    { 'tpope/vim-repeat', event = 'VeryLazy' },
   },
   config = function(_, opts)
     require('leap').add_default_mappings()
@@ -12,7 +12,7 @@ return {
 
     vim.keymap.set('n', 's', function()
       local current_window = vim.fn.win_getid()
-      require('leap').leap { target_windows = { current_window } }
+      require('leap').leap({ target_windows = { current_window } })
     end)
 
     -- The below settings make Leap's highlighting closer to what you've been
@@ -32,10 +32,16 @@ return {
     -- You might want to use either the primary label or the shortcut colors
     -- for Leap primary labels, depending on your taste.
     vim.api.nvim_set_hl(0, 'LeapLabelPrimary', {
-      bg = 'black', fg = 'red', bold = true, nocombine = true,
+      bg = 'black',
+      fg = 'red',
+      bold = true,
+      nocombine = true,
     })
     vim.api.nvim_set_hl(0, 'LeapLabelSecondary', {
-      bg = 'black', fg = 'blue', bold = true, nocombine = true,
+      bg = 'black',
+      fg = 'blue',
+      bold = true,
+      nocombine = true,
     })
     -- Try it without this setting first, you might find you don't even miss it.
     require('leap').opts.highlight_unlabeled_phase_one_targets = true

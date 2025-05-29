@@ -2,12 +2,11 @@
 return {
   {
     'tpope/vim-fugitive',
-    event = { "BufReadPre", "BufNewFile" },
+    event = { 'BufReadPre', 'BufNewFile' },
     cond = function()
       return not vim.g.vscode
     end,
-    dependencies =
-    {
+    dependencies = {
       'tpope/vim-rhubarb',
     },
   },
