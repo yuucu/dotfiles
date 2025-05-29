@@ -1,25 +1,35 @@
 # Alacritty Configuration
 # テンプレート化されたAlacritty設定ファイル
 
+# Catppuccin Mocha テーマをインポート
+[general]
+import = ["~/.config/alacritty/catppuccin-mocha.toml"]
+live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
+
 [window]
 padding = { x = 10, y = 10 }
-decorations = "full"
+decorations = "none"  # 装飾なし（以前の設定を復元）
 title = "Terminal"
 dynamic_title = true
+opacity = 0.85  # 透明度（以前の設定を復元）
+startup_mode = "Windowed"
 
 [font]
-size = 14.0
+size = 12.0
 
 [font.normal]
-family = "JetBrains Mono"
+family = "Hack Nerd Font"
 style = "Regular"
 
 [font.bold]
-family = "JetBrains Mono"
+family = "Hack Nerd Font"
 style = "Bold"
 
 [font.italic]
-family = "JetBrains Mono"
+family = "Hack Nerd Font"
 style = "Italic"
 
 [colors]
@@ -48,7 +58,7 @@ magenta = "#f5c2e7"
 cyan = "#94e2d5"
 white = "#a6adc8"
 
-[shell]
+[terminal.shell]
 {{- if eq .chezmoi.os "darwin" }}
 program = "/bin/zsh"
 {{- else if eq .chezmoi.os "linux" }}
@@ -57,3 +67,8 @@ program = "/bin/bash"
 program = "/bin/sh"
 {{- end }}
 args = ["--login"]
+
+# カスタムカーソル色（以前の設定を復元）
+[colors.cursor]
+text = '#CCD0DA'
+cursor = '#E64553'
