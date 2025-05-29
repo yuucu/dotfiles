@@ -31,7 +31,7 @@ jobs:
           sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
           
           # Install stylua (Lua formatter)
-          curl -L https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux.zip -o stylua.zip
+          curl -L https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip -o stylua.zip
           unzip stylua.zip
           chmod +x stylua
           sudo mv stylua /usr/local/bin/
