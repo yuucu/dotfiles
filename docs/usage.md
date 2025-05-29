@@ -9,9 +9,6 @@
 z <partial>  # よく使うディレクトリにジャンプ
 ..           # cd ..
 ...          # cd ../..
-
-# Gitリポジトリ移動
-fgh          # リポジトリを検索して移動
 ```
 
 ### Git操作
@@ -26,8 +23,6 @@ gp           # git push
 
 # 高度な操作
 lg           # LazyGit TUI
-work-git     # 仕事用Gitアイデンティティに切り替え
-personal-git # 個人用Gitアイデンティティに切り替え
 ```
 
 ### ファイル操作
@@ -84,84 +79,25 @@ K               # ホバー情報
 <Space>ca       # コードアクション
 ```
 
-### バッファ・ウィンドウ管理
+## ランタイム管理（mise）
 
-```vim
-# バッファ操作
-:bn             # 次のバッファ
-:bp             # 前のバッファ
-:bd             # バッファを閉じる
-
-# ウィンドウ操作
-<C-h/j/k/l>     # ウィンドウ移動
-<Space>sv       # 垂直分割
-<Space>sh       # 水平分割
-<C-w>q          # ウィンドウを閉じる
-```
-
-## tmux使用法
-
-### セッション管理
+### バージョン管理
 
 ```bash
-# セッション操作
-tmux new -s session_name    # 新しいセッション作成
-tmux attach -t session_name # セッションにアタッチ
-tmux list-sessions          # セッション一覧
-
-# セッション内操作（Ctrl-a がプレフィックス）
-<prefix>d                   # セッションからデタッチ
-<prefix>s                   # セッション一覧
-```
-
-### ウィンドウ・ペイン管理
-
-```bash
-# ウィンドウ操作
-<prefix>c       # 新しいウィンドウ
-<prefix>n       # 次のウィンドウ
-<prefix>p       # 前のウィンドウ
-<prefix>&       # ウィンドウを閉じる
-
-# ペイン操作
-<prefix>%       # 垂直分割
-<prefix>"       # 水平分割
-<prefix>x       # ペインを閉じる
-<prefix>o       # 次のペインへ移動
-```
-
-## パッケージ管理
-
-### システムパッケージ
-
-```bash
-# Homebrewの使用（macOS）
-brew install package_name
-brew update
-brew upgrade
-
-# aptの使用（Linux）
-sudo apt update
-sudo apt install package_name
-```
-
-### ランタイム管理（mise）
-
-```bash
-# Node.js
-mise install node@latest
-mise use node@18.17.0
-
-# Python
-mise install python@3.11
-mise use python@3.11
-
-# Ruby
-mise install ruby@3.2.0
-mise use ruby@3.2.0
-
 # 現在のバージョン確認
 mise current
+
+# 利用可能なバージョン一覧
+mise list nodejs
+mise list python
+
+# インストール
+mise install nodejs@18.17.0
+mise install python@3.11
+
+# プロジェクト固有のバージョン設定
+mise use nodejs@18.17.0
+mise use python@3.11
 ```
 
 ## 更新・メンテナンス
@@ -169,40 +105,27 @@ mise current
 ### dotfilesの更新
 
 ```bash
-# 設定を最新に更新
-chezmoi update
+# dotfilesディレクトリに移動
+cd ~/.local/share/chezmoi
 
-# 変更確認後に適用
-chezmoi diff
-chezmoi apply
+# 全体の更新（dotfiles + Neovimプラグイン + miseツール）
+make update
+
+# 状態確認
+make status
 ```
 
-### プラグインの更新
+### 個別の更新
 
 ```bash
 # Neovimプラグイン
 nvim --headless "+Lazy! sync" +qa
 
-# Zshプラグイン
-zinit update --all
+# miseツール
+mise upgrade
 
-# システムパッケージ
-brew upgrade        # macOS
-sudo apt upgrade    # Linux
-```
-
-### 環境の確認
-
-```bash
-# システム情報
-neofetch
-
-# 設定の確認
-chezmoi status
-chezmoi diff
-
-# Gitの設定確認
-git config --global --list
+# 設定の適用
+chezmoi apply
 ```
 
 ## トラブルシューティング
@@ -214,11 +137,8 @@ git config --global --list
 nvim --headless "+Lazy! clean" +qa
 nvim --headless "+Lazy! sync" +qa
 
-# Zshプラグインエラー
-zinit delete --all
-zinit load
-
 # 設定の競合
+chezmoi diff
 chezmoi apply --force
 
 # 権限エラー
@@ -231,10 +151,9 @@ chmod +x scripts/*.sh
 # chezmoiのログ
 chezmoi --verbose apply
 
+# miseのログ
+mise doctor
+
 # Neovimのログ
 tail -f ~/.local/share/nvim/log/nvim.log
-
-# システムログ
-journalctl --user -f  # systemd
-tail -f /var/log/system.log  # macOS
 ``` 

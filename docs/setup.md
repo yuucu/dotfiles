@@ -1,19 +1,6 @@
 # セットアップガイド
 
-## 依存関係
-
-以下のツールが必要です：
-
-- chezmoi >= 2.50
-- age（暗号化ツール）
-- git
-- neovim >= 0.10
-- fzf
-- starship
-
-依存関係はbootstrapスクリプトで自動インストールされます。
-
-## 基本インストール
+## クイックスタート
 
 ### ワンライナーインストール
 
@@ -21,33 +8,25 @@
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply yuucu/dotfiles
 ```
 
-### 手動インストール
+### 完全セットアップ
 
 ```bash
-# chezmoiをインストール
-curl -sfL https://git.io/chezmoi | sh
+# dotfilesディレクトリに移動
+cd ~/.local/share/chezmoi
 
-# dotfilesをクローン・適用
-chezmoi init yuucu/dotfiles
-chezmoi apply
+# 必要なツール・ランタイムをインストール
+make install
 ```
 
-## 初期設定
+## 利用可能なコマンド
 
-### 1. 環境変数の設定
-
-セットアップスクリプトを実行：
-```bash
-./scripts/setup-env.sh
-```
-
-### 2. Git設定
-
-初回セットアップ後、Git設定を確認：
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-```
+| コマンド | 説明 |
+|---------|------|
+| `make help` | 利用可能なコマンド一覧を表示 |
+| `make install` | 必要なツール（chezmoi、age、neovim、mise等）とランタイムをインストール |
+| `make update` | dotfiles、Neovimプラグイン、miseツールを更新 |
+| `make status` | 環境の状態確認 |
+| `make clean` | 一時ファイルのクリーンアップ |
 
 ## トラブルシューティング
 
@@ -69,10 +48,7 @@ nvim --headless "+Lazy! sync" +qa
 ### 設定の競合
 
 ```bash
-# 既存設定をバックアップ
-mv ~/.config/nvim ~/.config/nvim.backup
-mv ~/.zshrc ~/.zshrc.backup
-
-# 再適用
+# 変更確認後に強制適用
+chezmoi diff
 chezmoi apply --force
 ``` 

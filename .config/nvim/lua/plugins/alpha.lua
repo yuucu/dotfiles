@@ -122,8 +122,8 @@ return {
       type = "group",
       val = {
         button("f", "👀  Search", ":Telescope find_files<CR>"),
-        button("n", "📝  New Note", ":lua notes.create_new_note()<CR>"),
-        button("d", "📅  Daily", ":lua notes.create_daily_note()<CR>"),
+        button("n", "📝  New Note", ":lua _G.create_new_note()<CR>"),
+        button("d", "📅  Daily", ":lua _G.create_daily_note()<CR>"),
         -- button("b", " Jump to bookmarks", ":Telescope marks<CR>"),
         button("c", "🔧  Config", ":e $HOME/.config/nvim/init.lua | :cd %:p:h<CR>"),
         button("q", "😶‍🌫️  Quit", ":qa<CR>"),

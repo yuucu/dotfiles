@@ -34,6 +34,7 @@ cd ~/.local/share/chezmoi && make update
 | `make help` | 利用可能なコマンド一覧を表示 |
 | `make install` | 必要なツール（chezmoi、age、neovim、mise等）とランタイムをインストール |
 | `make update` | dotfiles、Neovimプラグイン、miseツールを更新 |
+| `make ci-check` | CIでチェックされる項目をローカルで確認 |
 | `make status` | 環境の状態確認 |
 | `make clean` | 一時ファイルのクリーンアップ |
 
