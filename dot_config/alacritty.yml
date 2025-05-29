@@ -1,0 +1,28 @@
+# https://github.com/catppuccin/alacritty
+general.import:
+  - ~/.config/alacritty/catppuccin/catppuccin-mocha.yml
+
+terminal.shell:
+  program: /bin/zsh
+  args:
+    - --login
+window:
+  decorations: none
+  startup_mode: Windowed
+  opacity: 0.85
+general.live_config_reload: true
+colors:
+  # Cursor colors
+  cursor:
+    text: '#CCD0DA'
+    cursor: '#E64553'
+font:
+  normal:
+    family: Hack Nerd Font
+    style: Regular
+  bold:
+    family: Hack Nerd Font
+    style: Bold
+  italic:
+    family: Hack Nerd Font
+    style: Italic

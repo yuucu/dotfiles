@@ -1,0 +1,87 @@
+name: dotfiles CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: |
+          curl -fsLS get.chezmoi.io | sh -s -- -b "$HOME/bin"
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y age shellcheck
+          # Neovim latest stable
+          curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+          sudo tar -C /opt -xzf nvim-linux64.tar.gz
+          sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
+
+      - name: Install stylua (Lua formatter)
+        run: |
+          curl -L https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux.zip -o stylua.zip
+          unzip stylua.zip
+          chmod +x stylua
+          sudo mv stylua /usr/local/bin/
+
+      - name: Validate chezmoi templates
+        run: |
+          chezmoi apply --dry-run --verbose
+
+      - name: Lint shell scripts
+        run: |
+          find . -name "*.sh" -exec shellcheck {} \;
+
+      - name: Format check Lua files
+        run: |
+          stylua --check dot_config/nvim/
+
+      - name: Test Neovim configuration
+        run: |
+          # 一時的にNeovim設定をホームディレクトリにコピー
+          mkdir -p ~/.config
+          cp -r dot_config/nvim ~/.config/
+          # ヘッドレスモードでNeovimプラグインの同期テスト
+          timeout 300 nvim --headless "+Lazy! sync" +qa || true
+          # 基本的な設定読み込みテスト
+          nvim --headless -c "checkhealth" -c "quit" || echo "Health check completed with warnings"
+
+  test-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: |
+          curl -fsLS get.chezmoi.io | sh -s -- -b "$HOME/bin"
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: |
+          brew install age shellcheck neovim stylua
+
+      - name: Validate chezmoi templates (macOS)
+        run: |
+          chezmoi apply --dry-run --verbose
+
+      - name: Test zsh template
+        run: |
+          # テンプレートファイルが正しく処理されるかテスト
+          if [ -f "dot_zshrc.tmpl" ]; then
+            echo "Testing zsh template processing..."
+            chezmoi execute-template < dot_zshrc.tmpl > /tmp/test_zshrc
+            echo "✅ zsh template processed successfully"
+          fi

@@ -1,116 +1,160 @@
 # dotfiles
-## Overview
 
 ![nvim](https://github.com/yuucu/dotfiles/assets/39527561/896889e6-fc51-4058-bdf2-4e917883e635)
-![nvim](https://github.com/yuucu/dotfiles/assets/39527561/d7b0b199-045d-4874-9147-4126cfea976e)
 
-## Install
+Neovim中心のdotfiles設定。[chezmoi](https://www.chezmoi.io/)で管理され、age暗号化で機密情報を安全に管理。
+
+## ✨ 特徴
+
+- 🛡️ **セキュア**: age暗号化で秘密鍵を安全に管理
+- 🌍 **クロスプラットフォーム**: macOS/Linux対応
+- 🚀 **即座にセットアップ**: ワンライナーでインストール完了
+- 🔧 **テンプレート化**: OS別の設定自動分岐
+- ✅ **CI/CD**: GitHub Actionsで品質保証
+
+## 🚀 クイックスタート
+
+### ワンライナーインストール
+
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply yuucu/dotfiles
+```
+
+### 手動インストール
+
+```bash
+# 1. 依存ツールのインストール
+curl -fsLS get.chezmoi.io | sh  # chezmoi
+brew install age                 # 暗号化ツール (macOS)
+
+# 2. リポジトリの取得と適用
+chezmoi init yuucu/dotfiles
+chezmoi apply
+```
+
+## 📋 前提条件
+
+- **chezmoi** ≥ 2.50
+- **age** (暗号化用)
+- **git**
+- **neovim** ≥ 0.10
+- **homebrew** (macOS) / **apt** (Ubuntu)
+
+## 🗂️ ディレクトリ構成
 
 ```
-git clone git@github.com:yuucu/dotfiles.git
-cd dotfiles
-make install
+dotfiles/
+├── README.md                    # このファイル
+├── LICENSE                      # MITライセンス
+├── .chezmoi.yaml               # chezmoi設定
+├── .chezmoiignore              # 無視ファイル設定
+├── .chezmoiexternal.toml       # 外部リポジトリ管理
+├── scripts/
+│   └── bootstrap.sh            # 初期化スクリプト
+├── dot_config/
+│   └── nvim/                   # Neovim設定 (lazy.nvim)
+│       ├── init.lua
+│       ├── lua/
+│       └── lazy-lock.json
+├── dot_zshrc.tmpl              # テンプレート化されたzsh設定
+├── dot_ideavimrc               # IntelliJ vim設定
+└── private/
+    └── encrypted_*             # age暗号化ファイル
 ```
 
-## vim
+## 🔐 暗号化ファイルの管理
+
+### 初回設定
+
+```bash
+# age鍵の生成
+mkdir -p ~/.config/age
+age-keygen -o ~/.config/age/keys.txt
+
+# 秘密鍵の暗号化追加
+chezmoi add --encrypt ~/.ssh/id_rsa
+```
+
+### 復号化
+
+```bash
+# 環境変数で鍵を設定
+export AGE_SECRET_KEY="$(cat ~/.config/age/keys.txt | grep -v '#')"
+chezmoi apply
+```
+
+## 🛠️ カスタマイズ
+
+### 個人情報の設定
+
+```yaml
+# ~/.config/chezmoi/chezmoi.yaml
+data:
+  name: "あなたの名前"
+  email: "your-email@example.com"
+```
+
+### OS別設定の追加
+
+```go
+{{- if eq .chezmoi.os "darwin" }}
+# macOS専用設定
+{{- else if eq .chezmoi.os "linux" }}
+# Linux専用設定
+{{- end }}
+```
+
+## 📦 含まれる設定
+
+### Neovim設定
 
 <a href="https://dotfyle.com/yuucu/dotfiles-config-nvim"><img src="https://dotfyle.com/yuucu/dotfiles-config-nvim/badges/plugins?style=flat" /></a>
 <a href="https://dotfyle.com/yuucu/dotfiles-config-nvim"><img src="https://dotfyle.com/yuucu/dotfiles-config-nvim/badges/leaderkey?style=flat" /></a>
 <a href="https://dotfyle.com/yuucu/dotfiles-config-nvim"><img src="https://dotfyle.com/yuucu/dotfiles-config-nvim/badges/plugin-manager?style=flat" /></a>
 
+- **プラグインマネージャー**: lazy.nvim
+- **LSP**: lsp-zero.nvim + mason.nvim
+- **補完**: nvim-cmp
+- **ファジーファインダー**: telescope.nvim
+- **Git統合**: gitsigns.nvim + diffview.nvim
+- **テーマ**: tokyonight、catppuccin他
 
-## Plugins
+### Shell設定
 
-### colorscheme
+- **Zsh**: 設定済みエイリアス・プロンプト
+- **Starship**: クロスシェルプロンプト
+- **mise**: 開発ツールバージョン管理
+- **Alacritty**: ターミナル設定
 
-+ [folke/tokyonight.nvim](https://dotfyle.com/plugins/folke/tokyonight.nvim)
-+ [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
-+ [rebelot/kanagawa.nvim](https://dotfyle.com/plugins/rebelot/kanagawa.nvim)
-+ [rose-pine/neovim](https://dotfyle.com/plugins/rose-pine/neovim)
-+ [navarasu/onedark.nvim](https://dotfyle.com/plugins/navarasu/onedark.nvim)
-### comment
+## 🧪 開発・テスト
 
-+ [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
-### completion
+```bash
+# 設定のドライラン
+chezmoi apply --dry-run --verbose
 
-+ [hrsh7th/nvim-cmp](https://dotfyle.com/plugins/hrsh7th/nvim-cmp)
-### debugging
+# Lua設定の構文チェック
+nvim --headless "+Lazy! sync" +qa
 
-+ [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
-+ [rcarriga/nvim-dap-ui](https://dotfyle.com/plugins/rcarriga/nvim-dap-ui)
-+ [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
-### diagnostics
+# シェルスクリプトの構文チェック
+shellcheck scripts/*.sh
+```
 
-+ [folke/trouble.nvim](https://dotfyle.com/plugins/folke/trouble.nvim)
-### editing-support
+## 🤝 コントリビュート
 
-+ [shortcuts/no-neck-pain.nvim](https://dotfyle.com/plugins/shortcuts/no-neck-pain.nvim)
-+ [cshuaimin/ssr.nvim](https://dotfyle.com/plugins/cshuaimin/ssr.nvim)
-+ [Wansmer/treesj](https://dotfyle.com/plugins/Wansmer/treesj)
-### fuzzy-finder
+1. Fork this repository
+2. Create feature branch: `git checkout -b feature/amazing-feature`
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open Pull Request
 
-+ [nvim-telescope/telescope.nvim](https://dotfyle.com/plugins/nvim-telescope/telescope.nvim)
-+ [fdschmidt93/telescope-egrepify.nvim](https://dotfyle.com/plugins/fdschmidt93/telescope-egrepify.nvim)
-### git
+## 📄 ライセンス
 
-+ [lewis6991/gitsigns.nvim](https://dotfyle.com/plugins/lewis6991/gitsigns.nvim)
-+ [sindrets/diffview.nvim](https://dotfyle.com/plugins/sindrets/diffview.nvim)
-### indent
+[MIT License](LICENSE) - 自由に利用・改変・再配布可能
 
-+ [echasnovski/mini.indentscope](https://dotfyle.com/plugins/echasnovski/mini.indentscope)
-### keybinding
+## 🙏 謝辞
 
-+ [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
-### lsp
+This dotfiles configuration is inspired by the chezmoi community and various open-source dotfiles repositories.
 
-+ [jose-elias-alvarez/null-ls.nvim](https://dotfyle.com/plugins/jose-elias-alvarez/null-ls.nvim)
-+ [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
-+ [VidocqH/lsp-lens.nvim](https://dotfyle.com/plugins/VidocqH/lsp-lens.nvim)
-+ [ray-x/lsp_signature.nvim](https://dotfyle.com/plugins/ray-x/lsp_signature.nvim)
-+ [j-hui/fidget.nvim](https://dotfyle.com/plugins/j-hui/fidget.nvim)
-+ [nvimdev/lspsaga.nvim](https://dotfyle.com/plugins/nvimdev/lspsaga.nvim)
-+ [VonHeikemen/lsp-zero.nvim](https://dotfyle.com/plugins/VonHeikemen/lsp-zero.nvim)
-### lsp-installer
+---
 
-+ [williamboman/mason.nvim](https://dotfyle.com/plugins/williamboman/mason.nvim)
-### motion
-
-+ [ggandor/leap.nvim](https://dotfyle.com/plugins/ggandor/leap.nvim)
-### nvim-dev
-
-+ [folke/neodev.nvim](https://dotfyle.com/plugins/folke/neodev.nvim)
-+ [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
-+ [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
-### plugin-manager
-
-+ [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
-### snippet
-
-+ [L3MON4D3/LuaSnip](https://dotfyle.com/plugins/L3MON4D3/LuaSnip)
-### startup
-
-+ [goolord/alpha-nvim](https://dotfyle.com/plugins/goolord/alpha-nvim)
-### statusline
-
-+ [nvim-lualine/lualine.nvim](https://dotfyle.com/plugins/nvim-lualine/lualine.nvim)
-### syntax
-
-+ [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
-### utility
-
-+ [folke/noice.nvim](https://dotfyle.com/plugins/folke/noice.nvim)
-+ [rcarriga/nvim-notify](https://dotfyle.com/plugins/rcarriga/nvim-notify)
-## Language Servers
-
-+ dagger
-+ gopls
-+ html
-+ lua_ls
-+ marksman
-+ terraformls
-+ tflint
-+ tsserver
-+ yamlls
-
-
- This readme was generated by [Dotfyle](https://dotfyle.com)
+*Generated by [Dotfyle](https://dotfyle.com)*

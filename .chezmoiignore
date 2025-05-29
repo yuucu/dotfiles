@@ -1,0 +1,26 @@
+# Git関連
+.git/
+.gitignore
+
+# macOS関連
+.DS_Store
+*.swp
+*.tmp
+
+# Private keys (age暗号化された以外)
+private_key*
+id_rsa*
+id_ed25519*
+*.pem
+
+# 一時ファイル
+*.log
+*.tmp
+
+# Node.js関連
+node_modules/
+
+# その他
+todo.md
+Makefile
+install.sh 

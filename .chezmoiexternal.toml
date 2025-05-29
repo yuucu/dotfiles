@@ -1,0 +1,11 @@
+# TPM (Tmux Plugin Manager) の自動取得例
+# [".tmux/plugins/tpm"]
+#     type = "archive"
+#     url = "https://github.com/tmux-plugins/tpm/archive/master.tar.gz"
+#     stripComponents = 1
+
+# Oh My Zsh の自動取得例（必要に応じてコメントアウト）
+# [".oh-my-zsh"]
+#     type = "archive"
+#     url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+#     stripComponents = 1 
