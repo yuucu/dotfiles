@@ -2,7 +2,7 @@
 # ================================
 # シンプルなdotfiles管理タスク
 
-.PHONY: help install update clean status
+.PHONY: help install update clean status ci-check
 
 # Variables
 SCRIPTS_DIR := scripts
@@ -30,6 +30,11 @@ install: ## 必要なツールとmiseのインストール・設定
 update: ## dotfiles、プラグイン、miseツールの更新
 	@chmod +x $(SCRIPTS_DIR)/update.sh
 	@$(SCRIPTS_DIR)/update.sh
+
+# Development
+ci-check: ## CIでチェックされる項目をローカルで確認
+	@chmod +x $(SCRIPTS_DIR)/ci-check.sh
+	@$(SCRIPTS_DIR)/ci-check.sh
 
 # Maintenance
 clean: ## 一時ファイルとキャッシュのクリーンアップ

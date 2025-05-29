@@ -5,36 +5,40 @@
 ```
 dotfiles/
 ├── README.md              # 基本情報
+├── Makefile               # タスク管理
 ├── LICENSE                # MIT License
 ├── .chezmoi.yaml          # chezmoi設定
+├── .chezmoiexternal.toml  # 外部依存関係
 ├── .chezmoiignore         # 管理除外ファイル
 ├── docs/                  # ドキュメント
-├── scripts/
-│   ├── bootstrap.sh       # 初期セットアップ
-│   └── setup-env.sh       # 環境変数セットアップ
+├── scripts/               # セットアップ・更新スクリプト
 ├── dot_config/
-│   └── nvim/              # Neovim設定（Lua + lazy.nvim）
-│       ├── init.lua
-│       └── lua/
-└── private/               # 暗号化ファイル（age）
+│   ├── nvim/              # Neovim設定（Lua + lazy.nvim）
+│   ├── alacritty.toml     # Alacrittyターミナル設定
+│   ├── starship.toml      # Starshipプロンプト設定
+│   ├── lazygit/           # LazyGit設定
+│   ├── fish/              # Fish shell設定
+│   └── mise/              # miseランタイム管理設定
+├── dot_zshrc.tmpl         # Zsh設定テンプレート
+├── dot_mise.toml          # miseツール設定
+└── private_dot_env.tmpl.age # 暗号化環境変数（age）
 ```
 
 ## 含まれる設定
 
 ### シェル・ターミナル
 
-- **Zsh** + Zinit プラグインマネージャー
+- **Zsh** シェル設定
+- **Fish** 追加シェル
 - **Starship** プロンプト（Git統合）
 - **Alacritty** ターミナルエミュレーター
-- **tmux** ターミナルマルチプレクサー
 
 ### 開発ツール
 
-- **Neovim** Lua設定 + 50以上のプラグイン
+- **Neovim** Lua設定 + 多数のプラグイン
 - **Git** エイリアス、ワークフロー拡張
 - **LazyGit** Git操作のTUI
-- **mise** ランタイムバージョン管理
-- **direnv** 環境変数管理
+- **mise** ランタイムバージョン管理（Node.js、Go、Python等）
 
 ### 生産性ツール
 
@@ -88,80 +92,32 @@ lazy.nvimを使用したプラグイン管理：
 <Space>sh    # 水平分割
 ```
 
-## Zsh設定
+## ランタイム管理（mise）
 
-### エイリアス
+### インストール済みツール
 
 ```bash
-# ナビゲーション
-..           # cd ..
-...          # cd ../..
-....         # cd ../../..
+# 現在のバージョン確認
+mise current
 
-# Git
-g            # git
-gs           # git status
-ga           # git add
-gc           # git commit
-gp           # git push
-
-# ツール
-lg           # lazygit
-v            # nvim
+# 利用可能なツール確認
+mise list
 ```
 
-### プラグイン（Zinit）
-
-- **zsh-autosuggestions**: コマンド補完
-- **zsh-syntax-highlighting**: シンタックスハイライト
-- **fzf-tab**: タブ補完の改善
-- **zoxide**: ディレクトリジャンプ
-
-## Git設定
-
-### グローバル設定
+### よく使うランタイム
 
 ```bash
-# エディタ設定
-git config --global core.editor nvim
+# Node.js
+mise install node@latest
+mise use node@18.17.0
 
-# デフォルトブランチ
-git config --global init.defaultBranch main
+# Python
+mise install python@3.11
+mise use python@3.11
 
-# プッシュ設定
-git config --global push.default simple
-```
-
-### エイリアス
-
-```bash
-# よく使うコマンドのエイリアス
-git config --global alias.st status
-git config --global alias.co checkout
-git config --global alias.br branch
-git config --global alias.cm commit
-```
-
-## tmux設定
-
-### キーバインド
-
-プレフィックスキー: `Ctrl-a`
-
-```bash
-# セッション管理
-<prefix>s    # セッション一覧
-<prefix>d    # セッションからデタッチ
-
-# ウィンドウ管理
-<prefix>c    # 新しいウィンドウ
-<prefix>n    # 次のウィンドウ
-<prefix>p    # 前のウィンドウ
-
-# ペイン管理
-<prefix>%    # 垂直分割
-<prefix>"    # 水平分割
-<prefix>x    # ペインを閉じる
+# Go
+mise install go@latest
+mise use go@1.21
 ```
 
 ## カスタマイズ
@@ -193,11 +149,4 @@ return {
     -- 設定
   end
 }
-```
-
-Zshプラグインを追加：
-
-```bash
-# .zshrcに追加
-zinit load "author/plugin-name"
 ``` 
