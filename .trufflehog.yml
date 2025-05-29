@@ -1,0 +1,16 @@
+# TruffleHog設定ファイル
+detectors:
+  - name: "gitleaks"
+    enabled: true
+  - name: "generic-api-key"
+    enabled: true
+
+ignore:
+  paths:
+    - "*.md"
+    - "*.txt"
+    - "LICENSE"
+    - "docs/"
+    - "scripts/"
+
+verification: true
