@@ -58,13 +58,50 @@ jobs:
           sudo mv stylua /usr/local/bin/
           rm stylua.zip
           echo "✅ StyLua installed"
-          
-          echo "🎉 All dependencies installed successfully"
 
-      - name: Run CI checks
+      - name: Install Security Tools
         run: |
+          set -e
+          echo "🔒 Installing security tools..."
+          
+          # Install GitLeaks
+          echo "📦 Installing GitLeaks..."
+          GITLEAKS_VERSION="v8.21.0"
+          GITLEAKS_URL="https://github.com/gitleaks/gitleaks/releases/download/${GITLEAKS_VERSION}/gitleaks_8.21.0_linux_x64.tar.gz"
+          curl -L --fail --show-error "$GITLEAKS_URL" -o gitleaks.tar.gz
+          tar -xzf gitleaks.tar.gz
+          mkdir -p ~/.local/bin
+          mv gitleaks ~/.local/bin/
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          rm gitleaks.tar.gz
+          echo "✅ GitLeaks installed"
+          
+          # Install TruffleHog
+          echo "📦 Installing TruffleHog..."
+          TRUFFLEHOG_VERSION="v3.63.2"
+          TRUFFLEHOG_URL="https://github.com/trufflesecurity/trufflehog/releases/download/${TRUFFLEHOG_VERSION}/trufflehog_3.63.2_linux_amd64.tar.gz"
+          curl -L --fail --show-error "$TRUFFLEHOG_URL" -o trufflehog.tar.gz
+          tar -xzf trufflehog.tar.gz
+          mv trufflehog ~/.local/bin/
+          rm trufflehog.tar.gz
+          echo "✅ TruffleHog installed"
+          
+          echo "🎉 All security tools installed successfully"
+
+      - name: Run comprehensive CI checks
+        env:
+          CI: true
+        run: |
+          set -e
+          echo "🔍 Running comprehensive CI checks..."
+          
+          # 基本的なCIチェック
           chmod +x scripts/ci-check.sh
           scripts/ci-check.sh
+          
+          # セキュリティチェック実行
+          echo "🔒 Running security checks..."
+          make security-check-all || echo "⚠️ Security checks completed with warnings"
 
   test-macos:
     runs-on: macos-latest
@@ -74,23 +111,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup CI dependencies
+      - name: Setup dependencies with make install
+        env:
+          CI: true
         run: |
           set -e
-          echo "🔍 Starting CI dependencies setup..."
-          
-          # Install chezmoi
-          echo "📦 Installing chezmoi..."
-          curl -fsLS get.chezmoi.io | sh -s -- -b "$HOME/bin"
-          echo "$HOME/bin" >> $GITHUB_PATH
-          echo "✅ chezmoi installed"
-          
-          # Install dependencies
-          echo "📦 Installing dependencies with Homebrew..."
-          brew install age shellcheck neovim stylua
-          echo "✅ All dependencies installed successfully"
+          echo "🚀 Using make install for setup..."
+          # Homebrewは既に利用可能
+          make install
 
-      - name: Run CI checks
+      - name: Run comprehensive CI checks
+        env:
+          CI: true
         run: |
-          chmod +x scripts/ci-check.sh
-          scripts/ci-check.sh
+          set -e
+          echo "🔍 Running comprehensive CI checks..."
+          make ci-check

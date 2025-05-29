@@ -6,5 +6,5 @@ age:
 
 # データ設定（テンプレートで使用）
 data:
-  name: "yuucu"
-  email: "yuucu.work@gmail.com" 
+  name: "{{ .chezmoi.username }}"
+  email: "{{ if eq .chezmoi.username "s09104" }}yuucu.work@gmail.com{{ else }}user@example.com{{ end }}" 

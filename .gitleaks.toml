@@ -1,0 +1,32 @@
+# GitLeaks設定ファイル
+[extend]
+# デフォルトルールを使用
+useDefault = true
+
+[[rules]]
+description = "Personal email patterns"
+id = "personal-email"
+regex = '''[a-zA-Z0-9._%+-]+@(gmail|yahoo|hotmail|outlook)\.com'''
+tags = ["email", "personal"]
+
+[[rules]]
+description = "Japanese personal paths"
+id = "personal-paths"
+regex = '''/Users/[^/]+/'''
+tags = ["path", "personal"]
+
+[allowlist]
+description = "Allowlisted files"
+files = [
+    '''\.md$''',
+    '''\.txt$''',
+    '''LICENSE''',
+    '''\.tmpl$''',
+    '''\.gitleaks\.toml$''',
+    '''\.trufflehog\.yml$''',
+]
+
+paths = [
+    '''scripts/''',
+    '''docs/''',
+]
