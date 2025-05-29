@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
     vim.opt_local.expandtab = true
-  end
+  end,
 })
 
 -- other
@@ -64,4 +64,4 @@ vim.o.incsearch = true
 vim.o.autoindent = true
 vim.o.laststatus = 2
 
-vim.cmd("set t_Co=256")
+vim.cmd('set t_Co=256')

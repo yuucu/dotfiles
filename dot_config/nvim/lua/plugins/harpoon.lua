@@ -1,15 +1,15 @@
 return {
-  "ThePrimeagen/harpoon",
-  event = { "BufReadPre", "BufNewFile" },
+  'ThePrimeagen/harpoon',
+  event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
-    "nvim-lua/plenary.nvim",
+    'nvim-lua/plenary.nvim',
   },
   config = true,
   keys = {
-    { "<leader>hm", "<cmd>lua require('harpoon.mark').add_file()<cr>",        desc = "Mark file with harpoon" },
+    { '<leader>hm', "<cmd>lua require('harpoon.mark').add_file()<cr>", desc = 'Mark file with harpoon' },
     -- { "<leader>hn", "<cmd>lua require('harpoon.ui').nav_next()<cr>",          desc = "Go to next harpoon mark" },
     -- { "<leader>hp", "<cmd>lua require('harpoon.ui').nav_prev()<cr>",          desc = "Go to previous harpoon mark" },
-    { "<leader>ha", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Show harpoon marks" },
+    { '<leader>ha', "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = 'Show harpoon marks' },
   },
   options = {
     global_settings = {
@@ -26,15 +26,15 @@ return {
       tmux_autoclose_windows = false,
 
       -- filetypes that you want to prevent from adding to the harpoon list menu.
-      excluded_filetypes = { "harpoon" },
+      excluded_filetypes = { 'harpoon' },
 
       -- set marks specific to each git branch inside git repository
       mark_branch = false,
 
       -- enable tabline with harpoon marks
       tabline = false,
-      tabline_prefix = "   ",
-      tabline_suffix = "   ",
-    }
+      tabline_prefix = '   ',
+      tabline_suffix = '   ',
+    },
   },
 }

@@ -7,5 +7,5 @@ return {
   },
   config = function()
     require('cursor_open').setup()
-  end
+  end,
 }
