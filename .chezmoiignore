@@ -43,4 +43,83 @@ node_modules/
 # その他
 todo.md
 Makefile
-install.sh 
+install.sh
+
+# Sensitive files - encrypted with age or excluded entirely
+**/*_rsa*
+**/*_dsa*
+**/*_ecdsa*
+**/*_ed25519*
+**/*key*
+**/*Key*
+.ssh/known_hosts*
+.gnupg/
+.netrc
+
+# Temporary or cache files
+**/*.log
+**/*.tmp
+**/*.cache
+**/.DS_Store
+**/Thumbs.db
+
+# API keys and tokens
+**/*token*
+**/*Token*
+**/*secret*
+**/*Secret*
+**/*api*key*
+**/*API*KEY*
+**/*credential*
+**/*Credential*
+
+# Cloud provider configs
+.aws/credentials
+.aws/config
+.gcp/
+.azure/
+
+# Application specific secrets
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Database configs with passwords
+**/config.toml
+**/database.yml
+**/db.conf
+
+# IDE configs (often contain local paths)
+.vscode/settings.json
+.idea/
+**/*.code-workspace
+
+# Browser/app specific data
+.mozilla/
+.chrome/
+.chromium/
+.firefox/
+
+# Package manager auth
+.npm/
+.yarn/
+.composer/auth.json
+.docker/config.json
+
+# Shell history and local configs
+.zsh_history
+.bash_history
+.zshrc
+.bashrc
+.bash_profile
+.profile
+
+# Application directories that may contain secrets
+gh/
+github-copilot/
+raycast/
+gcloud/
+age/keys.txt
+age/
+gobang/ 
