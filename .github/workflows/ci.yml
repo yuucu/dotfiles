@@ -20,10 +20,15 @@ jobs:
           set -e
           echo "🔍 Starting CI dependencies setup..."
           
+          # Create local bin directory
+          mkdir -p ~/.local/bin
+          export PATH="$HOME/.local/bin:$PATH"
+          echo "PATH=$HOME/.local/bin:$PATH" >> $GITHUB_ENV
+          
           # Install chezmoi
           echo "📦 Installing chezmoi..."
-          curl -fsLS get.chezmoi.io | sh -s -- -b /usr/local/bin
-          echo "✅ chezmoi installed"
+          curl -fsLS get.chezmoi.io | sh -s -- -b ~/.local/bin
+          echo "✅ chezmoi installed to ~/.local/bin"
           
           # Install dependencies
           echo "📦 Installing system dependencies..."
@@ -39,10 +44,10 @@ jobs:
           curl -L --fail --show-error "$NVIM_URL" -o nvim-linux-x86_64.tar.gz
           echo "File downloaded, checking content type:"
           file nvim-linux-x86_64.tar.gz
-          sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
-          sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+          tar -C ~/.local -xzf nvim-linux-x86_64.tar.gz
+          ln -sf ~/.local/nvim-linux-x86_64/bin/nvim ~/.local/bin/nvim
           rm nvim-linux-x86_64.tar.gz
-          echo "✅ Neovim installed"
+          echo "✅ Neovim installed to ~/.local/bin"
           
           # Install stylua (Lua formatter)
           echo "📦 Installing StyLua..."
@@ -54,9 +59,14 @@ jobs:
           file stylua.zip
           unzip stylua.zip
           chmod +x stylua
-          sudo mv stylua /usr/local/bin/
+          mv stylua ~/.local/bin/
           rm stylua.zip
-          echo "✅ StyLua installed"
+          echo "✅ StyLua installed to ~/.local/bin"
+          
+          # Verify installations
+          echo "🔧 Verifying installations..."
+          ls -la ~/.local/bin/
+          echo "PATH: $PATH"
 
       - name: Install Security Tools
         run: |
@@ -69,9 +79,9 @@ jobs:
           GITLEAKS_URL="https://github.com/gitleaks/gitleaks/releases/download/${GITLEAKS_VERSION}/gitleaks_8.21.0_linux_x64.tar.gz"
           curl -L --fail --show-error "$GITLEAKS_URL" -o gitleaks.tar.gz
           tar -xzf gitleaks.tar.gz
-          sudo mv gitleaks /usr/local/bin/
+          mv gitleaks ~/.local/bin/
           rm gitleaks.tar.gz
-          echo "✅ GitLeaks installed"
+          echo "✅ GitLeaks installed to ~/.local/bin"
           
           # Install TruffleHog
           echo "📦 Installing TruffleHog..."
@@ -79,10 +89,13 @@ jobs:
           TRUFFLEHOG_URL="https://github.com/trufflesecurity/trufflehog/releases/download/${TRUFFLEHOG_VERSION}/trufflehog_3.63.2_linux_amd64.tar.gz"
           curl -L --fail --show-error "$TRUFFLEHOG_URL" -o trufflehog.tar.gz
           tar -xzf trufflehog.tar.gz
-          sudo mv trufflehog /usr/local/bin/
+          mv trufflehog ~/.local/bin/
           rm trufflehog.tar.gz
-          echo "✅ TruffleHog installed"
+          echo "✅ TruffleHog installed to ~/.local/bin"
           
+          # Verify security tools
+          echo "🔧 Verifying security tools..."
+          ls -la ~/.local/bin/
           echo "🎉 All security tools installed successfully"
 
       - name: Run comprehensive CI checks
@@ -91,6 +104,13 @@ jobs:
         run: |
           set -e
           echo "🔍 Running comprehensive CI checks..."
+          
+          # PATH設定を確実に
+          export PATH="$HOME/.local/bin:$PATH"
+          echo "Current PATH: $PATH"
+          echo "Home directory: $HOME"
+          echo "Contents of ~/.local/bin:"
+          ls -la ~/.local/bin/ || echo "~/.local/bin directory not found"
           
           # ツールの存在確認
           echo "🔧 Checking installed tools..."
