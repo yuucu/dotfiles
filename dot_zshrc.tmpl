@@ -1,0 +1,56 @@
+# .zshrc - Managed by chezmoi
+# Generated for {{ .chezmoi.username }} on {{ .chezmoi.hostname }}
+
+# Path configuration
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+{{- if eq .chezmoi.os "darwin" }}
+# macOS specific configuration
+export HOMEBREW_NO_AUTO_UPDATE=1
+export EDITOR="nvim"
+alias ls="ls -G"
+{{- else if eq .chezmoi.os "linux" }}
+# Linux specific configuration
+export EDITOR="nvim"
+alias ls="ls --color=auto"
+{{- end }}
+
+# Common aliases
+alias ll="ls -la"
+alias la="ls -la"
+alias ..="cd .."
+alias ...="cd ../.."
+alias grep="grep --color=auto"
+
+# Git aliases
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git pull"
+
+# Neovim
+alias vi="nvim"
+alias vim="nvim"
+
+# Starship prompt (if installed)
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
+
+# mise (if installed)
+if command -v mise >/dev/null 2>&1; then
+    eval "$(mise activate zsh)"
+fi
+
+# zsh-autosuggestions (if installed)
+if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+# zsh-syntax-highlighting (if installed)
+if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi 

@@ -1,0 +1,10 @@
+sourceDir: "{{ .chezmoi.workingTree }}"
+encryption: "age"
+age:
+  identity: "~/.config/age/keys.txt"
+  recipient: "age1j3dd9zm3m6rwchee6shjk9ae0e3cwddlg3hple9gzxs6xlzp5fysjjq7c2"
+
+# データ設定（テンプレートで使用）
+data:
+  name: "yuucu"
+  email: "your-email@example.com" 
