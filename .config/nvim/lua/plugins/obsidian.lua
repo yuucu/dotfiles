@@ -17,6 +17,7 @@ return {
     { "<leader>on", "<cmd>ObsidianNew<cr>",         desc = "[o]bsidian new file" },
     { "<leader>of", "<cmd>ObsidianQuickSwitch<cr>", desc = "[o]bsidian [f]ile search" },
     { "<leader>or", "<cmd>ObsidianSearch<cr>",      desc = "[o]bsidian [r]igrep" },
+    { "<leader>oe", "<cmd>ObsidianExtractNote<cr>", desc = "[o]bsidian [e]xtract" },
   },
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -25,7 +26,7 @@ return {
     workspaces = {
       {
         name = "personal",
-        path = "~/workspace/obsidian/me",
+        path = "~/ghq/github.com.yuucu/yuucu/life",
       },
     },
     ui = {
@@ -39,10 +40,8 @@ return {
       local date = os.date("%Y%m%d")
       local suffix = ""
       if title ~= nil then
-        -- If title is given, transform it into valid file name.
-        suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+        suffix = title:gsub(" ", "-")
       else
-        -- If title is nil, just add 4 random uppercase letters to the suffix.
         for _ = 1, 4 do
           suffix = suffix .. string.char(math.random(65, 90))
         end
@@ -50,7 +49,7 @@ return {
       return date .. "_" .. suffix
     end,
     daily_notes = {
-      folder = "Journal/2025/Daily",
+      folder = "docs/journal/2025/Daily",
       date_format = "%Y%m%d",
       template = nil,
     },

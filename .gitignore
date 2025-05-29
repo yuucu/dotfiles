@@ -1,4 +1,3 @@
-
 *.log
 raycast/
 .config/gcloud/
@@ -272,3 +271,6 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/vim,lua,windows,macos,intellij,go
 
 .config/lazygit/state.yml
+
+# Sensitive configuration files
+.zshrc
