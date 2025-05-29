@@ -1,11 +1,11 @@
 return {
-  "sindrets/diffview.nvim",
+  'sindrets/diffview.nvim',
   cmd = {
-    "DiffviewOpen"
+    'DiffviewOpen',
   },
   opts = {
     default_args = {
-      DiffviewOpen = { "--imply-local" },
-    }
+      DiffviewOpen = { '--imply-local' },
+    },
   },
 }

@@ -1,4 +1,4 @@
 return {
-  event = { "BufReadPre", "BufNewFile" },
+  event = { 'BufReadPre', 'BufNewFile' },
   'simeji/winresizer',
 }
