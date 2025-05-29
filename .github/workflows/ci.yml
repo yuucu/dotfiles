@@ -17,24 +17,49 @@ jobs:
 
       - name: Setup CI dependencies
         run: |
+          set -e
+          echo "🔍 Starting CI dependencies setup..."
+          
           # Install chezmoi
+          echo "📦 Installing chezmoi..."
           curl -fsLS get.chezmoi.io | sh -s -- -b "$HOME/bin"
           echo "$HOME/bin" >> $GITHUB_PATH
+          echo "✅ chezmoi installed"
           
           # Install dependencies
+          echo "📦 Installing system dependencies..."
           sudo apt-get update
           sudo apt-get install -y age shellcheck
+          echo "✅ System dependencies installed"
           
           # Install Neovim latest stable
-          curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-          sudo tar -C /opt -xzf nvim-linux64.tar.gz
-          sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
+          echo "📦 Installing Neovim..."
+          NVIM_VERSION="v0.11.1"
+          NVIM_URL="https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-x86_64.tar.gz"
+          echo "Downloading from: $NVIM_URL"
+          curl -L --fail --show-error "$NVIM_URL" -o nvim-linux-x86_64.tar.gz
+          echo "File downloaded, checking content type:"
+          file nvim-linux-x86_64.tar.gz
+          sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+          sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+          rm nvim-linux-x86_64.tar.gz
+          echo "✅ Neovim installed"
           
           # Install stylua (Lua formatter)
-          curl -L https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip -o stylua.zip
+          echo "📦 Installing StyLua..."
+          STYLUA_VERSION="v2.1.0"
+          STYLUA_URL="https://github.com/JohnnyMorganz/StyLua/releases/download/${STYLUA_VERSION}/stylua-linux-x86_64.zip"
+          echo "Downloading from: $STYLUA_URL"
+          curl -L --fail --show-error "$STYLUA_URL" -o stylua.zip
+          echo "File downloaded, checking content type:"
+          file stylua.zip
           unzip stylua.zip
           chmod +x stylua
           sudo mv stylua /usr/local/bin/
+          rm stylua.zip
+          echo "✅ StyLua installed"
+          
+          echo "🎉 All dependencies installed successfully"
 
       - name: Run CI checks
         run: |
@@ -51,12 +76,19 @@ jobs:
 
       - name: Setup CI dependencies
         run: |
+          set -e
+          echo "🔍 Starting CI dependencies setup..."
+          
           # Install chezmoi
+          echo "📦 Installing chezmoi..."
           curl -fsLS get.chezmoi.io | sh -s -- -b "$HOME/bin"
           echo "$HOME/bin" >> $GITHUB_PATH
+          echo "✅ chezmoi installed"
           
           # Install dependencies
+          echo "📦 Installing dependencies with Homebrew..."
           brew install age shellcheck neovim stylua
+          echo "✅ All dependencies installed successfully"
 
       - name: Run CI checks
         run: |
