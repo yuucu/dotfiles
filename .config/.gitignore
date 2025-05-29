@@ -8,6 +8,7 @@
 !cspell/
 !lazygit/
 !nvim/
+!nvim/**
 !alacritty.yml
 !alacritty.toml
 !starship.toml
@@ -50,7 +51,14 @@ Temporary Items
 *.icloud
 
 ### Vim ###
-# Swap
+# Swap files in nvim directory
+nvim/[._]*.s[a-v][a-z]
+nvim/[._]*.sw[a-p]
+nvim/[._]s[a-rt-v][a-z]
+nvim/[._]ss[a-gi-z]
+nvim/[._]sw[a-p]
+
+# General swap files (other directories)
 [._]*.s[a-v][a-z]
 !*.svg  # comment out if you don't need vector files
 [._]*.sw[a-p]
