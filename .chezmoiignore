@@ -13,6 +13,26 @@ id_rsa*
 id_ed25519*
 *.pem
 
+# 機密情報ファイル - 重要!
+age/keys.txt
+gcloud/
+github-copilot/
+gh/
+raycast/
+
+# クラウド認証情報
+**/credentials.json
+**/application_default_credentials.json
+**/access_tokens.db
+**/credentials.db
+**/legacy_credentials/
+
+# API Keys and Secrets
+**/*secret*
+**/*token*
+**/*credential*
+**/*api_key*
+
 # 一時ファイル
 *.log
 *.tmp
