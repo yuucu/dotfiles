@@ -2,7 +2,7 @@
 # ================================
 # シンプルなdotfiles管理タスク
 
-.PHONY: help install update clean status ci-check
+.PHONY: help install update clean status ci-check security-check setup-git-hooks
 
 # Variables
 SCRIPTS_DIR := scripts
@@ -56,3 +56,9 @@ status: ## 現在の状態とヘルスチェック
 	@$(MISE) current 2>/dev/null || echo "  miseが設定されていません"
 	@echo "$(YELLOW)Chezmoi状態:$(RESET)"
 	@$(CHEZMOI) status 2>/dev/null || echo "  設定なし"
+
+security-check: ## 🔒 機密情報チェックを実行
+	@./scripts/pre-commit-security-check.sh
+
+setup-git-hooks: ## 🔧 Git pre-commit hooks をセットアップ
+	@./scripts/setup-git-hooks.sh
