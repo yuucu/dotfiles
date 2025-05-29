@@ -143,8 +143,36 @@ jobs:
         run: |
           set -e
           echo "🚀 Using make install for setup..."
+          echo "Current PATH before install: $PATH"
+          echo "Home directory: $HOME"
+          
           # Homebrewは既に利用可能
           make install
+          
+          # インストール後の確認
+          echo "🔧 Verifying installations after make install..."
+          echo "Contents of ~/.local/bin (if exists):"
+          ls -la ~/.local/bin/ 2>/dev/null || echo "~/.local/bin does not exist"
+          
+          echo "Checking installed tools..."
+          which chezmoi && chezmoi --version || echo "❌ chezmoi not found after install"
+          which gitleaks && gitleaks version || echo "❌ gitleaks not found after install"
+          which trufflehog && trufflehog --version || echo "❌ trufflehog not found after install"
+          
+          # brew でインストールされたツールも確認
+          which shellcheck && shellcheck --version || echo "❌ shellcheck not found (trying brew install)"
+          if ! command -v shellcheck >/dev/null 2>&1; then
+            echo "Installing shellcheck via brew..."
+            brew install shellcheck
+          fi
+          
+          which stylua && stylua --version || echo "❌ stylua not found (trying brew install)"
+          if ! command -v stylua >/dev/null 2>&1; then
+            echo "Installing stylua via brew..."
+            brew install stylua
+          fi
+          
+          echo "PATH after all installations: $PATH"
 
       - name: Run comprehensive CI checks
         env:

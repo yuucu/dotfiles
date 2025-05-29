@@ -89,6 +89,53 @@ fi
 # セキュリティツールのインストール
 echo -e "${BLUE}🔒 セキュリティツールをインストール中...${RESET}"
 
+# shellcheck インストール（CI用）
+echo -e "${YELLOW}shellcheck確認中...${RESET}"
+if ! command -v shellcheck >/dev/null 2>&1; then
+    echo -e "${BLUE}shellcheckをインストールしています...${RESET}"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        brew install shellcheck
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux - apt-getで既にインストール済みのはず
+        if command -v apt-get >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y shellcheck
+        fi
+    fi
+fi
+if command -v shellcheck >/dev/null 2>&1; then
+    echo -e "  ✅ shellcheck"
+else
+    echo -e "  ❌ shellcheck"
+fi
+
+# stylua インストール（CI用）
+echo -e "${YELLOW}stylua確認中...${RESET}"
+if ! command -v stylua >/dev/null 2>&1; then
+    echo -e "${BLUE}styluaをインストールしています...${RESET}"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        brew install stylua
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux - 手動インストール
+        if [[ "$IS_CI" == "true" ]]; then
+            STYLUA_VERSION="v2.1.0"
+            STYLUA_URL="https://github.com/JohnnyMorganz/StyLua/releases/download/${STYLUA_VERSION}/stylua-linux-x86_64.zip"
+            curl -L --fail --show-error "$STYLUA_URL" -o stylua.zip
+            unzip stylua.zip
+            chmod +x stylua
+            mkdir -p ~/.local/bin
+            mv stylua ~/.local/bin/
+            rm stylua.zip
+        fi
+    fi
+fi
+if command -v stylua >/dev/null 2>&1; then
+    echo -e "  ✅ stylua"
+else
+    echo -e "  ❌ stylua"
+fi
+
 # GitLeaks インストール
 echo -e "${YELLOW}GitLeaks確認中...${RESET}"
 if ! command -v gitleaks >/dev/null 2>&1; then
