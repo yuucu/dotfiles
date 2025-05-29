@@ -7,81 +7,58 @@ on:
     branches: [main, master]
 
 jobs:
-  test:
+  test-ubuntu:
     runs-on: ubuntu-latest
+    name: Test on Ubuntu
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install chezmoi
+      - name: Setup CI dependencies
         run: |
+          # Install chezmoi
           curl -fsLS get.chezmoi.io | sh -s -- -b "$HOME/bin"
           echo "$HOME/bin" >> $GITHUB_PATH
-
-      - name: Install dependencies
-        run: |
+          
+          # Install dependencies
           sudo apt-get update
           sudo apt-get install -y age shellcheck
-          # Neovim latest stable
+          
+          # Install Neovim latest stable
           curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
           sudo tar -C /opt -xzf nvim-linux64.tar.gz
           sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
-
-      - name: Install stylua (Lua formatter)
-        run: |
+          
+          # Install stylua (Lua formatter)
           curl -L https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux.zip -o stylua.zip
           unzip stylua.zip
           chmod +x stylua
           sudo mv stylua /usr/local/bin/
 
-      - name: Validate chezmoi templates
+      - name: Run CI checks
         run: |
-          chezmoi apply --dry-run --verbose
-
-      - name: Lint shell scripts
-        run: |
-          find . -name "*.sh" -exec shellcheck {} \;
-
-      - name: Format check Lua files
-        run: |
-          stylua --check dot_config/nvim/
-
-      - name: Test Neovim configuration
-        run: |
-          # 一時的にNeovim設定をホームディレクトリにコピー
-          mkdir -p ~/.config
-          cp -r dot_config/nvim ~/.config/
-          # ヘッドレスモードでNeovimプラグインの同期テスト
-          timeout 300 nvim --headless "+Lazy! sync" +qa || true
-          # 基本的な設定読み込みテスト
-          nvim --headless -c "checkhealth" -c "quit" || echo "Health check completed with warnings"
+          chmod +x scripts/ci-check.sh
+          scripts/ci-check.sh
 
   test-macos:
     runs-on: macos-latest
+    name: Test on macOS
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install chezmoi
+      - name: Setup CI dependencies
         run: |
+          # Install chezmoi
           curl -fsLS get.chezmoi.io | sh -s -- -b "$HOME/bin"
           echo "$HOME/bin" >> $GITHUB_PATH
-
-      - name: Install dependencies
-        run: |
+          
+          # Install dependencies
           brew install age shellcheck neovim stylua
 
-      - name: Validate chezmoi templates (macOS)
+      - name: Run CI checks
         run: |
-          chezmoi apply --dry-run --verbose
-
-      - name: Test zsh template
-        run: |
-          # テンプレートファイルが正しく処理されるかテスト
-          if [ -f "dot_zshrc.tmpl" ]; then
-            echo "Testing zsh template processing..."
-            chezmoi execute-template < dot_zshrc.tmpl > /tmp/test_zshrc
-            echo "✅ zsh template processed successfully"
-          fi
+          chmod +x scripts/ci-check.sh
+          scripts/ci-check.sh
