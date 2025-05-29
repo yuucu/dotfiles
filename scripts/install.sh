@@ -89,8 +89,7 @@ fi
 # セキュリティツールのインストール
 echo -e "${BLUE}🔒 セキュリティツールをインストール中...${RESET}"
 
-# shellcheck disable=SC2034  # Comment is informational only
-# shellcheck インストール（CI用）
+# shellcheck installation for CI
 echo -e "${YELLOW}shellcheck確認中...${RESET}"
 if ! command -v shellcheck >/dev/null 2>&1; then
     echo -e "${BLUE}shellcheckをインストールしています...${RESET}"

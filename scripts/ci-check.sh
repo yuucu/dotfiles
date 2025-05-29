@@ -54,7 +54,6 @@ echo -e "${YELLOW}2. Chezmoi template validation...${RESET}"
 if command -v chezmoi >/dev/null 2>&1; then
     if [ "$IS_CI" = "true" ]; then
         # CI環境では現在のディレクトリをchezmoiのソースディレクトリとして設定
-        CHEZMOI_SOURCE_DIR
         CHEZMOI_SOURCE_DIR="$(pwd)"
         export CHEZMOI_SOURCE_DIR
         echo -e "  ${BLUE}CI環境: ソースディレクトリを $(pwd) に設定${RESET}"
