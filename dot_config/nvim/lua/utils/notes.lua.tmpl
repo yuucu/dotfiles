@@ -2,9 +2,9 @@
 local M = {}
 
 -- Configuration
-local NOTES_DIR = '/Users/s09104/ghq/github.com.yuucu/yuucu/life/notes/'
-local DAILY_DIR = '/Users/s09104/ghq/github.com.yuucu/yuucu/life/docs/journal/'
-local LIFE_REPO_ROOT = '/Users/s09104/ghq/github.com.yuucu/yuucu/life'
+local NOTES_DIR = '{{ .chezmoi.homeDir }}/ghq/github.com.yuucu/yuucu/life/notes/'
+local DAILY_DIR = '{{ .chezmoi.homeDir }}/ghq/github.com.yuucu/yuucu/life/docs/journal/'
+local LIFE_REPO_ROOT = '{{ .chezmoi.homeDir }}/ghq/github.com.yuucu/yuucu/life'
 
 -- Helper function to get git repository root
 local function get_git_root(path)
