@@ -27,6 +27,27 @@ cd ~/.local/share/chezmoi && make install
 cd ~/.local/share/chezmoi && make update
 ```
 
+## 開発・CI
+
+このプロジェクトでは、ローカル開発とCI環境で**同じスクリプト**を使用してテストを実行しています。
+
+```bash
+# ローカルでCIと同じチェックを実行
+make ci-check
+
+# 手動でスクリプトを実行
+./scripts/ci-check.sh
+```
+
+**チェック項目:**
+- Shell script linting (shellcheck)
+- Chezmoi template validation
+- Lua formatting check (stylua)
+- Neovim configuration test (CI環境のみ)
+- Template processing test (CI環境のみ)
+- File structure check
+- Script executable check
+
 ## よく使うコマンド
 
 | コマンド | 説明 |
