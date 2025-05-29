@@ -1,160 +1,193 @@
-# dotfiles
+# 🏠 dotfiles
 
-![nvim](https://github.com/yuucu/dotfiles/assets/39527561/896889e6-fc51-4058-bdf2-4e917883e635)
+Modern dotfiles configuration managed with [chezmoi](https://www.chezmoi.io/), centered around Neovim and optimized for macOS/Linux development environments.
 
-Neovim中心のdotfiles設定。[chezmoi](https://www.chezmoi.io/)で管理され、age暗号化で機密情報を安全に管理。
+## ⚡ Quick Start
 
-## ✨ 特徴
-
-- 🛡️ **セキュア**: age暗号化で秘密鍵を安全に管理
-- 🌍 **クロスプラットフォーム**: macOS/Linux対応
-- 🚀 **即座にセットアップ**: ワンライナーでインストール完了
-- 🔧 **テンプレート化**: OS別の設定自動分岐
-- ✅ **CI/CD**: GitHub Actionsで品質保証
-
-## 🚀 クイックスタート
-
-### ワンライナーインストール
+Clone and apply in one command:
 
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply yuucu/dotfiles
 ```
 
-### 手動インストール
+## 🔧 Environment Variables Management
+
+This dotfiles repository separates public configuration from sensitive information for security.
+
+### Option 1: ~/.zshrc.local (Recommended)
+
+1. Run the setup script:
+   ```bash
+   ./scripts/setup-env.sh
+   ```
+
+2. Edit `~/.zshrc.local` with your actual tokens:
+   ```bash
+   # Add your real API tokens and passwords
+   export ZENPAY_REPO_PAT="ghp_your_real_token"
+   export NPM_AUTH_TOKEN="npm_your_real_token"
+   
+   # Database aliases with real passwords
+   alias common="mysql -h hostname -u user -pYourPassword"
+   ```
+
+3. The file is automatically loaded by zshrc and ignored by git.
+
+### Option 2: Encrypted chezmoi Management
+
+For maximum security, use chezmoi's age encryption:
 
 ```bash
-# 1. 依存ツールのインストール
-curl -fsLS get.chezmoi.io | sh  # chezmoi
-brew install age                 # 暗号化ツール (macOS)
+# Add encrypted environment file
+chezmoi add --encrypt ~/.env
 
-# 2. リポジトリの取得と適用
-chezmoi init yuucu/dotfiles
-chezmoi apply
+# Edit encrypted file
+chezmoi edit ~/.env
 ```
 
-## 📋 前提条件
+### Option 3: Project-specific .env with direnv
 
-- **chezmoi** ≥ 2.50
-- **age** (暗号化用)
-- **git**
-- **neovim** ≥ 0.10
-- **homebrew** (macOS) / **apt** (Ubuntu)
+For project-specific environment variables:
 
-## 🗂️ ディレクトリ構成
+```bash
+# Install direnv (already included in dotfiles)
+brew install direnv
+
+# Create .env in your project
+cp ~/.env.template .env
+# Edit .env with project-specific values
+
+# direnv will automatically load/unload variables
+```
+
+### Security Best Practices
+
+- ✅ **Never commit** `.env`, `.zshrc.local`, or any file with real secrets
+- ✅ **Use different tokens** for development and production  
+- ✅ **Rotate API tokens** regularly
+- ✅ **Store secrets** in a password manager
+- ✅ **Use environment-specific** configurations
+
+## 🌟 Features
+
+- **🚀 One-liner installation** with immediate usability
+- **🔐 Secure secret management** with multiple options
+- **🎯 Neovim-centered** development environment
+- **🎨 Beautiful UI** with Starship prompt
+- **🔧 Developer tools** integration (Git, Docker, Cloud tools)
+- **🔄 Cross-platform** support (macOS/Linux)
+- **📦 Package management** with Homebrew/apt
+- **🎛️ Plugin management** with lazy.nvim and Zinit
+
+## 📁 Structure
 
 ```
 dotfiles/
-├── README.md                    # このファイル
-├── LICENSE                      # MITライセンス
-├── .chezmoi.yaml               # chezmoi設定
-├── .chezmoiignore              # 無視ファイル設定
-├── .chezmoiexternal.toml       # 外部リポジトリ管理
+├── README.md              # You are here
+├── LICENSE                # MIT License
+├── .chezmoi.yaml          # chezmoi configuration
+├── .chezmoiignore         # Files to exclude from management
 ├── scripts/
-│   └── bootstrap.sh            # 初期化スクリプト
+│   ├── bootstrap.sh       # Initial setup script
+│   └── setup-env.sh       # Environment variables setup
 ├── dot_config/
-│   └── nvim/                   # Neovim設定 (lazy.nvim)
+│   └── nvim/              # Neovim configuration (Lua + lazy.nvim)
 │       ├── init.lua
-│       ├── lua/
-│       └── lazy-lock.json
-├── dot_zshrc.tmpl              # テンプレート化されたzsh設定
-├── dot_ideavimrc               # IntelliJ vim設定
-└── private/
-    └── encrypted_*             # age暗号化ファイル
+│       └── lua/
+└── private/               # Encrypted files (age)
 ```
 
-## 🔐 暗号化ファイルの管理
+## 🛠️ Dependencies
 
-### 初回設定
+- **chezmoi** ≥ 2.50 (package manager for dotfiles)
+- **age** (encryption tool for secrets)
+- **git** (version control)
+- **neovim** ≥ 0.10 (text editor)
+- **fzf** (fuzzy finder)
+- **starship** (shell prompt)
+
+All dependencies are automatically installed via the bootstrap script.
+
+## 📋 Included Configurations
+
+### Shell & Terminal
+- **Zsh** with Zinit plugin manager
+- **Starship** prompt with Git integration
+- **Alacritty** terminal emulator
+- **tmux** terminal multiplexer
+
+### Development Tools
+- **Neovim** with Lua configuration and 50+ plugins
+- **Git** with aliases and enhanced workflow
+- **LazyGit** TUI for Git operations
+- **mise** (runtime version manager)
+- **direnv** (environment variable manager)
+
+### Productivity
+- **fzf** for fuzzy searching everywhere
+- **eza** (better ls with Git integration)
+- **bat** (syntax-highlighted cat)
+- **ripgrep** (faster grep)
+- **zoxide** (smarter cd command)
+
+## 🚀 Usage
+
+After installation, you'll have access to:
+
+### Quick Navigation
+```bash
+fgh          # Browse and cd to any git repository
+z <partial>  # Jump to frequently used directories
+..           # cd ..
+...          # cd ../..
+```
+
+### Git Workflow
+```bash
+g            # git
+gs           # git status
+ga           # git add
+gc           # git commit
+gp           # git push
+lg           # lazygit TUI
+```
+
+### Development
+```bash
+v filename   # Open in Neovim
+work-git     # Switch to work Git identity  
+personal-git # Switch to personal Git identity
+```
+
+## 🔄 Updates
 
 ```bash
-# age鍵の生成
-mkdir -p ~/.config/age
-age-keygen -o ~/.config/age/keys.txt
+# Update dotfiles
+chezmoi update
 
-# 秘密鍵の暗号化追加
-chezmoi add --encrypt ~/.ssh/id_rsa
-```
-
-### 復号化
-
-```bash
-# 環境変数で鍵を設定
-export AGE_SECRET_KEY="$(cat ~/.config/age/keys.txt | grep -v '#')"
-chezmoi apply
-```
-
-## 🛠️ カスタマイズ
-
-### 個人情報の設定
-
-```yaml
-# ~/.config/chezmoi/chezmoi.yaml
-data:
-  name: "あなたの名前"
-  email: "your-email@example.com"
-```
-
-### OS別設定の追加
-
-```go
-{{- if eq .chezmoi.os "darwin" }}
-# macOS専用設定
-{{- else if eq .chezmoi.os "linux" }}
-# Linux専用設定
-{{- end }}
-```
-
-## 📦 含まれる設定
-
-### Neovim設定
-
-<a href="https://dotfyle.com/yuucu/dotfiles-config-nvim"><img src="https://dotfyle.com/yuucu/dotfiles-config-nvim/badges/plugins?style=flat" /></a>
-<a href="https://dotfyle.com/yuucu/dotfiles-config-nvim"><img src="https://dotfyle.com/yuucu/dotfiles-config-nvim/badges/leaderkey?style=flat" /></a>
-<a href="https://dotfyle.com/yuucu/dotfiles-config-nvim"><img src="https://dotfyle.com/yuucu/dotfiles-config-nvim/badges/plugin-manager?style=flat" /></a>
-
-- **プラグインマネージャー**: lazy.nvim
-- **LSP**: lsp-zero.nvim + mason.nvim
-- **補完**: nvim-cmp
-- **ファジーファインダー**: telescope.nvim
-- **Git統合**: gitsigns.nvim + diffview.nvim
-- **テーマ**: tokyonight、catppuccin他
-
-### Shell設定
-
-- **Zsh**: 設定済みエイリアス・プロンプト
-- **Starship**: クロスシェルプロンプト
-- **mise**: 開発ツールバージョン管理
-- **Alacritty**: ターミナル設定
-
-## 🧪 開発・テスト
-
-```bash
-# 設定のドライラン
-chezmoi apply --dry-run --verbose
-
-# Lua設定の構文チェック
+# Update Neovim plugins
 nvim --headless "+Lazy! sync" +qa
-
-# シェルスクリプトの構文チェック
-shellcheck scripts/*.sh
 ```
 
-## 🤝 コントリビュート
+## 🤝 Contributing
 
 1. Fork this repository
-2. Create feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 📄 ライセンス
+## 📄 License
 
-[MIT License](LICENSE) - 自由に利用・改変・再配布可能
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 謝辞
+## 🙏 Acknowledgments
 
-This dotfiles configuration is inspired by the chezmoi community and various open-source dotfiles repositories.
+- [chezmoi](https://www.chezmoi.io/) for excellent dotfiles management
+- [lazy.nvim](https://github.com/folke/lazy.nvim) for plugin management
+- [Starship](https://starship.rs/) for the beautiful prompt
+- All the amazing open-source tools that make development a joy
 
 ---
 
-*Generated by [Dotfyle](https://dotfyle.com)*
+**✨ Happy coding!** If you found this helpful, please give it a ⭐
