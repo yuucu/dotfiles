@@ -14,6 +14,20 @@ IS_CI=${CI:-false}
 echo -e "${BLUE}🔍 CI チェックを実行中...${RESET}"
 if [ "$IS_CI" = "true" ]; then
     echo -e "${YELLOW}CI環境で実行中${RESET}"
+    echo -e "Initial PATH in ci-check.sh: $PATH"
+    # Ensure common system paths and our custom path are present
+    # Prepend $HOME/.local/bin and ensure standard paths are there.
+    # The existing $PATH from the environment is appended, which should contain GHA default paths.
+    export PATH="$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
+    echo -e "Modified PATH in ci-check.sh for CI: $PATH"
+    echo -e "Contents of $HOME/.local/bin in ci-check.sh (after PATH mod):"
+    ls -la "$HOME/.local/bin/" || echo "$HOME/.local/bin not found or empty (checked from ci-check.sh)"
+    echo -e "Verifying 'find' command from ci-check.sh:"
+    command -v find || echo "find command NOT FOUND in ci-check.sh"
+    echo -e "Verifying 'shellcheck' command from ci-check.sh (after PATH mod):"
+    command -v shellcheck || echo "shellcheck command NOT FOUND in ci-check.sh (after PATH mod)"
+    echo -e "Verifying 'chezmoi' command from ci-check.sh (after PATH mod):"
+    command -v chezmoi || echo "chezmoi command NOT FOUND in ci-check.sh (after PATH mod)"
 fi
 
 # 1. Shell script linting
