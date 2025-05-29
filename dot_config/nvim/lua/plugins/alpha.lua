@@ -58,6 +58,7 @@ Ascii.cat = {
 
 -- Notes directory (keeping for reference, but functions moved to utils/notes.lua)
 local notes = require('utils.notes')
+local documents = require('utils.documents')
 
 local function button(sc, txt, keybind)
   local sc_ = sc:gsub('%s', ''):gsub('SPC', '<leader>')
@@ -101,6 +102,7 @@ return {
     -- Make the note functions globally available
     _G.create_new_note = notes.create_new_note
     _G.create_daily_note = notes.create_daily_note
+    _G.search_documents = documents.search_documents
 
     local header = {
       type = 'text',
@@ -123,8 +125,8 @@ return {
       val = {
         button('f', '👀  Search', ':Telescope find_files<CR>'),
         button('n', '📝  New Note', ':lua _G.create_new_note()<CR>'),
-        button('d', '📅  Daily', ':lua _G.create_daily_note()<CR>'),
-        -- button("b", " Jump to bookmarks", ":Telescope marks<CR>"),
+        button('d', '💼  Documents', ':lua _G.search_documents()<CR>'),
+        button('t', '📅  Daily', ':lua _G.create_daily_note()<CR>'),
         button('c', '🔧  Config', ':e $HOME/.config/nvim/init.lua | :cd %:p:h<CR>'),
         button('q', '😶‍🌫️  Quit', ':qa<CR>'),
       },
