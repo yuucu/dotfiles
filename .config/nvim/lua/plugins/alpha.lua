@@ -56,32 +56,8 @@ Ascii.cat = {
   [[       '---''(_/--'  `-'\_)    ]]
 }
 
-
-local function getGreeting()
-  local tableTime = os.date("*t")
-  local hour = tableTime.hour
-  local greetingsTable = {
-    [1] = "  Sleep well",
-    [2] = "  Good morning",
-    [3] = "  Good afternoon",
-    [4] = "  Good evening",
-    [5] = "望 Good night",
-    [6] = "今日も一日がんばるぞい!",
-  }
-  local greetingIndex = 0
-  if 2 < hour or hour < 8 then
-    greetingIndex = 1
-  elseif hour < 12 then
-    greetingIndex = 2
-  elseif hour >= 12 and hour < 20 then
-    greetingIndex = 3
-  elseif hour >= 20 and hour < 22 then
-    greetingIndex = 4
-  elseif hour >= 23 then
-    greetingIndex = 5
-  end
-  return greetingsTable[greetingIndex] .. "."
-end
+-- Notes directory (keeping for reference, but functions moved to utils/notes.lua)
+local notes = require('utils.notes')
 
 local function button(sc, txt, keybind)
   local sc_ = sc:gsub("%s", ""):gsub("SPC", "<leader>")
@@ -121,6 +97,11 @@ return {
     if not present then
       return
     end
+
+    -- Make the note functions globally available
+    _G.create_new_note = notes.create_new_note
+    _G.create_daily_note = notes.create_daily_note
+
     local header = {
       type = "text",
       val = Ascii.miku,
@@ -129,7 +110,6 @@ return {
         hl = "Comment",
       },
     }
-    -- local greeting = getGreeting()
     local greetHeading = {
       type = "text",
       val = { "今日も1日がんばるぞい！", "涼風青葉" },
@@ -141,11 +121,12 @@ return {
     local buttons = {
       type = "group",
       val = {
-        button("f", "󰱼  Search", ":Telescope find_files<CR>"),
-        button("e", "  New", ":ene<CR>"),
-        -- button("b", " Jump to bookmarks", ":Telescope marks<CR>"),
-        button("c", "  Config", ":e $HOME/.config/nvim/init.lua | :cd %:p:h | :silent !pwd<CR>"),
-        button("q", "  Quit", ":qa<CR>"),
+        button("f", "👀  Search", ":Telescope find_files<CR>"),
+        button("n", "📝  New Note", ":lua notes.create_new_note()<CR>"),
+        button("d", "📅  Daily", ":lua notes.create_daily_note()<CR>"),
+        -- button("b", " Jump to bookmarks", ":Telescope marks<CR>"),
+        button("c", "🔧  Config", ":e $HOME/.config/nvim/init.lua | :cd %:p:h<CR>"),
+        button("q", "😶‍🌫️  Quit", ":qa<CR>"),
       },
       opts = {
         position = "center",
@@ -187,7 +168,7 @@ return {
         local stats = require("lazy").stats()
         -- local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
         local ms = stats.startuptime
-        local version = " v" ..
+        local version = " v" ..
             vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
         local plugins = "⚡plugins " .. stats.loaded .. "/" .. stats.count .. " in " .. ms .. "ms"
         local footer = version .. "\t" .. plugins .. "\n"
