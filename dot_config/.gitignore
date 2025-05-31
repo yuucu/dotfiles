@@ -14,6 +14,8 @@
 !starship.toml
 !.zshrc
 !zellij/
+!todotui/
+!todotui/*
 
 # And not this file
 !.gitignore
