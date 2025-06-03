@@ -90,5 +90,15 @@ return {
         marp_command = "npx @marp-team/marp-cli@latest",
       })
     end,
+  },
+  {
+    'yuucu/minimemo.nvim',
+    lazy = false,
+    config = function()
+      require('minimemo').setup({
+        memo_dir = "~/ghq/github.com.yuucu/yuucu/life/docs/journal/2025/Daily/",
+        display_timezone = "Asia/Tokyo",
+      })
+    end
   }
 }
