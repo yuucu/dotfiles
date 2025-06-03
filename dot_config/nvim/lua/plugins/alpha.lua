@@ -124,6 +124,7 @@ return {
       type = 'group',
       val = {
         button('f', '👀  Search', ':Telescope find_files<CR>'),
+        button('e', '📄  Empty', ':enew<CR>'),
         button('n', '📝  New Note', ':lua _G.create_new_note()<CR>'),
         button('d', '💼  Documents', ':lua _G.search_documents()<CR>'),
         button('t', '📅  Daily', ':lua _G.create_daily_note()<CR>'),
