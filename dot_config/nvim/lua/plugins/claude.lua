@@ -1,9 +1,9 @@
 return {
   "greggh/claude-code.nvim",
-  lazy = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
+  cmd = "ClaudeCode",
   config = function()
     require("claude-code").setup()
   end
