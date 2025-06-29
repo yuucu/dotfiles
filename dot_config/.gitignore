@@ -16,6 +16,7 @@
 !zellij/
 !todotui/
 !todotui/*
+!tmux/*
 
 # And not this file
 !.gitignore
