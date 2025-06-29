@@ -38,11 +38,9 @@ update: ## 📦 dotfiles、プラグイン、miseツールの更新
 	@$(SCRIPTS_DIR)/update.sh
 
 # Development
-ci-check: ## 🔍 CIでチェックされる項目をローカルで確認（セキュリティチェック含む）
+ci-check: ## 🔍 CIでチェックされる項目をローカルで確認
 	@chmod +x $(SCRIPTS_DIR)/ci-check.sh
 	@$(SCRIPTS_DIR)/ci-check.sh
-	@echo "$(BLUE)🔒 セキュリティチェック実行中...$(RESET)"
-	@$(MAKE) security-check || true
 
 # Maintenance
 clean: ## 🧹 一時ファイルとキャッシュのクリーンアップ
