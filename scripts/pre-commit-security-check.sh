@@ -107,7 +107,7 @@ PERSONAL_PATTERNS=(
     "/home/[^/]+/"               # Linuxの絶対パス
     "C:\\\\Users\\\\[^\\\\]+\\\\" # Windowsの絶対パス
     "@gmail\\.com"               # Gmail（除外設定で許可されたもの以外）
-    "@[a-zA-Z0-9.-]+\\.(co\\.jp|com|net|org)" # その他のメールアドレス
+    "[^@]@[a-zA-Z0-9.-]+\\.(co\\.jp|com|net|org)" # その他のメールアドレス（@pluginを除外）
 )
 
 PERSONAL_EXCLUDE_FILES=(
@@ -115,6 +115,12 @@ PERSONAL_EXCLUDE_FILES=(
     "README.md"                  # READMEには例として含まれる可能性
     "docs/"                      # ドキュメント
     "scripts/pre-commit-security-check.sh"  # このスクリプト自体
+    "dot_config/tmux/"           # tmux設定（@pluginパターンを含む）
+    "dot_config/git/"            # git設定（メールアドレスを含む可能性）
+    "*.conf"                     # 一般的な設定ファイル
+    "*.toml"                     # 設定ファイル
+    "*.yaml"                     # 設定ファイル
+    "*.yml"                      # 設定ファイル
 )
 
 for file in $STAGED_FILES; do
