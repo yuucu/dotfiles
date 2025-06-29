@@ -2,7 +2,7 @@
 # ================================
 # シンプルなdotfiles管理タスク
 
-.PHONY: help install update clean status ci-check security-check security-quick security-full security-gitleaks security-trufflehog security-report security-setup security-clean setup-git-hooks
+.PHONY: help install update clean status ci-check security-quick security-full security-gitleaks security-trufflehog security-report security-setup security-clean setup-git-hooks
 
 # Variables
 SCRIPTS_DIR := scripts
@@ -25,7 +25,7 @@ help: ## このヘルプメッセージを表示
 	@echo ""
 	@echo "$(YELLOW)📋 カテゴリ別タスク:$(RESET)"
 	@echo "  $(BLUE)基本操作:$(RESET) install, update, status, clean"
-	@echo "  $(BLUE)セキュリティ:$(RESET) security-check, security-quick, security-full, security-report"
+	@echo "  $(BLUE)セキュリティ:$(RESET) security-quick, security-full, security-report"
 	@echo "  $(BLUE)開発・CI:$(RESET) ci-check, setup-git-hooks"
 
 # Core commands
@@ -78,19 +78,14 @@ security-setup: ## 🔧 セキュリティ環境の完全セットアップ
 	@$(MAKE) security-report
 	@echo "$(GREEN)✅ セキュリティ環境セットアップ完了$(RESET)"
 
-security-check: security-quick ## 🔒 標準的なセキュリティチェック（推奨）
-	@echo "$(GREEN)✅ セキュリティチェック完了$(RESET)"
-
 security-quick: ## ⚡ 高速セキュリティチェック（GitLeaks + 自前スクリプト）
 	@echo "$(BLUE)⚡ 高速セキュリティチェック実行中...$(RESET)"
 	@$(MAKE) security-gitleaks
-	@$(MAKE) security-custom
 
 security-full: ## 🔍 完全セキュリティチェック（全ツール + 詳細レポート）
 	@echo "$(BLUE)🔍 完全セキュリティチェック実行中...$(RESET)"
 	@$(MAKE) security-gitleaks
 	@$(MAKE) security-trufflehog
-	@$(MAKE) security-custom
 	@$(MAKE) security-report
 
 security-clean: ## 🧹 セキュリティ関連の一時ファイル・ログを削除
@@ -147,19 +142,6 @@ security-trufflehog: ## 🔍 TruffleHogで機密情報検出
 	else \
 		echo "$(YELLOW)⚠️  TruffleHogがインストールされていません。$(RESET)"; \
 		echo "$(BLUE)インストール: make install$(RESET)"; \
-	fi
-
-security-custom: ## 🔧 自前セキュリティスクリプト実行
-	@echo "$(BLUE)🔧 自前セキュリティチェック実行中...$(RESET)"
-	@if test -f scripts/pre-commit-security-check.sh; then \
-		chmod +x scripts/pre-commit-security-check.sh; \
-		if ./scripts/pre-commit-security-check.sh; then \
-			echo "$(GREEN)✅ 自前チェック: 問題なし$(RESET)"; \
-		else \
-			echo "$(RED)⚠️  自前チェック: 潜在的な問題を発見$(RESET)"; \
-		fi \
-	else \
-		echo "$(YELLOW)⚠️  自前セキュリティスクリプトが見つかりません$(RESET)"; \
 	fi
 
 setup-git-hooks: ## 🔧 Git pre-commit hooks セットアップ
