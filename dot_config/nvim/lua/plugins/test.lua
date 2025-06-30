@@ -95,23 +95,37 @@ return {
     'yuucu/minimemo.nvim',
     lazy = false,
     config = function()
+      local constants = require('config.constants')
       require('minimemo').setup({
-        memo_dir = "~/ghq/github.com.yuucu/yuucu/life/docs/journal/2025/Daily/",
+        memo_dir = constants.DAILY_NOTES.FULL_PATH,
         display_timezone = "Asia/Tokyo",
       })
     end
   },
-  'wasabeef/yank-for-claude.nvim',
-  config = function()
-    require('yank-for-claude').setup()
-  end,
-  keys = {
-    -- Reference only
-    { '<leader>y', function() require('yank-for-claude').yank_visual() end,              mode = 'v', desc = 'Yank for Claude' },
-    { '<leader>y', function() require('yank-for-claude').yank_line() end,                mode = 'n', desc = 'Yank line for Claude' },
+  {
+    'wasabeef/yank-for-claude.nvim',
+    config = function()
+      require('yank-for-claude').setup()
 
-    -- Reference + Code
-    { '<leader>Y', function() require('yank-for-claude').yank_visual_with_content() end, mode = 'v', desc = 'Yank with content' },
-    { '<leader>Y', function() require('yank-for-claude').yank_line_with_content() end,   mode = 'n', desc = 'Yank line with content' },
+      -- YankForClaude コマンドを作成
+      vim.api.nvim_create_user_command('YankForClaude', function(opts)
+        -- ビジュアルモードの選択範囲がある場合
+        if opts.range == 2 then
+          require('yank-for-claude').yank_visual()
+        else
+          require('yank-for-claude').yank_line()
+        end
+      end, { range = true, desc = 'Yank for Claude' })
+      
+      -- YankForClaudeWithContent コマンドを作成
+      vim.api.nvim_create_user_command('YankForClaudeWithContent', function(opts)
+        if opts.range == 2 then
+          require('yank-for-claude').yank_visual_with_content()
+        else
+          require('yank-for-claude').yank_line_with_content()
+        end
+      end, { range = true, desc = 'Yank with content for Claude' })
+    end,
+    lazy = false,
   },
 }
