@@ -2,6 +2,7 @@
 -- =====================================
 
 local M = {}
+local constants = require('config.constants')
 
 -- Test functions
 function M.test_title_processing()
@@ -64,18 +65,18 @@ end
 function M.test_file_paths()
   print('📁 Testing file path generation...')
 
-  local base_path = '{{ .chezmoi.homeDir }}/ghq/github.com.yuucu/yuucu/life'
+  local base_path = constants.LIFE_REPO_ROOT
   local date_str = os.date('%Y%m%d')
   local title = 'test_note'
 
   -- Test note file path
-  local note_path = string.format('%s/notes/%s_%s.md', base_path, date_str, title)
+  local note_path = string.format('%s%s_%s.md', constants.NOTES_DIR, date_str, title)
   local expected_note_pattern = '{{ .chezmoi.homeDir | replace "." "\\." }}/ghq/github\\.com\\.yuucu/yuucu/life/notes/%d+_test_note\\.md'
 
   -- Test daily note path
   local year = os.date('%Y')
-  local daily_path = string.format('%s/docs/journal/%s/Daily/%s.md', base_path, year, date_str)
-  local expected_daily_pattern = '{{ .chezmoi.homeDir | replace "." "\\." }}/ghq/github\\.com\\.yuucu/yuucu/life/docs/journal/%d+/Daily/%d+\\.md'
+  local daily_path = string.format('%s%s.md', constants.get_daily_path(year), date_str)
+  local expected_daily_pattern = '{{ .chezmoi.homeDir | replace "." "\\." }}/ghq/github\\.com\\.yuucu/yuucu/life/docs/20_Timeline/%d+/daily/%d+\\.md'
 
   local note_test = string.match(note_path, expected_note_pattern) ~= nil
   local daily_test = string.match(daily_path, expected_daily_pattern) ~= nil

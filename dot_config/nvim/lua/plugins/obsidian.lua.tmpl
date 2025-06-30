@@ -1,3 +1,5 @@
+local constants = require('config.constants')
+
 return {
   'epwalsh/obsidian.nvim',
   version = '*', -- recommended, use latest release instead of latest commit
@@ -26,11 +28,11 @@ return {
     workspaces = {
       {
         name = 'personal',
-        path = '{{ .chezmoi.homeDir }}/ghq/github.com.yuucu/yuucu/life',
+        path = constants.LIFE_REPO_ROOT,
       },
     },
     ui = {},
-    notes_subdir = 'Notes/FleetingNote',
+    notes_subdir = constants.NOTES.SUBDIR,
     new_notes_location = 'notes_subdir',
 
     ---@param title string|?
@@ -48,13 +50,13 @@ return {
       return date .. '_' .. suffix
     end,
     daily_notes = {
-      folder = 'docs/journal/2025/Daily',
-      date_format = '%Y%m%d',
+      folder = constants.get_daily_relative_path('2025'),
+      date_format = constants.DAILY_NOTES.DATE_FORMAT,
       template = nil,
     },
     templates = {
       folder = 'Templates',
-      date_format = '%Y%m%d',
+      date_format = constants.DAILY_NOTES.DATE_FORMAT,
       time_format = '%H:%M',
       substitutions = {},
     },
