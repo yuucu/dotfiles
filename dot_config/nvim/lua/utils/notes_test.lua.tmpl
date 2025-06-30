@@ -71,7 +71,7 @@ function M.test_file_paths()
 
   -- Test note file path
   local note_path = string.format('%s%s_%s.md', constants.NOTES_DIR, date_str, title)
-  local expected_note_pattern = '{{ .chezmoi.homeDir | replace "." "\\." }}/ghq/github\\.com\\.yuucu/yuucu/life/notes/%d+_test_note\\.md'
+  local expected_note_pattern = '{{ .chezmoi.homeDir | replace "." "\\." }}/ghq/github\\.com\\.yuucu/yuucu/life/docs/50_Notes/%d+_test_note\\.md'
 
   -- Test daily note path
   local year = os.date('%Y')
