@@ -26,11 +26,11 @@ return {
   },
   {
     'iamcco/markdown-preview.nvim',
-    ft = { 'markdown' },
+    ft = { 'markdown', 'mdc' },
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
     build = 'cd app && yarn install',
     init = function()
-      vim.g.mkdp_filetypes = { 'markdown' }
+      vim.g.mkdp_filetypes = { 'markdown', 'mdc' }
     end,
   },
   {
