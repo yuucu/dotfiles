@@ -86,7 +86,7 @@ install.sh
 **/.env.*
 
 # Database configs with passwords
-**/config.toml
+# **/config.toml  # Commented out to allow mise config.toml
 **/database.yml
 **/db.conf
 
