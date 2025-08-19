@@ -12,3 +12,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- PlantUMLファイルタイプ設定
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '*.puml', '*.plantuml', '*.pu', '*.uml' },
+  callback = function()
+    vim.bo.filetype = 'plantuml'
+  end,
+})
