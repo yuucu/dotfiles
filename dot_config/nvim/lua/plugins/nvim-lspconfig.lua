@@ -25,6 +25,21 @@ return {
       end,
     })
 
+    -- PlantUML LSPサーバー設定
+    local configs = require('lspconfig.configs')
+    if not configs.plantuml_lsp then
+      configs.plantuml_lsp = {
+        default_config = {
+          cmd = { 'plantuml-lsp' },
+          filetypes = { 'plantuml', 'puml' },
+          root_dir = function(fname)
+            return lspconfig.util.find_git_ancestor(fname) or lspconfig.util.path.dirname(fname)
+          end,
+          settings = {},
+        },
+      }
+    end
+
     -- LSPサーバー設定
     local servers = {
       ts_ls = { single_file_support = false, root_dir = lspconfig.util.root_pattern('package.json') },
@@ -34,6 +49,7 @@ return {
       },
       lua_ls = { settings = { Lua = { completion = { callSnippet = 'Replace' } } } },
       gopls = {},
+      plantuml_lsp = {},
     }
 
     require('neodev').setup()
