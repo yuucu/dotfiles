@@ -36,7 +36,6 @@ return {
       'luap',
       'markdown',
       'markdown_inline',
-      'plantuml',
       'query',
       'regex',
       'yaml',
