@@ -7,7 +7,6 @@ return {
   },
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
-    local lspconfig = require('lspconfig')
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
     local on_attach = function(client, bufnr)
       require('lsp-format').on_attach(client, bufnr)
@@ -25,40 +24,65 @@ return {
       end,
     })
 
-    -- PlantUML LSPサーバー設定
-    local configs = require('lspconfig.configs')
-    if not configs.plantuml_lsp then
-      configs.plantuml_lsp = {
-        default_config = {
-          cmd = { 'plantuml-lsp' },
-          filetypes = { 'plantuml', 'puml' },
-          root_dir = function(fname)
-            return lspconfig.util.find_git_ancestor(fname) or lspconfig.util.path.dirname(fname)
-          end,
-          settings = {},
-        },
-      }
-    end
-
-    -- LSPサーバー設定
-    local servers = {
-      ts_ls = { single_file_support = false, root_dir = lspconfig.util.root_pattern('package.json') },
-      denols = { 
-        root_dir = lspconfig.util.root_pattern('deno.json'),
-        init_options = { lint = true, unstable = true }
-      },
-      lua_ls = { settings = { Lua = { completion = { callSnippet = 'Replace' } } } },
-      gopls = {},
-      plantuml_lsp = {},
-    }
-
     require('neodev').setup()
-    
-    for server, config in pairs(servers) do
-      config.capabilities = capabilities
-      config.on_attach = on_attach
-      lspconfig[server].setup(config)
-    end
+
+    -- 新しい vim.lsp.config API を使用
+    -- TypeScript (ts_ls)
+    vim.lsp.config('ts_ls', {
+      cmd = { 'typescript-language-server', '--stdio' },
+      filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+      root_markers = { 'package.json' },
+      single_file_support = false,
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- Deno
+    vim.lsp.config('denols', {
+      cmd = { 'deno', 'lsp' },
+      filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+      root_markers = { 'deno.json', 'deno.jsonc' },
+      init_options = { lint = true, unstable = true },
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- Lua
+    vim.lsp.config('lua_ls', {
+      cmd = { 'lua-language-server' },
+      filetypes = { 'lua' },
+      root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', '.git' },
+      settings = { Lua = { completion = { callSnippet = 'Replace' } } },
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- Go
+    vim.lsp.config('gopls', {
+      cmd = { 'gopls' },
+      filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+      root_markers = { 'go.work', 'go.mod', '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- PlantUML
+    vim.lsp.config('plantuml_lsp', {
+      cmd = { 'plantuml-lsp' },
+      filetypes = { 'plantuml', 'puml' },
+      root_markers = { '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- Terraform
+    vim.lsp.config('terraformls', {
+      cmd = { 'terraform-ls', 'serve' },
+      filetypes = { 'terraform', 'tf', 'hcl' },
+      root_markers = { '.terraform', '.git' },
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
 
     -- LSPキーマップ
     vim.api.nvim_create_autocmd('LspAttach', {
