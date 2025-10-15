@@ -38,23 +38,12 @@ return {
     cmd = 'Spectre',
   },
   {
-    'cameron-wags/rainbow_csv.nvim',
-    config = true,
-    ft = {
-      'csv',
-      'tsv',
-      'csv_semicolon',
-      'csv_whitespace',
-      'csv_pipe',
-      'rfc_csv',
-      'rfc_semicolon',
-    },
-    cmd = {
-      'RainbowDelim',
-      'RainbowDelimSimple',
-      'RainbowDelimQuoted',
-      'RainbowMultiDelim',
-    },
+    'hat0uma/csvview.nvim',
+    ft = { 'csv', 'tsv' },
+    config = function()
+      require('csvview').setup()
+      vim.keymap.set('n', '<Space>c', '<cmd>CsvViewToggle<cr>', { desc = 'Toggle CSV view' })
+    end,
   },
   {
     'm4xshen/hardtime.nvim',
