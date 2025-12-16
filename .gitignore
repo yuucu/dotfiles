@@ -8,7 +8,11 @@ raycast/
 .config/gitui/
 .config/op/
 .config/alacritty/
-.config/tmux/plugins/
+
+# Node.js
+node_modules/
+package-lock.json
+package.json
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/vim,lua,windows,macos,intellij,go

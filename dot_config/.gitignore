@@ -17,7 +17,7 @@
 !todotui/
 !todotui/*
 !tmux/
-!tmux/*
+!tmux/**
 
 # And not this file
 !.gitignore
