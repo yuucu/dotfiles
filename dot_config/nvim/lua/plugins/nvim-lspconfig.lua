@@ -24,6 +24,15 @@ return {
       end,
     })
 
+    -- TypeScript/React自動フォーマット
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      pattern = { '*.ts', '*.tsx', '*.js', '*.jsx' },
+      callback = function()
+        vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+        vim.lsp.buf.format({ async = false })
+      end,
+    })
+
     require('neodev').setup()
 
     -- 新しい vim.lsp.config API を使用
@@ -31,11 +40,36 @@ return {
     vim.lsp.config('ts_ls', {
       cmd = { 'typescript-language-server', '--stdio' },
       filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
-      root_markers = { 'package.json' },
-      single_file_support = false,
+      root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json' },
+      single_file_support = true,
+      settings = {
+        typescript = {
+          inlayHints = {
+            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayEnumMemberValueHints = true,
+          },
+        },
+        javascript = {
+          inlayHints = {
+            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayEnumMemberValueHints = true,
+          },
+        },
+      },
       capabilities = capabilities,
       on_attach = on_attach,
     })
+    vim.lsp.enable('ts_ls')
 
     -- Deno
     vim.lsp.config('denols', {
@@ -46,6 +80,7 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
     })
+    vim.lsp.enable('denols')
 
     -- Lua
     vim.lsp.config('lua_ls', {
@@ -56,15 +91,26 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
     })
+    vim.lsp.enable('lua_ls')
 
     -- Go
     vim.lsp.config('gopls', {
       cmd = { 'gopls' },
       filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
       root_markers = { 'go.work', 'go.mod', '.git' },
+      settings = {
+        gopls = {
+          analyses = {
+            unusedparams = true,
+          },
+          staticcheck = true,
+          gofumpt = true,
+        },
+      },
       capabilities = capabilities,
       on_attach = on_attach,
     })
+    vim.lsp.enable('gopls')
 
     -- PlantUML
     vim.lsp.config('plantuml_lsp', {
@@ -74,6 +120,7 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
     })
+    vim.lsp.enable('plantuml_lsp')
 
     -- Terraform
     vim.lsp.config('terraformls', {
@@ -83,6 +130,7 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
     })
+    vim.lsp.enable('terraformls')
 
     -- LSPキーマップ
     vim.api.nvim_create_autocmd('LspAttach', {
