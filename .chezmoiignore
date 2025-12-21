@@ -50,8 +50,14 @@ install.sh
 **/*_dsa*
 **/*_ecdsa*
 **/*_ed25519*
-**/*key*
-**/*Key*
+**/*_key
+**/*_key.*
+**/key.*
+**/*.key
+**/*_Key
+**/*_Key.*
+**/Key.*
+**/*.Key
 .ssh/known_hosts*
 .gnupg/
 .netrc
