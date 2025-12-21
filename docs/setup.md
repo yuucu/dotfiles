@@ -12,7 +12,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply yuucu/dotfiles
 
 ```bash
 # dotfilesディレクトリに移動
-cd ~/.local/share/chezmoi
+cd $(chezmoi source-path)
 
 # 必要なツール・ランタイムをインストール
 make install

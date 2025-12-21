@@ -106,7 +106,7 @@ mise use python@3.11
 
 ```bash
 # dotfilesディレクトリに移動
-cd ~/.local/share/chezmoi
+cd $(chezmoi source-path)
 
 # 全体の更新（dotfiles + Neovimプラグイン + miseツール）
 make update
