@@ -7,13 +7,73 @@ return {
   },
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
+    -- LSP capabilities の設定
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    -- snippet サポートを明示的に有効化
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = { 'documentation', 'detail', 'additionalTextEdits' },
+    }
+
     local on_attach = function(client, bufnr)
       require('lsp-format').on_attach(client, bufnr)
+
+      -- セマンティックトークンを有効化
+      if client.server_capabilities.semanticTokensProvider then
+        vim.api.nvim_set_hl(0, '@lsp.type.namespace', { link = '@namespace' })
+        vim.api.nvim_set_hl(0, '@lsp.type.type', { link = '@type' })
+        vim.api.nvim_set_hl(0, '@lsp.type.class', { link = '@class' })
+        vim.api.nvim_set_hl(0, '@lsp.type.enum', { link = '@type' })
+        vim.api.nvim_set_hl(0, '@lsp.type.interface', { link = '@interface' })
+        vim.api.nvim_set_hl(0, '@lsp.type.struct', { link = '@structure' })
+        vim.api.nvim_set_hl(0, '@lsp.type.parameter', { link = '@parameter' })
+        vim.api.nvim_set_hl(0, '@lsp.type.variable', { link = '@variable' })
+        vim.api.nvim_set_hl(0, '@lsp.type.property', { link = '@property' })
+        vim.api.nvim_set_hl(0, '@lsp.type.enumMember', { link = '@constant' })
+        vim.api.nvim_set_hl(0, '@lsp.type.function', { link = '@function' })
+        vim.api.nvim_set_hl(0, '@lsp.type.method', { link = '@method' })
+        vim.api.nvim_set_hl(0, '@lsp.type.macro', { link = '@macro' })
+        vim.api.nvim_set_hl(0, '@lsp.type.decorator', { link = '@function' })
+      end
     end
 
-    -- 診断設定
-    vim.diagnostic.config({ virtual_text = true, signs = true, float = true })
+    -- 診断設定の強化
+    vim.diagnostic.config({
+      virtual_text = {
+        spacing = 4,
+        source = 'if_many',
+        prefix = '●',
+        -- severity による表示制御
+        severity = { min = vim.diagnostic.severity.HINT },
+      },
+      signs = true,
+      underline = true,
+      update_in_insert = false,
+      severity_sort = true,
+      float = {
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = '',
+        focusable = false,
+      },
+    })
+
+    -- 診断記号の設定
+    local signs = {
+      { name = 'DiagnosticSignError', text = '' },
+      { name = 'DiagnosticSignWarn', text = '' },
+      { name = 'DiagnosticSignHint', text = '' },
+      { name = 'DiagnosticSignInfo', text = '' },
+    }
+    for _, sign in ipairs(signs) do
+      vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
+    end
+
+    -- ホバーウィンドウとシグネチャヘルプのボーダー設定
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+    vim.lsp.handlers['textDocument/signatureHelp'] =
+      vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
 
     -- Go自動フォーマット
     vim.api.nvim_create_autocmd('BufWritePre', {
@@ -52,24 +112,36 @@ return {
       settings = {
         typescript = {
           inlayHints = {
-            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHints = 'literals',
             includeInlayParameterNameHintsWhenArgumentMatchesName = false,
             includeInlayFunctionParameterTypeHints = true,
-            includeInlayVariableTypeHints = true,
+            includeInlayVariableTypeHints = false, -- パフォーマンス重視でデフォルト無効
             includeInlayPropertyDeclarationTypeHints = true,
             includeInlayFunctionLikeReturnTypeHints = true,
             includeInlayEnumMemberValueHints = true,
           },
+          suggest = {
+            includeCompletionsForModuleExports = true,
+          },
+          format = {
+            enable = true,
+          },
         },
         javascript = {
           inlayHints = {
-            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHints = 'literals',
             includeInlayParameterNameHintsWhenArgumentMatchesName = false,
             includeInlayFunctionParameterTypeHints = true,
-            includeInlayVariableTypeHints = true,
+            includeInlayVariableTypeHints = false,
             includeInlayPropertyDeclarationTypeHints = true,
             includeInlayFunctionLikeReturnTypeHints = true,
             includeInlayEnumMemberValueHints = true,
+          },
+          suggest = {
+            includeCompletionsForModuleExports = true,
+          },
+          format = {
+            enable = true,
           },
         },
       },
@@ -110,7 +182,38 @@ return {
         'selene.yml',
         '.git',
       },
-      settings = { Lua = { completion = { callSnippet = 'Replace' } } },
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+          },
+          diagnostics = {
+            globals = { 'vim' },
+            disable = { 'missing-fields' },
+          },
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME,
+              '${3rd}/luv/library',
+            },
+          },
+          completion = {
+            callSnippet = 'Replace',
+          },
+          telemetry = {
+            enable = false,
+          },
+          hint = {
+            enable = true,
+            setType = false,
+            paramType = true,
+            paramName = 'Disable',
+            semicolon = 'Disable',
+            arrayIndex = 'Disable',
+          },
+        },
+      },
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -125,9 +228,24 @@ return {
         gopls = {
           analyses = {
             unusedparams = true,
+            shadow = true,
+            nilness = true,
+            unusedwrite = true,
           },
           staticcheck = true,
           gofumpt = true,
+          semanticTokens = true,
+          usePlaceholders = true,
+          completeUnimported = true,
+          hints = {
+            assignVariableTypes = true,
+            compositeLiteralFields = true,
+            compositeLiteralTypes = true,
+            constantValues = true,
+            functionTypeParameters = true,
+            parameterNames = true,
+            rangeVariableTypes = true,
+          },
         },
       },
       capabilities = capabilities,

@@ -1,75 +1,53 @@
 -- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
 
--- :help options
-vim.opt.backup = false -- creates a backup file
+local opt = vim.opt
 
--- Set highlight on search
-vim.o.hlsearch = true
+-- Backup and undo
+opt.backup = false
+opt.writebackup = false
+opt.swapfile = false
+opt.undofile = true
 
--- Make line numbers default
-vim.wo.number = true
+-- Search
+opt.hlsearch = true
+opt.incsearch = true
+opt.ignorecase = true
+opt.smartcase = true
 
--- Enable mouse mode
-vim.o.mouse = 'a'
+-- UI
+opt.number = true
+opt.relativenumber = false
+opt.signcolumn = 'yes'
+opt.cursorline = true
+opt.termguicolors = true
+opt.scrolloff = 8
+opt.sidescrolloff = 8
+opt.laststatus = 2
 
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+-- Editing
+opt.mouse = 'a'
+opt.clipboard = 'unnamedplus'
+opt.breakindent = true
+opt.autoindent = true
+opt.smartindent = true
+opt.wrap = false
 
--- Enable break indent
-vim.o.breakindent = true
+-- Tab and indentation
+opt.expandtab = true
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.softtabstop = 2
 
--- Save undo history
-vim.o.undofile = true
+-- Performance
+opt.updatetime = 250
+opt.timeoutlen = 300
+opt.lazyredraw = true
 
--- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
-
--- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeout = true
-vim.o.timeoutlen = 300
-
--- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
-
--- vim doc ja
-vim.o.helplang = 'ja,en'
-
--- tab
-vim.o.expandtab = true
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
-
--- Set mdc files as markdown filetype
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = '*.mdc',
-  callback = function()
-    vim.bo.filetype = 'markdown'
-  end,
-})
-
--- Set markdown tab width
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'markdown', 'mdc' },
-  callback = function()
-    vim.opt_local.tabstop = 2
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.expandtab = true
-  end,
-})
-
--- other
-vim.o.autoread = true
-vim.o.incsearch = true
-vim.o.autoindent = true
-vim.o.laststatus = 2
-
-vim.cmd('set t_Co=256')
+-- Other
+opt.autoread = true
+opt.helplang = 'ja,en'
+opt.completeopt = 'menu,menuone,noselect'
+opt.conceallevel = 0
+opt.fileencoding = 'utf-8'
+opt.splitbelow = true
+opt.splitright = true
