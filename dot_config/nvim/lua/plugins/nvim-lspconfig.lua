@@ -18,6 +18,12 @@ return {
     -- LSP キーマップ設定
     common.setup_keymaps()
 
+    -- 全サーバー共通設定
+    vim.lsp.config('*', {
+      capabilities = common.capabilities(),
+      on_attach = common.on_attach,
+    })
+
     -- Go 自動フォーマット
     vim.api.nvim_create_autocmd('BufWritePre', {
       pattern = '*.go',
