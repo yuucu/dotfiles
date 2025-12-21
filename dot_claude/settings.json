@@ -71,10 +71,5 @@
   "alwaysThinkingEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754128638453
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/scripts/statusline.js",
-    "padding": 0
   }
 }
