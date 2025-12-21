@@ -21,14 +21,14 @@ return {
           vim.bo.tabstop = 2
           vim.bo.expandtab = true
           vim.bo.softtabstop = 2
-          
+
           -- 折りたたみ設定
           vim.wo.foldmethod = 'indent'
           vim.wo.foldlevel = 99
-          
+
           -- コメント設定
           vim.bo.commentstring = "' %s"
-          
+
           -- PlantUMLプレビュー用キーマップ
           local opts = { buffer = true, silent = true }
           vim.keymap.set('n', '<leader>pp', ':PlantumlOpen<CR>', opts)
@@ -36,7 +36,7 @@ return {
           vim.keymap.set('n', '<leader>pt', ':PlantumlToggle<CR>', opts)
         end,
       })
-      
+
       -- PlantUMLプレビューアーの設定
       vim.g.plantuml_previewer = {
         plantuml_jar_path = vim.fn.expand('~/plantuml.jar'),

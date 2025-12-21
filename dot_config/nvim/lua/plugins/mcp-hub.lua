@@ -1,11 +1,11 @@
 return {
-  "ravitemer/mcphub.nvim",
+  'ravitemer/mcphub.nvim',
   dependencies = {
-    "nvim-lua/plenary.nvim",
+    'nvim-lua/plenary.nvim',
   },
-  build = "npm install -g mcp-hub@latest",
-  cmd = "MCPHub",
+  build = 'npm install -g mcp-hub@latest',
+  cmd = 'MCPHub',
   config = function()
-    require("mcphub").setup()
-  end
+    require('mcphub').setup()
+  end,
 }

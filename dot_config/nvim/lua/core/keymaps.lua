@@ -36,7 +36,7 @@ end
 if notes_ok then
   vim.api.nvim_create_user_command('Today', function()
     notes.create_daily_note()
-  end, { desc = 'Create or open today\'s daily note' })
+  end, { desc = "Create or open today's daily note" })
 
   vim.api.nvim_create_user_command('NewNote', function()
     notes.create_new_note()
@@ -44,7 +44,7 @@ if notes_ok then
 else
   vim.api.nvim_create_user_command('Today', function()
     vim.notify('utils.notes module not available', vim.log.levels.ERROR)
-  end, { desc = 'Create or open today\'s daily note (DISABLED)' })
+  end, { desc = "Create or open today's daily note (DISABLED)" })
 
   vim.api.nvim_create_user_command('NewNote', function()
     vim.notify('utils.notes module not available', vim.log.levels.ERROR)
