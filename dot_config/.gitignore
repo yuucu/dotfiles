@@ -18,6 +18,8 @@
 !todotui/*
 !tmux/
 !tmux/**
+!ccstatusline/
+!ccstatusline/*
 
 # And not this file
 !.gitignore
