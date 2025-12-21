@@ -1,19 +1,19 @@
 #!/bin/bash
 
-# Claude Code Monitor Script
-# Monitors Claude Code processes and their activity status
+# Claude Code モニタースクリプト
+# Claude Code プロセスとその稼働状況を監視する
 
-# Configuration
+# 設定
 PROCESS_NAME="claude"
 CPU_THRESHOLD=${CCMONITOR_CPU_THRESHOLD:-1.0}
 
-# Get process count by name
+# プロセス名からプロセス数を取得
 get_process_count() {
     local process_name=$1
     pgrep -x "$process_name" 2>/dev/null | wc -l | tr -d ' '
 }
 
-# Get active processes (CPU > threshold)
+# アクティブなプロセス数を取得 (CPU > 閾値)
 get_active_process_count() {
     local process_name=$1
     local threshold=$2
@@ -25,7 +25,7 @@ get_active_process_count() {
         return
     fi
 
-    # Get all process info in one call for better performance
+    # パフォーマンス向上のため ps を一度だけ呼ぶ
     while read -r pid cpu; do
         if [ -n "$cpu" ] && awk -v cpu="$cpu" -v thresh="$threshold" \
            'BEGIN { if (cpu > thresh) exit 0; else exit 1 }'; then
@@ -36,7 +36,7 @@ get_active_process_count() {
     echo $count
 }
 
-# Main function
+# メイン処理
 main() {
     local action=${1:-"status"}
 
@@ -53,7 +53,7 @@ main() {
             echo $(get_process_count "$PROCESS_NAME")
             ;;
         "info")
-            echo "Claude Code Process Information:"
+            echo "Claude Code プロセス情報:"
             echo "Total: $(get_process_count "$PROCESS_NAME")"
             echo "Active (CPU > ${CPU_THRESHOLD}%): $(get_active_process_count "$PROCESS_NAME" "$CPU_THRESHOLD")"
             ps -eo pid,pcpu,pmem,comm,args | grep -E "\\bclaude\\b" | grep -v grep
