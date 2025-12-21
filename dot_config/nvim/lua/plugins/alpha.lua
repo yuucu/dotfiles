@@ -128,7 +128,11 @@ return {
         button('n', '📝  New Note', ':lua _G.create_new_note()<CR>'),
         button('d', '💼  Documents', ':lua _G.search_documents()<CR>'),
         button('t', '📅  Daily', ':lua _G.create_daily_note()<CR>'),
-        button('c', '🔧  Config', ':e $HOME/ghq/github.com.yuucu/yuucu/dotfiles/dot_config/nvim/init.lua | :cd %:p:h<CR>'),
+        button(
+          'c',
+          '🔧  Config',
+          ':e $HOME/ghq/github.com.yuucu/yuucu/dotfiles/dot_config/nvim/init.lua | :cd %:p:h<CR>'
+        ),
         button('q', 'Quit', ':qa<CR>'),
       },
       opts = {

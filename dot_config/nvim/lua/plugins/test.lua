@@ -72,11 +72,11 @@ return {
     end,
   },
   {
-    "nwiizo/marp.nvim",
-    ft = "markdown",
+    'nwiizo/marp.nvim',
+    ft = 'markdown',
     config = function()
       require('marp').setup({
-        marp_command = "npx @marp-team/marp-cli@latest",
+        marp_command = 'npx @marp-team/marp-cli@latest',
       })
     end,
   },
@@ -87,9 +87,9 @@ return {
       local constants = require('config.constants')
       require('minimemo').setup({
         memo_dir = constants.DAILY_NOTES.FULL_PATH,
-        display_timezone = "Asia/Tokyo",
+        display_timezone = 'Asia/Tokyo',
       })
-    end
+    end,
   },
   {
     'wasabeef/yank-for-claude.nvim',
@@ -105,7 +105,7 @@ return {
           require('yank-for-claude').yank_line()
         end
       end, { range = true, desc = 'Yank for Claude' })
-      
+
       -- YankForClaudeWithContent コマンドを作成
       vim.api.nvim_create_user_command('YankForClaudeWithContent', function(opts)
         if opts.range == 2 then

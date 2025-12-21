@@ -39,7 +39,14 @@ return {
     -- TypeScript (ts_ls)
     vim.lsp.config('ts_ls', {
       cmd = { 'typescript-language-server', '--stdio' },
-      filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+      filetypes = {
+        'javascript',
+        'javascriptreact',
+        'javascript.jsx',
+        'typescript',
+        'typescriptreact',
+        'typescript.tsx',
+      },
       root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json' },
       single_file_support = true,
       settings = {
@@ -74,7 +81,14 @@ return {
     -- Deno
     vim.lsp.config('denols', {
       cmd = { 'deno', 'lsp' },
-      filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+      filetypes = {
+        'javascript',
+        'javascriptreact',
+        'javascript.jsx',
+        'typescript',
+        'typescriptreact',
+        'typescript.tsx',
+      },
       root_markers = { 'deno.json', 'deno.jsonc' },
       init_options = { lint = true, unstable = true },
       capabilities = capabilities,
@@ -86,7 +100,16 @@ return {
     vim.lsp.config('lua_ls', {
       cmd = { 'lua-language-server' },
       filetypes = { 'lua' },
-      root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', '.git' },
+      root_markers = {
+        '.luarc.json',
+        '.luarc.jsonc',
+        '.luacheckrc',
+        '.stylua.toml',
+        'stylua.toml',
+        'selene.toml',
+        'selene.yml',
+        '.git',
+      },
       settings = { Lua = { completion = { callSnippet = 'Replace' } } },
       capabilities = capabilities,
       on_attach = on_attach,

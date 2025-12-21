@@ -7,7 +7,7 @@ M.life_repo_path = vim.fn.expand('$HOME/ghq/github.com.yuucu/yuucu/life')
 function M.search_documents()
   -- Change to life repository directory
   vim.cmd('cd ' .. M.life_repo_path)
-  
+
   -- Open Telescope file finder
   vim.cmd('Telescope find_files')
 end
@@ -33,4 +33,4 @@ function M.get_life_repo_path()
   return M.life_repo_path
 end
 
-return M 
+return M
