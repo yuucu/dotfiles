@@ -3,14 +3,10 @@ return {
   dependencies = {
     'hrsh7th/cmp-nvim-lsp',
     'lukas-reineke/lsp-format.nvim',
-    'folke/neodev.nvim',
   },
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local common = require('lsp.common')
-
-    -- neodev を先に setup
-    require('neodev').setup()
 
     -- 診断設定
     common.setup_diagnostics()
