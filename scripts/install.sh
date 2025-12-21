@@ -274,6 +274,6 @@ fi
 
 echo -e "${GREEN}🎉 セットアップ完了！${RESET}"
 echo -e "${BLUE}使用可能なコマンド:${RESET}"
-echo -e "  make security-check-gitleaks  - GitLeaksでスキャン"
-echo -e "  make security-check-trufflehog - TruffleHogでスキャン"
-echo -e "  make security-check-all       - 全ツールでスキャン" 
+echo -e "  make update  - dotfilesとツールの更新"
+echo -e "  make apply   - chezmoiの変更を適用"
+echo -e "  make status  - 環境の状態確認" 

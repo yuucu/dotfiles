@@ -44,6 +44,7 @@ node_modules/
 todo.md
 Makefile
 install.sh
+bin/
 
 # Sensitive files - encrypted with age or excluded entirely
 **/*_rsa*
