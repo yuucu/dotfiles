@@ -1,0 +1,3 @@
+# エディタ設定
+export EDITOR=nvim
+export VISUAL=nvim

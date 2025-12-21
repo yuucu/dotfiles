@@ -5,10 +5,10 @@
 --
 
 if vim.g.vscode then
-  require('core/vscode')
+  require('core.vscode')
 else
-  require('core/keymaps')
-  require('core/autocmd')
-  require('core/lazyvim')
-  require('core/options')
+  require('core.keymaps')
+  require('core.autocmd')
+  require('core.lazyvim')
+  require('core.options')
 end

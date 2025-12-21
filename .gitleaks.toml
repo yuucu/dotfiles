@@ -18,22 +18,9 @@ files = [
     '''\.tmpl$''',
     '''\.gitleaks\.toml$''',
     '''\.trufflehog\.yml$''',
-    '''\.log$''',
-    '''\.js$''',
-    '''\.js\.map$''',
 ]
 
 paths = [
     '''scripts/''',
     '''docs/''',
-    '''\.config/gcloud/logs/''',
-    '''\.config/raycast/extensions/''',
-    '''node_modules/''',
-    '''vendor/''',
-    '''\.git/''',
-]
-
-commits = [
-    "069f5a33d9a80c22ca09c9cb636c5fd7ce52328d",
-    "a031a2f730b7ea8c4b7f6c58edb0babc90f97173"
 ]

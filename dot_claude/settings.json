@@ -1,0 +1,80 @@
+{
+  "cleanupPeriodDays": 30,
+  "env": {
+    "DISABLE_COST_WARNINGS": "0",
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1"
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)",
+      "Bash(npm run test:*)",
+      "Bash(git:*)",
+      "Read(./src/**)",
+      "Edit(./src/**)",
+      "Bash(chezmoi :*)",
+      "Bash(docker :*)",
+      "Bash(pnpm :*)",
+      "Read(~/.config/**)",
+      "Read(../**)",
+      "WebFetch(domain:github.com)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(ls)",
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf $HOME)",
+      "Bash(rm -rf ~/*)",
+      "Bash(npm publish:*)",
+      "WebFetch(domain:*)",
+      "Bash(git config :*)",
+      "Bash(brew install :*)",
+      "Bash(chmod 777 :*)",
+      "Bash(gh repo delete:*)",
+      "Bash(sudo :*)",
+      "Bash(curl *://http*)",
+      "Write(/etc/*)",
+      "Edit(/etc/*)"
+    ],
+    "defaultMode": "bypassPermissions",
+    "additionalDirectories": [
+      "../"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/deny-check.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Invoke \\\"Stop\\\" event.\" with title \"Claude Code\" sound name \"Frog\"'"
+          }
+        ]
+      }
+    ]
+  },
+  "alwaysThinkingEnabled": false,
+  "feedbackSurveyState": {
+    "lastShownTime": 1754128638453
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/scripts/statusline.js",
+    "padding": 0
+  }
+}
