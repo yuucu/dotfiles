@@ -131,7 +131,7 @@ return {
         button(
           'c',
           '🔧  Config',
-          ':e $HOME/ghq/github.com.yuucu/yuucu/dotfiles/dot_config/nvim/init.lua | :cd %:p:h<CR>'
+          ':e $HOME/ghq/github.com/yuucu/dotfiles/dot_config/nvim/init.lua | :cd %:p:h<CR>'
         ),
         button('q', 'Quit', ':qa<CR>'),
       },
