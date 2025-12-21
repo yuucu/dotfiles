@@ -1,5 +1,4 @@
-local opts = { noremap = true }
-vim.keymap.set('n', ';', ':', opts)
-vim.keymap.set('n', ':', ';', opts)
-
+-- VSCode 用の基本設定
 vim.o.clipboard = 'unnamedplus'
+
+-- キーマップは keymaps.lua で共通化
