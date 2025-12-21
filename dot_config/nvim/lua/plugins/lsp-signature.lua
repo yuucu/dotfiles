@@ -1,8 +1,14 @@
 return {
   'ray-x/lsp_signature.nvim',
-  event = 'InsertEnter',
-  config = function()
-    local cfg = {} -- add your config here
-    require('lsp_signature').setup(cfg)
-  end,
+  event = 'LspAttach',
+  opts = {
+    bind = true,
+    handler_opts = { border = 'rounded' },
+    hint_enable = true,
+    hint_prefix = '🐼 ',
+    max_height = 12,
+    max_width = 80,
+    floating_window_above_cur_line = true,
+    timer_interval = 200,
+  },
 }
