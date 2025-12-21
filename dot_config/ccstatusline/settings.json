@@ -50,7 +50,7 @@
         "id": "9",
         "type": "git-branch",
         "color": "brightBlack",
-        "rawValue": true
+        "rawValue": false
       },
       {
         "id": "10",
@@ -61,7 +61,7 @@
         "id": "11",
         "type": "git-changes",
         "color": "brightBlack",
-        "rawValue": true
+        "rawValue": false
       }
     ],
     [],
