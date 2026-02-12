@@ -8,6 +8,10 @@ raycast/
 .config/gitui/
 .config/op/
 .config/alacritty/
+dot_gitconfig.local
+dot_gitconfig.local.tmpl
+dot_gitconfig-personal.tmpl
+dot_gitconfig.tmpl
 
 # Node.js
 node_modules/
