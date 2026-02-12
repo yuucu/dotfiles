@@ -12,6 +12,7 @@ dot_gitconfig.local
 dot_gitconfig.local.tmpl
 dot_gitconfig-personal.tmpl
 dot_gitconfig.tmpl
+.ideavimrc
 
 # Node.js
 node_modules/
