@@ -69,15 +69,6 @@ make hook-install
 | `make status` | 環境の状態確認 |
 | `make clean` | 一時ファイルのクリーンアップ |
 
-## ドキュメント
-
-詳細な情報は [docs](./docs/) フォルダを参照してください：
-
-- [セットアップガイド](./docs/setup.md)
-- [環境変数管理](./docs/environment.md)
-- [設定の詳細](./docs/configuration.md)
-- [使用方法](./docs/usage.md)
-
 ## ライセンス
 
 MIT License

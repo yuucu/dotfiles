@@ -85,7 +85,6 @@ echo -e "${YELLOW}5. Script executable check...${RESET}"
 script_files=(
     "scripts/install.sh"
     "scripts/update.sh"
-    "scripts/bootstrap.sh"
 )
 
 for script in "${script_files[@]}"; do
