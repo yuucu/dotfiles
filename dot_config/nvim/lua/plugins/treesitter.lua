@@ -39,6 +39,8 @@ return {
       'query',
       'regex',
       'yaml',
+      'css',
+      'scss',
     },
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = true,

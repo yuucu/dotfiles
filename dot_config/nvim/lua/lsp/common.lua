@@ -1,4 +1,21 @@
 local M = {}
+-- サーバー個別設定は `after/lsp/<server>.lua` で管理する
+M.servers = { 'denols', 'oxc_lsp', 'lua_ls', 'gopls', 'plantuml_lsp', 'terraformls', 'yamlls', 'jsonls' }
+
+local formatters_by_ft = {
+  go = { 'gopls' },
+  javascript = { 'oxc_lsp', 'typescript-tools', 'tsserver' },
+  javascriptreact = { 'oxc_lsp', 'typescript-tools', 'tsserver' },
+  typescript = { 'oxc_lsp', 'typescript-tools', 'tsserver' },
+  typescriptreact = { 'oxc_lsp', 'typescript-tools', 'tsserver' },
+}
+
+local organize_imports_filetypes = {
+  javascript = true,
+  javascriptreact = true,
+  typescript = true,
+  typescriptreact = true,
+}
 
 -- LSP capabilities の設定
 M.capabilities = function()
@@ -37,12 +54,7 @@ end
 -- 診断設定
 M.setup_diagnostics = function()
   vim.diagnostic.config({
-    virtual_text = {
-      spacing = 4,
-      source = 'if_many',
-      prefix = '●',
-      severity = { min = vim.diagnostic.severity.HINT },
-    },
+    virtual_text = false,
     signs = true,
     underline = true,
     update_in_insert = false,
@@ -53,6 +65,7 @@ M.setup_diagnostics = function()
       header = '',
       prefix = '',
       focusable = false,
+      max_width = 100,
     },
   })
 
@@ -92,6 +105,83 @@ M.setup_keymaps = function()
       end
     end,
   })
+end
+
+local function preferred_formatter_id(bufnr)
+  local ft = vim.bo[bufnr].filetype
+  local preferred = formatters_by_ft[ft]
+  if not preferred then
+    return nil
+  end
+
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  for _, name in ipairs(preferred) do
+    for _, client in ipairs(clients) do
+      if client.name == name and client.supports_method and client:supports_method('textDocument/formatting') then
+        return client.id
+      end
+    end
+  end
+  return nil
+end
+
+M.setup_format_on_save = function()
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = vim.api.nvim_create_augroup('LspFormatOnSave', { clear = true }),
+    callback = function(ev)
+      local bufnr = ev.buf
+      local ft = vim.bo[bufnr].filetype
+
+      if organize_imports_filetypes[ft] then
+        pcall(vim.lsp.buf.code_action, {
+          context = { only = { 'source.organizeImports' } },
+          apply = true,
+        })
+      end
+
+      vim.lsp.buf.format({
+        async = false,
+        timeout_ms = 1000,
+        bufnr = bufnr,
+        id = preferred_formatter_id(bufnr),
+      })
+    end,
+  })
+end
+
+M.setup = function()
+  M.setup_diagnostics()
+  M.setup_keymaps()
+  M.setup_format_on_save()
+
+  vim.lsp.config('*', {
+    capabilities = M.capabilities(),
+    on_attach = vim.schedule_wrap(M.on_attach),
+  })
+
+  for _, server in ipairs(M.servers) do
+    vim.lsp.enable(server)
+  end
+end
+
+-- lsp-lens 設定
+M.lens_opts = function()
+  return {
+    sections = {
+      git_authors = false,
+      definition = function(count)
+        return '󰳽 ' .. count
+      end,
+      references = function(count)
+        return '󰈇 ' .. count
+      end,
+      implements = function(count)
+        return '󰡱 ' .. count
+      end,
+    },
+    separator = '  ',
+    hide_zero_counts = true,
+  }
 end
 
 return M
