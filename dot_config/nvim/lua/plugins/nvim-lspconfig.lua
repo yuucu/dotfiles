@@ -33,7 +33,7 @@ return {
     })
 
     -- LSP サーバーを有効化（設定は lsp/*.lua から自動マージされる）
-    local servers = { 'ts_ls', 'denols', 'lua_ls', 'gopls', 'plantuml_lsp', 'terraformls' }
+    local servers = { 'ts_ls', 'denols', 'oxc_lsp', 'lua_ls', 'gopls', 'plantuml_lsp', 'terraformls' }
     for _, server in ipairs(servers) do
       vim.lsp.enable(server)
     end
