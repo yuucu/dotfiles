@@ -26,7 +26,7 @@ return {
     },
     modes = {
       search = {
-        enabled = true,
+        enabled = false, -- 通常の / 検索には介入しない
       },
       char = {
         enabled = true,

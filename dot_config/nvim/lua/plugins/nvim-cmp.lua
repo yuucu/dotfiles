@@ -88,9 +88,10 @@ return {
         },
       },
       performance = {
-        debounce = 60,
+        debounce = 100, -- 60 → 100: 入力の反応性改善
         throttle = 30,
-        fetching_timeout = 500,
+        fetching_timeout = 1000, -- 500 → 1000: ネットワーク対応
+        max_view_entries = 50, -- 表示項目数を制限してパフォーマンス向上
       },
     })
   end,
