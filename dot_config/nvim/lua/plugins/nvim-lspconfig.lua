@@ -14,27 +14,21 @@ return {
     -- LSP キーマップ設定
     common.setup_keymaps()
 
-    -- 全サーバー共通設定
+    -- 全サーバー共通設定（Neovim 0.10+ の新しい API）
     vim.lsp.config('*', {
       capabilities = common.capabilities(),
-      on_attach = common.on_attach,
+      on_attach = vim.schedule_wrap(common.on_attach), -- 非同期実行で起動時間短縮
     })
 
-    -- Go 自動フォーマット
+    -- 自動フォーマット（Go, TypeScript, JavaScript）
     vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = '*.go',
+      pattern = { '*.go', '*.ts', '*.tsx', '*.js', '*.jsx' },
+      group = vim.api.nvim_create_augroup('LspFormatOnSave', { clear = true }),
       callback = function()
+        -- organize imports を実行
         vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
-        vim.lsp.buf.format({ async = false })
-      end,
-    })
-
-    -- TypeScript/React 自動フォーマット
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = { '*.ts', '*.tsx', '*.js', '*.jsx' },
-      callback = function()
-        vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
-        vim.lsp.buf.format({ async = false })
+        -- 非同期フォーマット（UI ブロックを回避）
+        vim.lsp.buf.format({ async = false, timeout_ms = 1000 })
       end,
     })
 
