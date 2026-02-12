@@ -1,0 +1,10 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint-staged:
+      run: scripts/lint-staged.sh
+
+pre-push:
+  commands:
+    ci-check:
+      run: make ci-check
