@@ -42,6 +42,11 @@ make ci-check
 ./scripts/ci-check.sh
 ```
 
+```bash
+# Git hook を有効化（pre-commit / pre-push）
+make hook-install
+```
+
 **チェック項目:**
 - Shell script linting (shellcheck)
 - Chezmoi template validation
@@ -60,6 +65,7 @@ make ci-check
 | `make update` | dotfiles、Neovimプラグイン、miseツールを更新 |
 | `make apply` | chezmoiの変更を適用 |
 | `make ci-check` | CIでチェックされる項目をローカルで確認 |
+| `make hook-install` | lefthook をインストールして hook を有効化 |
 | `make status` | 環境の状態確認 |
 | `make clean` | 一時ファイルのクリーンアップ |
 

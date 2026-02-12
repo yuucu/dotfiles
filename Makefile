@@ -2,7 +2,7 @@
 # ================================
 # シンプルなdotfiles管理タスク
 
-.PHONY: help install update apply clean status ci-check
+.PHONY: help install update apply clean status ci-check hook-install
 
 # Variables
 SCRIPTS_DIR := scripts
@@ -25,7 +25,7 @@ help: ## このヘルプメッセージを表示
 	@echo ""
 	@echo "$(YELLOW)📋 カテゴリ別タスク:$(RESET)"
 	@echo "  $(BLUE)基本操作:$(RESET) install, update, apply, status, clean"
-	@echo "  $(BLUE)開発・CI:$(RESET) ci-check"
+	@echo "  $(BLUE)開発・CI:$(RESET) ci-check, hook-install"
 
 # Core commands
 install: ## 🚀 必要なツールをインストール
@@ -45,6 +45,9 @@ apply: ## 🔄 chezmoiの変更を適用
 ci-check: ## 🔍 CIでチェックされる項目をローカルで確認
 	@chmod +x $(SCRIPTS_DIR)/ci-check.sh
 	@$(SCRIPTS_DIR)/ci-check.sh
+
+hook-install: ## 🪝 lefthookをインストール
+	@lefthook install
 
 # Maintenance
 clean: ## 🧹 一時ファイルとキャッシュのクリーンアップ

@@ -89,6 +89,22 @@ fi
 # セキュリティツールのインストール
 echo -e "${BLUE}🔒 セキュリティツールをインストール中...${RESET}"
 
+# lefthook インストール
+echo -e "${YELLOW}lefthook確認中...${RESET}"
+if ! command -v lefthook >/dev/null 2>&1; then
+    echo -e "${BLUE}lefthookをインストールしています...${RESET}"
+    if [[ "$OSTYPE" == "darwin"* ]] && command -v brew >/dev/null 2>&1; then
+        brew install lefthook
+    elif [[ "$OSTYPE" == "linux-gnu"* ]] && command -v apt-get >/dev/null 2>&1; then
+        sudo apt-get update && sudo apt-get install -y lefthook || true
+    fi
+fi
+if command -v lefthook >/dev/null 2>&1; then
+    echo -e "  ✅ lefthook"
+else
+    echo -e "  ${YELLOW}⚠️  lefthook not installed${RESET}"
+fi
+
 # shellcheck installation for CI
 echo -e "${YELLOW}shellcheck確認中...${RESET}"
 if ! command -v shellcheck >/dev/null 2>&1; then
@@ -141,16 +157,10 @@ echo -e "${BLUE}⚙️  セキュリティツール設定ファイル作成中..
 
 echo -e "  ✅ 設定ファイル作成完了"
 
-# Git hooks セットアップ（非CI環境のみ）
-if [[ "$IS_CI" != "true" ]] && [[ -d ".git" ]]; then
-    echo -e "${BLUE}🪝 Git hooks セットアップ中...${RESET}"
-    if [[ -f "scripts/setup-git-hooks.sh" ]]; then
-        chmod +x scripts/setup-git-hooks.sh
-        ./scripts/setup-git-hooks.sh
-        echo -e "  ✅ Git hooks セットアップ完了"
-    else
-        echo -e "  ${YELLOW}⚠️  Git hooks スクリプトが見つかりません${RESET}"
-    fi
+if [[ "$IS_CI" != "true" ]] && [[ -d ".git" ]] && command -v lefthook >/dev/null 2>&1; then
+    echo -e "${BLUE}🪝 lefthookをセットアップ中...${RESET}"
+    lefthook install
+    echo -e "  ✅ lefthook install 完了"
 fi
 
 echo -e "${GREEN}✅ インストール完了！${RESET}"
