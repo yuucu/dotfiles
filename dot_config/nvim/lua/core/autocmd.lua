@@ -29,6 +29,13 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   end,
 })
 
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.gd',
+  callback = function()
+    vim.bo.filetype = 'gdscript'
+  end,
+})
+
 -- FileType 固有の設定
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'markdown', 'mdc' },

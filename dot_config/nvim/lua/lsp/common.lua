@@ -1,6 +1,6 @@
 local M = {}
 -- サーバー個別設定は `after/lsp/<server>.lua` で管理する
-M.servers = { 'denols', 'oxc_lsp', 'lua_ls', 'gopls', 'plantuml_lsp', 'terraformls', 'yamlls', 'jsonls', 'eslint' }
+M.servers = { 'denols', 'oxc_lsp', 'lua_ls', 'gopls', 'plantuml_lsp', 'terraformls', 'yamlls', 'jsonls', 'eslint', 'prismals', 'gdscript' }
 
 local formatters_by_ft = {
   go = { 'gopls' },
