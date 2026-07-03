@@ -35,7 +35,7 @@ update: ## 📦 flake inputs・Neovim プラグイン・mise ツールの更新
 
 ci-check: ## 🔍 CI と同じチェックをローカルで実行
 	@chmod +x scripts/ci-check.sh
-	@scripts/ci-check.sh
+	@FLAKE_TARGET=$(FLAKE_TARGET) scripts/ci-check.sh
 
 hook-install: ## 🪝 lefthook をインストール
 	@lefthook install

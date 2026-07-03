@@ -23,7 +23,7 @@ if command -v shellcheck >/dev/null 2>&1; then
     fi
 else
     echo -e "  ${YELLOW}⚠️  shellcheck not installed${RESET}"
-    echo -e "    ${BLUE}Install: brew install shellcheck${RESET}"
+    echo -e "    ${BLUE}Install: home.packages 管理（make switch で導入）${RESET}"
 fi
 
 # 2. Lua formatting check
@@ -40,7 +40,7 @@ if command -v stylua >/dev/null 2>&1; then
     fi
 else
     echo -e "  ${YELLOW}⚠️  stylua not installed${RESET}"
-    echo -e "    ${BLUE}Install: brew install stylua${RESET}"
+    echo -e "    ${BLUE}Install: home.packages 管理（make switch で導入）${RESET}"
 fi
 
 # 3. Nix flake check
@@ -50,6 +50,12 @@ if command -v nix >/dev/null 2>&1; then
         echo -e "  ✅ nix flake check passed"
     else
         echo -e "  ❌ nix flake check failed"
+        EXIT_CODE=1
+    fi
+    if nix build ".#darwinConfigurations.${FLAKE_TARGET:-yuucu-mac}.system" --dry-run; then
+        echo -e "  ✅ nix build dry-run passed"
+    else
+        echo -e "  ❌ nix build dry-run failed"
         EXIT_CODE=1
     fi
 else
