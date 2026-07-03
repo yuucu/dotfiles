@@ -3,3 +3,6 @@
 - Nix モジュール（flake.nix / darwin/ / home/）を修正した後は `make switch`（= `sudo darwin-rebuild switch --flake .`）で反映する
 - パッケージ追加は `darwin/homebrew.nix`（cask・GUI）または `home/default.nix` の home.packages（CLI）
 - work 固有の設定（git identity・社内 URL）は `local/`（git 管理外）に置く
+- 検証コマンドは `make ci-check`（CI と同じ lint。pre-push でも実行）と `make check`（flake 評価）。コミット前に `make ci-check` を通す
+- セットアップ手順とコマンド一覧は [README.md](README.md)、設計判断・移行経緯は [docs/design.md](docs/design.md) を参照
+- AI エージェント設定の実体は `config/claude/`（CLAUDE.md・skills・agents/roles・hooks）と `config/codex/`（AGENTS.md・hooks）。両者の実行ガイドライン（CLAUDE.md / AGENTS.md）は同内容を維持し、片方を変えたらもう片方も同期する

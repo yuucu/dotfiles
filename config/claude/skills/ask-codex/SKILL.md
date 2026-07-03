@@ -24,7 +24,7 @@ codex exec "Your question or task here"
 |--------|-------------|
 | `-m MODEL` | Specify model |
 | `-C DIR` | Set working directory |
-| `--full-auto` | Enable automatic execution with workspace-write sandbox |
+| `-s workspace-write` | Enable automatic execution with workspace-write sandbox |
 
 > For all available options, run `codex exec --help`
 
@@ -45,18 +45,18 @@ codex exec -C /path/to/project "Explain the architecture of this codebase"
 **Use a specific model:**
 
 ```bash
-codex exec -m o4-mini "Write a function that validates email addresses"
+codex exec -m gpt-5.5 "Write a function that validates email addresses"
 ```
 
 **Let Codex make changes automatically:**
 
 ```bash
-codex exec --full-auto "Add error handling to all API endpoints"
+codex exec -s workspace-write "Add error handling to all API endpoints"
 ```
 
 ## Notes
 
 - Codex runs non-interactively with `exec` subcommand
 - By default, output goes to stdout and no files are modified without approval
-- Use `--full-auto` for automatic execution within sandbox constraints
+- Use `-s workspace-write` for automatic execution within sandbox constraints
 - The command inherits the current working directory unless `-C` is specified
