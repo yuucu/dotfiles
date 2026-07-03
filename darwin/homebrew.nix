@@ -1,7 +1,6 @@
 # Homebrew の宣言的管理（brew bundle dump 2026-07-03 時点から生成）
 # cleanup = "none" のため、リストにないパッケージが消されることはない
-{ ... }:
-{
+_: {
   homebrew = {
     enable = true;
     onActivation = {
