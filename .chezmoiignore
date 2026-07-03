@@ -40,11 +40,20 @@ raycast/
 # Node.js関連
 node_modules/
 
-# その他
+# リポジトリ管理用ファイル（ホームに配置しない）
 todo.md
 Makefile
 install.sh
 bin/
+README.md
+LICENSE
+CLAUDE.md
+lefthook.yml
+stylua.toml
+package.json
+package-lock.json
+scripts
+docs
 
 # Sensitive files - encrypted with age or excluded entirely
 **/*_rsa*
@@ -87,9 +96,10 @@ bin/
 .azure/
 
 # Application specific secrets
+# TODO: age 秘密鍵（~/.config/age/keys.txt）をこのマシンに復元したら下の `.env` 行を削除する。
+# ~/.env は encrypted_private_dot_env.tmpl.age から生成される。
 .env
 .env.*
-**/.env
 **/.env.*
 
 # Database configs with passwords
