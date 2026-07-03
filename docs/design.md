@@ -40,7 +40,8 @@ dotfiles/
 ├── flake.nix                    # エントリポイント（nixpkgs / nix-darwin / home-manager）
 ├── flake.lock
 ├── darwin/
-│   └── default.nix              # macOS システム設定・nix 設定・homebrew（taps/brews/casks）
+│   ├── default.nix              # macOS システム設定・nix 設定
+│   └── homebrew.nix             # Homebrew の宣言（taps/brews/casks）
 ├── home/
 │   ├── default.nix              # home-manager 本体（packages、環境変数）
 │   └── links.nix                # mkOutOfStoreSymlink による config/ の link 定義
@@ -65,12 +66,11 @@ curl -fsSL https://install.determinate.systems/nix | sh -s -- install
 # 2. clone & 適用
 git clone https://github.com/yuucu/dotfiles ~/ghq/github.com/yuucu/dotfiles
 cd ~/ghq/github.com/yuucu/dotfiles
-sudo nix run nix-darwin -- switch --flake .#yuucu-mac   # 初回
-darwin-rebuild switch --flake .                            # 以降
+sudo nix run nix-darwin/master -- switch --flake .#yuucu-mac   # 初回
+make switch                                                     # 以降
 
 # 3. 手作業（最小限）
-#    - age 鍵の復元（~/.config/age/keys.txt）
-#    - local/ 配下の work 設定の配置
+#    - local/ 配下の work 設定の配置（詳細は README）
 ```
 
 注意：Determinate installer は自前で Nix デーモンを管理するため、nix-darwin 側は `nix.enable = false` にする。
@@ -83,8 +83,8 @@ darwin-rebuild switch --flake .                            # 以降
 | 1 | 移行ブランチで flake スキャフォールド：flake.nix / darwin/ / home/、`dot_config` → `config` リネーム、テンプレート排除、`.zshrc`・mise config の取り込み、Homebrew 現状の宣言化、chezmoi ファイル削除・Makefile / CI / README の Nix 化 | ✅ 完了（2026-07-04） |
 | 2 | Nix インストール → `darwin-rebuild switch` で適用・検証。既存実ファイルは home-manager が `.hm-backup` 付きで退避 | ✅ 完了（2026-07-04） |
 | 3 | main へマージ、chezmoi 状態ファイル（`~/.config/chezmoi`）の削除 | ✅ 完了（2026-07-04） |
-| 4 | formula の nixpkgs への段階移行（brew は cask 中心へ）、`.env` の agenix 化、Linux（home-manager 単体）対応 | 🔄 第 1 弾（CLI ツール 14 個 + chezmoi 撤去）完了（2026-07-04）。agenix は age 鍵の復元待ち |
+| 4 | formula の nixpkgs への段階移行（brew は cask 中心へ）、秘密環境変数の agenix 化、Linux（home-manager 単体）対応 | 🔄 第 1 弾（CLI ツール 14 個 + chezmoi 撤去）完了（2026-07-04）。旧 `env.age` は暗号化されていない chezmoi テンプレートだったことが判明したため削除（実シークレット混入なし）。agenix は秘密環境変数を管理したくなった時点で導入 |
 
 ### ロールバック
 
-Phase 2 で問題が出た場合、chezmoi 構成は main に残っているため `chezmoi apply` で即復帰できる。Nix 世代のロールバックは `darwin-rebuild --rollback`。
+Nix 世代のロールバックは `darwin-rebuild --rollback`（または `--list-generations` から世代指定）。chezmoi 構成が必要になった場合は git 履歴（982941d 以前）から復元する。
