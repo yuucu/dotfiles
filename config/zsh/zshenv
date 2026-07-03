@@ -2,5 +2,11 @@
 export EDITOR=nvim
 export VISUAL=nvim
 
+# Homebrew
+# nix-darwin が /etc/zprofile を置き換えて path_helper が走らないため、ここで明示的に設定する
+if [[ -x /opt/homebrew/bin/brew && ":$PATH:" != *":/opt/homebrew/bin:"* ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # Rust
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

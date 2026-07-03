@@ -17,7 +17,7 @@ help: ## このヘルプメッセージを表示
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(GREEN)%-20s$(RESET) %s\n", $$1, $$2}'
 
 switch: ## 🔄 flake の変更をシステムに適用（darwin-rebuild switch）
-	@sudo darwin-rebuild switch --flake .#$(HOSTNAME)
+	@sudo /run/current-system/sw/bin/darwin-rebuild switch --flake .#$(HOSTNAME)
 
 check: ## 🔍 flake の評価チェック（適用はしない）
 	@nix flake check
