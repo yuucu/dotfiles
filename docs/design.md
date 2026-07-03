@@ -87,4 +87,4 @@ make switch                                                     # 以降
 
 ### ロールバック
 
-Nix 世代のロールバックは `darwin-rebuild --rollback`（または `--list-generations` から世代指定）。chezmoi 構成が必要になった場合は git 履歴（982941d 以前）から復元する。
+Nix 世代のロールバックは `darwin-rebuild --rollback`（または `--list-generations` から世代指定）。chezmoi 構成が必要になった場合は git 履歴（022bc6c 以前）から復元する。
