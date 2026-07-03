@@ -41,6 +41,20 @@ jobs:
           echo "🎨 Checking Lua formatting..."
           stylua --check config/nvim/
 
+  gitleaks:
+    runs-on: ubuntu-latest
+    name: Secret scan
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 全履歴をスキャンする
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   nix:
     runs-on: macos-latest
     name: Nix flake check

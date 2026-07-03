@@ -3,6 +3,8 @@ pre-commit:
   commands:
     lint-staged:
       run: scripts/lint-staged.sh
+    gitleaks:
+      run: gitleaks git --pre-commit --staged --no-banner --redact
 
 pre-push:
   commands:

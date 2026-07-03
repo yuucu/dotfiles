@@ -62,8 +62,22 @@ else
     echo -e "  ${YELLOW}⚠️  nix not installed（ローカルではスキップ可）${RESET}"
 fi
 
-# 4. Basic file structure check
-echo -e "${YELLOW}4. Basic file structure check...${RESET}"
+# 4. Secret scan
+echo -e "${YELLOW}4. Secret scan (gitleaks)...${RESET}"
+if command -v gitleaks >/dev/null 2>&1; then
+    if gitleaks git . --no-banner --redact; then
+        echo -e "  ✅ gitleaks passed"
+    else
+        echo -e "  ❌ gitleaks found secrets"
+        EXIT_CODE=1
+    fi
+else
+    echo -e "  ${YELLOW}⚠️  gitleaks not installed${RESET}"
+    echo -e "    ${BLUE}Install: home.packages 管理（make switch で導入）${RESET}"
+fi
+
+# 5. Basic file structure check
+echo -e "${YELLOW}5. Basic file structure check...${RESET}"
 required_files=(
     "README.md"
     "Makefile"
