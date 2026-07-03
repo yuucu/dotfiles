@@ -22,6 +22,14 @@
 !ccstatusline/*
 !herdr/
 !herdr/config.toml
+!zsh/
+!zsh/**
+!mise/
+!mise/config.toml
+!ideavim/
+!ideavim/**
+!claude/
+!claude/**
 
 # And not this file
 !.gitignore

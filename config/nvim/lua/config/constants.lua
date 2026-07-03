@@ -2,7 +2,7 @@
 local M = {}
 
 -- Base paths
-M.HOME_DIR = '{{ .chezmoi.homeDir }}'
+M.HOME_DIR = os.getenv('HOME')
 M.LIFE_REPO_ROOT = M.HOME_DIR .. '/ghq/github.com.yuucu/yuucu/life'
 
 -- Directory paths

@@ -59,13 +59,7 @@ cyan = "#94e2d5"
 white = "#a6adc8"
 
 [terminal.shell]
-{{- if eq .chezmoi.os "darwin" }}
 program = "/bin/zsh"
-{{- else if eq .chezmoi.os "linux" }}
-program = "/bin/bash"
-{{- else }}
-program = "/bin/sh"
-{{- end }}
 args = ["--login"]
 
 # カスタムカーソル色（以前の設定を復元）
