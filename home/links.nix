@@ -10,6 +10,9 @@ in
   xdg.configFile = {
     "nvim".source = link "config/nvim";
     "tmux".source = link "config/tmux";
+    # 例外：herdr は dir ごと link しているため session.json 等の state が
+    # repo 側に書かれる（config/.gitignore で除外済み）。config.toml 単位の
+    # link に揃える場合は herdr 停止中に state を ~/.config/herdr へ移すこと
     "herdr".source = link "config/herdr";
     "ccstatusline".source = link "config/ccstatusline";
     "starship.toml".source = link "config/starship.toml";
@@ -34,9 +37,6 @@ in
     ".claude/settings.json".source = link "local/claude/settings.json";
     ".claude/scripts/deny-check.sh".source = link "local/claude/deny-check.sh";
     ".claude/agents".source = link "config/claude/agents";
-    ".claude/bin/learn".source = link "config/claude/bin/learn";
-    ".claude/bin/learn-edit".source = link "config/claude/bin/learn-edit";
-    ".claude/bin/learn-show".source = link "config/claude/bin/learn-show";
     # skills/ は work repo への symlink 等が同居するため、汎用 skill だけ個別に link
     ".claude/skills/ask-codex".source = link "config/claude/skills/ask-codex";
     ".claude/skills/herdr".source = link "config/claude/skills/herdr";
