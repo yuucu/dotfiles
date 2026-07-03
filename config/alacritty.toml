@@ -1,9 +1,7 @@
 # Alacritty Configuration
-# テンプレート化されたAlacritty設定ファイル
+# カラーテーマ（Catppuccin Mocha 相当）は下の [colors] で直接定義している
 
-# Catppuccin Mocha テーマをインポート
 [general]
-import = ["~/.config/alacritty/catppuccin-mocha.toml"]
 live_config_reload = true
 
 [env]
