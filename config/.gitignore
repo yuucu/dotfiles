@@ -23,6 +23,8 @@
 !ideavim/**
 !claude/
 !claude/**
+!codex/
+!codex/**
 
 # And not this file
 !.gitignore

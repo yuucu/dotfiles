@@ -23,6 +23,8 @@ in
     ".ideavimrc".source = link "config/ideavim/ideavimrc";
     ".claude/CLAUDE.md".source = link "config/claude/CLAUDE.md";
     ".claude/scripts/deny-check.sh".source = link "config/claude/scripts/deny-check.sh";
+    # config.toml は Codex が動的更新する state（work パス含む）のため管理しない
+    ".codex/AGENTS.md".source = link "config/codex/AGENTS.md";
 
     # work の identity・社内 URL を含むため local/（git 管理外）に実体を置く
     ".gitconfig".source = link "local/gitconfig";
