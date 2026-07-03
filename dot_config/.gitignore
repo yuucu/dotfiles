@@ -20,6 +20,8 @@
 !tmux/**
 !ccstatusline/
 !ccstatusline/*
+!herdr/
+!herdr/config.toml
 
 # And not this file
 !.gitignore

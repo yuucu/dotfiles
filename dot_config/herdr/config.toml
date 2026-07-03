@@ -1,0 +1,60 @@
+onboarding = false
+[theme]
+name = "one-dark"
+
+[terminal]
+# 現在のシェルを引き継ぐ（zsh）
+default_shell = "zsh"
+# macOS では login shell で PATH を正しく引き継ぐ
+shell_mode = "auto"
+# 新しいペインで現在のディレクトリを引き継ぐ
+new_cwd = "follow"
+
+[ui]
+# マウス操作を有効化
+mouse_capture = true
+# ワークスペースを閉じる前に確認
+confirm_close = true
+
+show_agent_labels_on_pane_borders = true
+agent_panel_scope = "current"
+# タブ作成時に名前を聞かず、自動生成名で即作成する
+prompt_new_tab_name = false
+[ui.toast]
+# エージェントの完了を OS の通知サービスへ直接依頼する
+delivery = "system"
+delay_seconds = 1
+
+[ui.sound]
+# エージェントの状態変化をサウンドで通知（全エージェント一律で鳴らす）
+enabled = true
+
+[keys]
+# 日本語入力中も prefix コマンドを確実に効かせる（prefix モード中だけ英数入力へ切替、抜けたら元に戻す。macOS のみ best-effort）
+switch_ascii_input_source_in_prefix = true
+# tmux に合わせたキーバインド
+split_vertical = "prefix+v"
+split_horizontal = "prefix+minus"
+detach = "prefix+d"                  # tmux: prefix+d
+close_tab = "prefix+ampersand"       # tmux: prefix+&
+rename_tab = "prefix+comma"          # tmux: prefix+,
+
+# ペインフォーカス移動を矢印キーへ（prefix+l を lazygit に譲るため）
+focus_pane_left = "prefix+left"
+focus_pane_down = "prefix+down"
+focus_pane_up = "prefix+up"
+focus_pane_right = "prefix+right"
+
+# prefix+l で lazygit をペインで開く
+[[keys.command]]
+key = "prefix+l"
+type = "pane"
+command = "lazygit"
+
+[session]
+# サーバー再起動後にエージェントセッションを自動復元
+resume_agents_on_restore = true
+
+[experimental]
+# サーバー再起動後もペイン履歴を保持
+pane_history = true
