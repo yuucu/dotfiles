@@ -12,14 +12,62 @@ return {
     'nvim-neotest/neotest-plenary',
   },
   keys = {
-    { '<leader>tt', function() require('neotest').run.run() end, desc = 'Run nearest test' },
-    { '<leader>tf', function() require('neotest').run.run(vim.fn.expand('%')) end, desc = 'Run test file' },
-    { '<leader>ta', function() require('neotest').run.run(vim.fn.getcwd()) end, desc = 'Run all tests' },
-    { '<leader>ts', function() require('neotest').summary.toggle() end, desc = 'Toggle test summary' },
-    { '<leader>to', function() require('neotest').output.open({ enter = true }) end, desc = 'Show test output' },
-    { '<leader>tO', function() require('neotest').output_panel.toggle() end, desc = 'Toggle output panel' },
-    { '<leader>tS', function() require('neotest').run.stop() end, desc = 'Stop test' },
-    { '<leader>tw', function() require('neotest').watch.toggle() end, desc = 'Toggle watch mode' },
+    {
+      '<leader>tt',
+      function()
+        require('neotest').run.run()
+      end,
+      desc = 'Run nearest test',
+    },
+    {
+      '<leader>tf',
+      function()
+        require('neotest').run.run(vim.fn.expand('%'))
+      end,
+      desc = 'Run test file',
+    },
+    {
+      '<leader>ta',
+      function()
+        require('neotest').run.run(vim.fn.getcwd())
+      end,
+      desc = 'Run all tests',
+    },
+    {
+      '<leader>ts',
+      function()
+        require('neotest').summary.toggle()
+      end,
+      desc = 'Toggle test summary',
+    },
+    {
+      '<leader>to',
+      function()
+        require('neotest').output.open({ enter = true })
+      end,
+      desc = 'Show test output',
+    },
+    {
+      '<leader>tO',
+      function()
+        require('neotest').output_panel.toggle()
+      end,
+      desc = 'Toggle output panel',
+    },
+    {
+      '<leader>tS',
+      function()
+        require('neotest').run.stop()
+      end,
+      desc = 'Stop test',
+    },
+    {
+      '<leader>tw',
+      function()
+        require('neotest').watch.toggle()
+      end,
+      desc = 'Toggle watch mode',
+    },
   },
   config = function()
     require('neotest').setup({

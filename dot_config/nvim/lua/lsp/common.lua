@@ -1,6 +1,18 @@
 local M = {}
 -- サーバー個別設定は `after/lsp/<server>.lua` で管理する
-M.servers = { 'denols', 'oxc_lsp', 'lua_ls', 'gopls', 'plantuml_lsp', 'terraformls', 'yamlls', 'jsonls', 'eslint', 'prismals', 'gdscript' }
+M.servers = {
+  'denols',
+  'oxc_lsp',
+  'lua_ls',
+  'gopls',
+  'plantuml_lsp',
+  'terraformls',
+  'yamlls',
+  'jsonls',
+  'eslint',
+  'prismals',
+  'gdscript',
+}
 
 local formatters_by_ft = {
   go = { 'gopls' },
@@ -82,8 +94,7 @@ M.setup_diagnostics = function()
 
   -- ホバーウィンドウとシグネチャヘルプのボーダー設定
   vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
-  vim.lsp.handlers['textDocument/signatureHelp'] =
-    vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
 end
 
 -- LSP キーマップ設定
