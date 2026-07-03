@@ -32,7 +32,7 @@ cd ~/ghq/github.com/yuucu/dotfiles
 # 4. flake.nix の username / darwinConfigurations 名をそのマシンに合わせて確認
 
 # 5. 適用（初回。dotfiles の symlink と brew パッケージ一式が入る）
-sudo nix run nix-darwin/master -- switch --flake .
+sudo nix run nix-darwin/master -- switch --flake .#yuucu-mac
 
 # 6. 以降の適用
 make switch
