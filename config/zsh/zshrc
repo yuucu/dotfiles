@@ -1,8 +1,7 @@
 # OPENSPEC:START
 # OpenSpec shell completions configuration
+# compinit は zinit の atload（zicompinit）で 1 回だけ実行する
 fpath=("$HOME/.zsh/completions" $fpath)
-autoload -Uz compinit
-compinit
 # OPENSPEC:END
 
 # ============================================================================
@@ -23,11 +22,9 @@ setopt share_history
 setopt hist_ignore_all_dups
 
 # ============================================================================
-# Completion
+# Completion（compinit 本体は zinit の atload で実行）
 # ============================================================================
 
-autoload -Uz compinit
-compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # ============================================================================
@@ -52,11 +49,14 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit wait lucid blockf light-mode for \
-    @'zsh-users/zsh-syntax-highlighting' \
+# zsh-completions ロード後に zicompinit で compinit を 1 回だけ実行。
+# syntax-highlighting は最後にロードするのが公式推奨
+zinit wait lucid light-mode for \
     @'zsh-users/zsh-autosuggestions' \
+    @'paulirish/git-open' \
+    blockf atpull'zinit creinstall -q .' atload'zicompinit; zicdreplay' \
     @'zsh-users/zsh-completions' \
-    @'paulirish/git-open'
+    @'zsh-users/zsh-syntax-highlighting'
 
 # ============================================================================
 # Modern CLI Tools (オプション)
