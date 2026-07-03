@@ -1,0 +1,166 @@
+# OPENSPEC:START
+# OpenSpec shell completions configuration
+fpath=("$HOME/.zsh/completions" $fpath)
+autoload -Uz compinit
+compinit
+# OPENSPEC:END
+
+# ============================================================================
+# Zsh Configuration - シンプル版
+# ============================================================================
+
+# ファイルディスクリプタ上限を増加
+ulimit -n 10240
+
+# ============================================================================
+# History
+# ============================================================================
+
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt share_history
+setopt hist_ignore_all_dups
+
+# ============================================================================
+# Completion
+# ============================================================================
+
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# ============================================================================
+# Options
+# ============================================================================
+
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt no_beep
+
+# ============================================================================
+# Zinit (Plugin Manager)
+# ============================================================================
+
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+zinit wait lucid blockf light-mode for \
+    @'zsh-users/zsh-syntax-highlighting' \
+    @'zsh-users/zsh-autosuggestions' \
+    @'zsh-users/zsh-completions' \
+    @'paulirish/git-open'
+
+# ============================================================================
+# Modern CLI Tools (オプション)
+# ============================================================================
+
+# fzf
+if command -v fzf &> /dev/null; then
+  eval "$(fzf --zsh)"
+fi
+
+# zoxide
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
+# mise
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
+# ============================================================================
+# 基本的な Aliases
+# ============================================================================
+
+# Editor
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+
+# Git
+alias g='git'
+alias gs='git status -sb'
+alias ga='git add'
+alias gc='git commit -v'
+alias gp='git push'
+alias gl='git pull'
+alias gd='git diff'
+alias glog='git log --oneline --graph'
+alias lg='lazygit'
+
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# ls系（eza がインストールされていれば使う）
+if command -v eza &> /dev/null; then
+  alias ls='eza --icons --git'
+  alias ll='eza --icons --git -l'
+  alias la='eza --icons --git -la'
+else
+  alias ls='ls -G'
+  alias ll='ls -lh'
+  alias la='ls -lAh'
+fi
+
+# その他
+alias reload='source ~/.zshrc'
+alias t='todotui'
+
+# ============================================================================
+# 便利な Functions
+# ============================================================================
+
+# ghq + fzf でリポジトリに移動
+function fgh() {
+  local repo=$(ghq list --full-path | fzf)
+  if [ -n "$repo" ]; then
+    cd "$repo"
+  fi
+}
+
+# ============================================================================
+# Prompt
+# ============================================================================
+
+if command -v starship &> /dev/null; then
+  eval "$(starship init zsh)"
+fi
+
+# ============================================================================
+# Tools
+# ============================================================================
+
+# uv
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
+# Godot
+if [ -d "/Applications/Godot_mono.app/Contents/MacOS" ]; then
+  alias godot="/Applications/Godot_mono.app/Contents/MacOS/Godot"
+  export PATH="/Applications/Godot_mono.app/Contents/MacOS:$PATH"
+fi
+
+# worktrunk
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# ============================================================================
+# Local Configuration（work 固有の設定などは ~/.zshrc.local へ）
+# ============================================================================
+
+if [ -f ~/.zshrc.local ]; then
+  source ~/.zshrc.local
+fi
