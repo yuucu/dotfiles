@@ -83,7 +83,7 @@ make switch                                                     # 以降
 | 1 | 移行ブランチで flake スキャフォールド：flake.nix / darwin/ / home/、`dot_config` → `config` リネーム、テンプレート排除、`.zshrc`・mise config の取り込み、Homebrew 現状の宣言化、chezmoi ファイル削除・Makefile / CI / README の Nix 化 | ✅ 完了（2026-07-04） |
 | 2 | Nix インストール → `darwin-rebuild switch` で適用・検証。既存実ファイルは home-manager が `.hm-backup` 付きで退避 | ✅ 完了（2026-07-04） |
 | 3 | main へマージ、chezmoi 状態ファイル（`~/.config/chezmoi`）の削除 | ✅ 完了（2026-07-04） |
-| 4 | formula の nixpkgs への段階移行（brew は cask 中心へ）、秘密環境変数の agenix 化、Linux（home-manager 単体）対応 | 🔄 第 1 弾（CLI ツール 14 個 + chezmoi 撤去）完了（2026-07-04）。旧 `env.age` は暗号化されていない chezmoi テンプレートだったことが判明したため削除（実シークレット混入なし）。agenix は秘密環境変数を管理したくなった時点で導入 |
+| 4 | formula の nixpkgs への段階移行（brew は cask 中心へ）、秘密環境変数の agenix 化、Linux（home-manager 単体）対応 | 🔄 第 1 弾（CLI ツール 14 個 + chezmoi 撤去）完了（2026-07-04）。第 2 弾（CLI 16 個の nixpkgs 移行 + 未使用 nerd font cask 71 個の宣言整理）完了（2026-07-04）。coreutils / grep（g-prefix 共存）・node（ccusage 依存）等は意図して brew 残留（darwin/homebrew.nix のコメント参照）。旧 `env.age` は暗号化されていない chezmoi テンプレートだったことが判明したため削除（実シークレット混入なし）。agenix は秘密環境変数を管理したくなった時点で導入 |
 
 ### ロールバック
 

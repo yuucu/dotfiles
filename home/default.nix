@@ -10,17 +10,33 @@
   home.packages = with pkgs; [
     age
     bat
+    cmake
+    deno
     eza
     fd
     fzf
     gh
     ghq
+    git-lfs
+    gitleaks
+    go
+    go-migrate
+    gopls
+    jujutsu
     lazygit
     lefthook
+    lua-language-server
+    mkcert
+    neovim
+    ninja
+    pandoc
+    pnpm
+    protobuf
     ripgrep
     shellcheck
     starship
     stylua
+    tmux
     tree
     zoxide
   ];
