@@ -1,73 +1,50 @@
 # dotfiles
 
-chezmoi を使った個人開発環境設定です。
+nix-darwin + home-manager による個人開発環境設定です。
 
 ![nvim](https://github.com/yuucu/dotfiles/assets/39527561/896889e6-fc51-4058-bdf2-4e917883e635)
-![nvim](https://github.com/yuucu/dotfiles/assets/39527561/d7b0b199-045d-4874-9147-4126cfea976e)
 
-## クイックスタート
+## 構成
 
-```bash
-# 基本セットアップ（chezmoi + dotfiles）
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply yuucu/dotfiles
+- **flake.nix** — エントリポイント（nixpkgs / nix-darwin / home-manager）
+- **darwin/** — macOS システム設定と Homebrew（taps / brews / casks）の宣言的管理
+- **home/** — home-manager。`config/` 配下の設定ファイルを symlink（`mkOutOfStoreSymlink`）
+- **config/** — nvim / tmux / zsh / starship 等の実体。**編集は即反映（rebuild 不要）**
+- **local/** — git 管理外。work の git identity・社内 URL 等のマシンローカル設定
+- **secrets/** — age 暗号化された秘密情報
 
-# 必要なツールの確認・追加インストール
-cd $(chezmoi source-path) && make install && make update
-```
+設計の詳細と移行計画は [docs/design.md](docs/design.md) を参照。
 
-## 主な機能
-
-- Neovim中心の開発環境
-- 機密情報の安全な管理
-- ワンライナーでのセットアップ
-- macOS/Linux対応
-- **mise**によるランタイム管理（Node.js、Go、Python等）
-
-## 基本的な使い方
+## セットアップ
 
 ```bash
-# 全体の更新（dotfiles + Neovimプラグイン + miseツール）
-cd $(chezmoi source-path) && make update
+# 1. Nix のインストール（Determinate Systems installer）
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+
+# 2. clone
+git clone https://github.com/yuucu/dotfiles ~/ghq/github.com/yuucu/dotfiles
+cd ~/ghq/github.com/yuucu/dotfiles
+
+# 3. 適用（初回）
+sudo nix run nix-darwin/master -- switch --flake .
+
+# 4. 以降の適用
+make switch
 ```
 
-## 開発・CI
-
-このプロジェクトでは、ローカル開発とCI環境で**同じスクリプト**を使用してテストを実行しています。
-
-```bash
-# ローカルでCIと同じチェックを実行
-make ci-check
-
-# 手動でスクリプトを実行
-./scripts/ci-check.sh
-```
-
-```bash
-# Git hook を有効化（pre-commit / pre-push）
-make hook-install
-```
-
-**チェック項目:**
-- Shell script linting (shellcheck)
-- Chezmoi template validation
-- Lua formatting check (stylua)
-- Neovim configuration test (CI環境のみ)
-- Template processing test (CI環境のみ)
-- File structure check
-- Script executable check
+手作業が必要なもの：age 鍵の復元（`~/.config/age/keys.txt`）、`local/` 配下の作成。
 
 ## よく使うコマンド
 
 | コマンド | 説明 |
 |---------|------|
-| `make help` | 利用可能なコマンド一覧を表示 |
-| `make install` | 必要なツール（chezmoi、age、neovim、mise等）とランタイムをインストール |
-| `make update` | dotfiles、Neovimプラグイン、miseツールを更新 |
-| `make apply` | chezmoiの変更を適用 |
-| `make ci-check` | CIでチェックされる項目をローカルで確認 |
-| `make hook-install` | lefthook をインストールして hook を有効化 |
+| `make switch` | flake の変更をシステムに適用 |
+| `make check` | 適用せずに評価チェック |
+| `make update` | flake inputs・Neovim プラグイン・mise の更新 |
+| `make ci-check` | CI と同じ lint チェック |
 | `make status` | 環境の状態確認 |
-| `make clean` | 一時ファイルのクリーンアップ |
+
+`config/` 配下（nvim 設定など）の編集は symlink 経由で即反映されるため、`make switch` は不要です。ファイルの追加・削除・link 先の変更をしたときだけ `make switch` を実行します。
 
 ## ライセンス
 

@@ -18,46 +18,40 @@ jobs:
       - name: Setup dependencies
         run: |
           set -e
-          echo "📦 Installing dependencies..."
-          
-          # Install basic tools
           sudo apt-get update
           sudo apt-get install -y shellcheck
-          
-          # Install chezmoi
-          mkdir -p ~/.local/bin
-          curl -fsLS get.chezmoi.io | sh -s -- -b ~/.local/bin
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-          
+
           # Install stylua
           STYLUA_VERSION="v2.1.0"
+          mkdir -p ~/.local/bin
           curl -L "https://github.com/JohnnyMorganz/StyLua/releases/download/${STYLUA_VERSION}/stylua-linux-x86_64.zip" -o stylua.zip
           unzip stylua.zip
           chmod +x stylua
           mv stylua ~/.local/bin/
           rm stylua.zip
-          
-          echo "✅ Dependencies installed"
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Run linting checks
         run: |
           set -e
-          echo "🔍 Running linting checks..."
-          
-          # Shell script linting
           echo "📝 Checking shell scripts..."
           find scripts/ -name "*.sh" -exec shellcheck {} \;
-          
-          # Lua formatting check
-          if [ -d "dot_config/nvim" ]; then
-            echo "🎨 Checking Lua formatting..."
-            stylua --check dot_config/nvim/
-          fi
-          
-          # Basic chezmoi template validation
-          if [ -f ".chezmoi.yaml.tmpl" ]; then
-            echo "📋 Validating chezmoi template..."
-            ~/.local/bin/chezmoi execute-template < .chezmoi.yaml.tmpl > /dev/null
-          fi
-          
-          echo "✅ All linting checks passed"
+
+          echo "🎨 Checking Lua formatting..."
+          stylua --check config/nvim/
+
+  nix:
+    runs-on: macos-latest
+    name: Nix flake check
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Flake check
+        run: |
+          nix flake check
+          nix build .#darwinConfigurations.yuucu-mac.system --dry-run

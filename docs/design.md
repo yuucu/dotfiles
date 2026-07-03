@@ -80,9 +80,9 @@ darwin-rebuild switch --flake .                            # 以降
 | Phase | 内容 | 状態 |
 |---|---|---|
 | 0 | chezmoi 構成の応急修正（配布事故・purge・drift・`.env` 命名） | ✅ 完了（2026-07-03） |
-| 1 | 移行ブランチで flake スキャフォールド：flake.nix / darwin/ / home/、`dot_config` → `config` リネーム、テンプレート排除、`.zshrc`・mise config の取り込み、Homebrew 現状の宣言化 | 🔄 実施中 |
-| 2 | Nix インストール → `darwin-rebuild switch` で適用・検証。chezmoi の symlink 化されない旧ファイルとの差分確認 | 🔲 |
-| 3 | chezmoi 関連ファイル（`.chezmoi*`、Makefile の chezmoi タスク）の削除、README・CI 更新、main へマージ、`chezmoi purge` | 🔲 |
+| 1 | 移行ブランチで flake スキャフォールド：flake.nix / darwin/ / home/、`dot_config` → `config` リネーム、テンプレート排除、`.zshrc`・mise config の取り込み、Homebrew 現状の宣言化、chezmoi ファイル削除・Makefile / CI / README の Nix 化 | ✅ 完了（2026-07-04） |
+| 2 | Nix インストール → `darwin-rebuild switch` で適用・検証。既存実ファイルは home-manager が `.hm-backup` 付きで退避 | 🔲 |
+| 3 | main へマージ、`chezmoi purge`（chezmoi の状態 DB 削除） | 🔲 |
 | 4 | formula の nixpkgs への段階移行（brew は cask 中心へ）、`.env` の agenix 化、Linux（home-manager 単体）対応 | 🔲 |
 
 ### ロールバック

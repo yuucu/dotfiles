@@ -1,4 +1,5 @@
-
-
-- chezmoiを使ったdotfiles管理リポジトリ
-- dotfilesを修正した後は、`chezmoi apply` を押すことで反映される
+- nix-darwin + home-manager で管理する dotfiles リポジトリ（flake.nix がエントリポイント）
+- `config/` 配下は home-manager が symlink するため、編集は即反映される（rebuild 不要）
+- Nix モジュール（flake.nix / darwin/ / home/）を修正した後は `make switch`（= `sudo darwin-rebuild switch --flake .`）で反映する
+- パッケージ追加は `darwin/homebrew.nix`（cask・GUI）または `home/default.nix` の home.packages（CLI）
+- work 固有の設定（git identity・社内 URL）は `local/`（git 管理外）に置く

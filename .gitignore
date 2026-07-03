@@ -8,11 +8,12 @@ raycast/
 .config/gitui/
 .config/op/
 .config/alacritty/
-dot_gitconfig.local
-dot_gitconfig.local.tmpl
-dot_gitconfig-personal.tmpl
-dot_gitconfig.tmpl
-.ideavimrc
+# マシンローカル設定（work の identity・社内 URL 等）
+local/
+
+# Nix
+result
+result-*
 
 # Node.js
 node_modules/

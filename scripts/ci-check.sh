@@ -26,40 +26,34 @@ else
     echo -e "    ${BLUE}Install: brew install shellcheck${RESET}"
 fi
 
-# 2. Chezmoi template validation
-echo -e "${YELLOW}2. Chezmoi template validation...${RESET}"
-if command -v chezmoi >/dev/null 2>&1; then
-    if [ -f ".chezmoi.yaml.tmpl" ]; then
-        if chezmoi execute-template < .chezmoi.yaml.tmpl >/dev/null 2>&1; then
-            echo -e "  ✅ chezmoi config template valid"
-        else
-            echo -e "  ❌ chezmoi config template validation failed"
-            EXIT_CODE=1
-        fi
-    else
-        echo -e "  ${YELLOW}⚠️  .chezmoi.yaml.tmpl not found${RESET}"
-    fi
-else
-    echo -e "  ${YELLOW}⚠️  chezmoi not installed${RESET}"
-fi
-
-# 3. Lua formatting check
-echo -e "${YELLOW}3. Lua formatting check...${RESET}"
+# 2. Lua formatting check
+echo -e "${YELLOW}2. Lua formatting check...${RESET}"
 if command -v stylua >/dev/null 2>&1; then
-    if [ -d "dot_config/nvim" ]; then
-        if stylua --check dot_config/nvim/ 2>/dev/null; then
+    if [ -d "config/nvim" ]; then
+        if stylua --check config/nvim/ 2>/dev/null; then
             echo -e "  ✅ Lua formatting check passed"
         else
             echo -e "  ❌ Lua formatting check failed"
-            echo -e "    ${BLUE}Run: stylua dot_config/nvim/${RESET}"
+            echo -e "    ${BLUE}Run: stylua config/nvim/${RESET}"
             EXIT_CODE=1
         fi
-    else
-        echo -e "  ${YELLOW}⚠️  dot_config/nvim directory not found${RESET}"
     fi
 else
     echo -e "  ${YELLOW}⚠️  stylua not installed${RESET}"
     echo -e "    ${BLUE}Install: brew install stylua${RESET}"
+fi
+
+# 3. Nix flake check
+echo -e "${YELLOW}3. Nix flake check...${RESET}"
+if command -v nix >/dev/null 2>&1; then
+    if nix flake check 2>/dev/null; then
+        echo -e "  ✅ nix flake check passed"
+    else
+        echo -e "  ❌ nix flake check failed"
+        EXIT_CODE=1
+    fi
+else
+    echo -e "  ${YELLOW}⚠️  nix not installed（ローカルではスキップ可）${RESET}"
 fi
 
 # 4. Basic file structure check
@@ -67,8 +61,9 @@ echo -e "${YELLOW}4. Basic file structure check...${RESET}"
 required_files=(
     "README.md"
     "Makefile"
-    "scripts/install.sh"
-    "scripts/update.sh"
+    "flake.nix"
+    "darwin/default.nix"
+    "home/default.nix"
 )
 
 for file in "${required_files[@]}"; do
@@ -80,25 +75,6 @@ for file in "${required_files[@]}"; do
     fi
 done
 
-# 5. Script executable check
-echo -e "${YELLOW}5. Script executable check...${RESET}"
-script_files=(
-    "scripts/install.sh"
-    "scripts/update.sh"
-)
-
-for script in "${script_files[@]}"; do
-    if [ -f "$script" ]; then
-        if [ -x "$script" ]; then
-            echo -e "  ✅ $script (executable)"
-        else
-            echo -e "  ❌ $script (not executable)"
-            echo -e "    ${BLUE}Fix: chmod +x $script${RESET}"
-            EXIT_CODE=1
-        fi
-    fi
-done
-
 # Summary
 echo -e "\n${BLUE}📊 CI Check Summary${RESET}"
 if [ "${EXIT_CODE:-0}" -eq 0 ]; then
@@ -106,4 +82,4 @@ if [ "${EXIT_CODE:-0}" -eq 0 ]; then
 else
     echo -e "${RED}❌ Some checks failed. See details above.${RESET}"
     exit 1
-fi 
+fi

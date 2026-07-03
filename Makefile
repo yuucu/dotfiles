@@ -1,70 +1,49 @@
-# Makefile for dotfiles management
+# Makefile for dotfiles management (nix-darwin + home-manager)
 # ================================
-# シンプルなdotfiles管理タスク
 
-.PHONY: help install update apply clean status ci-check hook-install
+.PHONY: help switch check update ci-check hook-install status
 
-# Variables
-SCRIPTS_DIR := scripts
-CHEZMOI := chezmoi
-MISE := mise
+HOSTNAME := $(shell scutil --get LocalHostName)
 
 # Colors for output
 GREEN := \033[32m
 BLUE := \033[34m
 YELLOW := \033[33m
-RED := \033[31m
 RESET := \033[0m
 
-# Default target
 help: ## このヘルプメッセージを表示
 	@echo "$(BLUE)dotfiles管理用Makefile$(RESET)"
 	@echo "================================"
-	@echo "利用可能なタスク:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(GREEN)%-20s$(RESET) %s\n", $$1, $$2}'
-	@echo ""
-	@echo "$(YELLOW)📋 カテゴリ別タスク:$(RESET)"
-	@echo "  $(BLUE)基本操作:$(RESET) install, update, apply, status, clean"
-	@echo "  $(BLUE)開発・CI:$(RESET) ci-check, hook-install"
 
-# Core commands
-install: ## 🚀 必要なツールをインストール
-	@chmod +x $(SCRIPTS_DIR)/install.sh
-	@$(SCRIPTS_DIR)/install.sh
+switch: ## 🔄 flake の変更をシステムに適用（darwin-rebuild switch）
+	@sudo darwin-rebuild switch --flake .#$(HOSTNAME)
 
-update: ## 📦 dotfiles、プラグイン、miseツールの更新
-	@chmod +x $(SCRIPTS_DIR)/update.sh
-	@$(SCRIPTS_DIR)/update.sh
+check: ## 🔍 flake の評価チェック（適用はしない）
+	@nix flake check
+	@nix build .#darwinConfigurations.$(HOSTNAME).system --dry-run
 
-apply: ## 🔄 chezmoiの変更を適用
-	@echo "$(BLUE)🔄 chezmoi変更を適用中...$(RESET)"
-	@$(CHEZMOI) apply
-	@echo "$(GREEN)✅ chezmoi変更適用完了$(RESET)"
+update: ## 📦 flake inputs・Neovim プラグイン・mise ツールの更新
+	@echo "$(BLUE)📦 flake inputs を更新中...$(RESET)"
+	@nix flake update
+	@$(MAKE) switch
+	@echo "$(BLUE)🔌 Neovim プラグインを更新中...$(RESET)"
+	@command -v nvim >/dev/null 2>&1 && nvim --headless "+Lazy! sync" +qa 2>/dev/null || true
+	@echo "$(BLUE)🔄 mise 管理ツールを更新中...$(RESET)"
+	@command -v mise >/dev/null 2>&1 && mise upgrade || true
+	@echo "$(GREEN)✅ 全体更新完了$(RESET)"
 
-# Development
-ci-check: ## 🔍 CIでチェックされる項目をローカルで確認
-	@chmod +x $(SCRIPTS_DIR)/ci-check.sh
-	@$(SCRIPTS_DIR)/ci-check.sh
+ci-check: ## 🔍 CI と同じチェックをローカルで実行
+	@chmod +x scripts/ci-check.sh
+	@scripts/ci-check.sh
 
-hook-install: ## 🪝 lefthookをインストール
+hook-install: ## 🪝 lefthook をインストール
 	@lefthook install
 
-# Maintenance
-clean: ## 🧹 一時ファイルとキャッシュのクリーンアップ
-	@echo "$(BLUE)🧹 クリーンアップ中...$(RESET)"
-	@find . -name "*.tmp" -delete 2>/dev/null || true
-	@find . -name ".DS_Store" -delete 2>/dev/null || true
-	@find . -name "*.log" -delete 2>/dev/null || true
-	@echo "$(GREEN)✅ クリーンアップ完了$(RESET)"
-
-status: ## 📊 現在の状態とヘルスチェック
-	@echo "$(BLUE)📊 dotfiles状態確認$(RESET)"
+status: ## 📊 環境の状態確認
 	@echo "$(YELLOW)必須ツール:$(RESET)"
-	@command -v chezmoi >/dev/null 2>&1 && echo "  ✅ chezmoi" || echo "  ❌ chezmoi"
-	@command -v age >/dev/null 2>&1 && echo "  ✅ age" || echo "  ❌ age"
-	@command -v nvim >/dev/null 2>&1 && echo "  ✅ neovim" || echo "  ❌ neovim"
+	@command -v nix >/dev/null 2>&1 && echo "  ✅ nix ($$(nix --version))" || echo "  ❌ nix"
+	@command -v darwin-rebuild >/dev/null 2>&1 && echo "  ✅ darwin-rebuild" || echo "  ❌ darwin-rebuild（初回は README のセットアップ参照）"
 	@command -v mise >/dev/null 2>&1 && echo "  ✅ mise" || echo "  ❌ mise"
-	@echo "$(YELLOW)mise管理ツール:$(RESET)"
-	@$(MISE) current 2>/dev/null || echo "  miseが設定されていません"
-	@echo "$(YELLOW)Chezmoi状態:$(RESET)"
-	@$(CHEZMOI) status 2>/dev/null || echo "  設定なし"
+	@echo "$(YELLOW)symlink 状態（home-manager）:$(RESET)"
+	@ls -l ~/.zshrc ~/.config/nvim 2>/dev/null || echo "  未適用"
