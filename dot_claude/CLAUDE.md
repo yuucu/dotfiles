@@ -38,7 +38,9 @@
 ## Git 操作
 
 - ブランチ切り替え・新規ブランチ作成は `git checkout` / `git switch` ではなく `wt switch`（worktrunk）を使う。一覧・削除・マージも `wt list` / `wt remove` / `wt merge`。
-- `wt switch` は worktree への `cd` を伴い Bash ツールでは持続しないため、移動先での継続作業が必要なら `! wt switch ...` をユーザーに促す。
+  - すでに実装している場合は、git でのブランチ作成可
+- `wt switch` は Bash ツール内で実行してよい。`cd` はターンをまたいで持続しないため、以降のコマンドは worktree の絶対パス（`wt list` で確認）を明示して実行する。
+- **未コミット変更を新しい worktree に持っていく**：`git stash push -u -m "<用途>"` → `wt switch --create <branch>` → 移動先で `git stash pop` の順に実行する。`-u` を付けて未追跡ファイルも含めるのが既定（新規ファイルが置き去りになる事故を防ぐ）。`.gitignore` 対象まで含めたい場合のみ `-a` を使う（キャッシュ類を巻き込むので原則使わない）。
 
 ## コミット規律
 

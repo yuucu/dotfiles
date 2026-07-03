@@ -1,3 +1,6 @@
 # エディタ設定
 export EDITOR=nvim
 export VISUAL=nvim
+
+# Rust
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

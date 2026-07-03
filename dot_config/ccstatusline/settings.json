@@ -17,7 +17,13 @@
         "id": "3",
         "type": "context-percentage",
         "color": "brightRed",
-        "rawValue": true
+        "rawValue": false
+      },
+      {
+        "id": "12",
+        "type": "context-bar",
+        "color": "brightRed",
+        "barWidth": 10
       },
       {
         "id": "4",
@@ -25,24 +31,14 @@
         "color": "brightBlack"
       },
       {
-        "id": "5",
-        "type": "session-clock",
-        "color": "white",
-        "rawValue": true
+        "id": "13",
+        "type": "current-working-dir",
+        "color": "cyan",
+        "abbreviateHome": true,
+        "rawValue": false
       },
       {
-        "id": "6",
-        "type": "separator",
-        "color": "brightBlack"
-      },
-      {
-        "id": "7",
-        "type": "session-cost",
-        "color": "yellow",
-        "rawValue": true
-      },
-      {
-        "id": "8",
+        "id": "14",
         "type": "separator",
         "color": "brightBlack"
       },
@@ -53,18 +49,75 @@
         "rawValue": false
       },
       {
-        "id": "10",
-        "type": "separator",
-        "color": "brightBlack"
-      },
-      {
         "id": "11",
         "type": "git-changes",
         "color": "brightBlack",
         "rawValue": false
       }
     ],
-    [],
+    [
+      {
+        "id": "20",
+        "type": "tokens-input",
+        "color": "green",
+        "rawValue": false
+      },
+      {
+        "id": "21",
+        "type": "separator",
+        "color": "brightBlack"
+      },
+      {
+        "id": "22",
+        "type": "tokens-output",
+        "color": "magenta",
+        "rawValue": false
+      },
+      {
+        "id": "23",
+        "type": "separator",
+        "color": "brightBlack"
+      },
+      {
+        "id": "24",
+        "type": "tokens-cached",
+        "color": "brightBlack",
+        "rawValue": false
+      },
+      {
+        "id": "25",
+        "type": "separator",
+        "color": "brightBlack"
+      },
+      {
+        "id": "26",
+        "type": "tokens-total",
+        "color": "white",
+        "rawValue": false
+      },
+      {
+        "id": "27",
+        "type": "separator",
+        "color": "brightBlack"
+      },
+      {
+        "id": "7",
+        "type": "session-cost",
+        "color": "yellow",
+        "rawValue": false
+      },
+      {
+        "id": "28",
+        "type": "separator",
+        "color": "brightBlack"
+      },
+      {
+        "id": "5",
+        "type": "session-clock",
+        "color": "white",
+        "rawValue": false
+      }
+    ],
     []
   ],
   "flexMode": "full-minus-40",
@@ -75,7 +128,7 @@
   "powerline": {
     "enabled": false,
     "separators": [
-      ""
+      ""
     ],
     "separatorInvertBackground": [
       false
