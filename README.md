@@ -15,24 +15,39 @@ nix-darwin + home-manager による個人開発環境設定です。
 
 設計の詳細と移行計画は [docs/design.md](docs/design.md) を参照。
 
-## セットアップ
+## セットアップ（新しい Mac）
 
 ```bash
-# 1. Nix のインストール（Determinate Systems installer）
-curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+# 1. Xcode CLT と Homebrew（brew 管理のパッケージ用）
+xcode-select --install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# 2. clone
+# 2. Nix のインストール（Determinate Systems installer）
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install --no-confirm
+
+# 3. clone
+mkdir -p ~/ghq/github.com/yuucu
 git clone https://github.com/yuucu/dotfiles ~/ghq/github.com/yuucu/dotfiles
 cd ~/ghq/github.com/yuucu/dotfiles
 
-# 3. 適用（初回）
+# 4. flake.nix の username / darwinConfigurations 名をそのマシンに合わせて確認
+
+# 5. 適用（初回。dotfiles の symlink と brew パッケージ一式が入る）
 sudo nix run nix-darwin/master -- switch --flake .
 
-# 4. 以降の適用
+# 6. 以降の適用
 make switch
 ```
 
-手作業が必要なもの：age 鍵の復元（`~/.config/age/keys.txt`）、`local/` 配下の作成。
+### 適用後の手作業（最小限）
+
+1. **`local/` の作成**（git 管理外。ないと `~/.gitconfig` 等の symlink が空振りする）
+   - `local/gitconfig` … 本体。identity と `[include] path = ~/.gitconfig.local` など
+   - `local/gitconfig-personal` … 個人用 identity（`includeIf` で `~/ghq/github.com/yuucu/` 配下に適用）
+   - `local/gitconfig.local` / `local/zshrc.local` … work 固有の URL 書き換えや関数
+2. **age 鍵の復元** … パスワードマネージャーから `~/.config/age/keys.txt` へ（`secrets/env.age` の復号に必要）
+3. シェルを開き直す … zinit・プラグインは初回起動時に自動インストールされる
+4. `mise install` / `gh auth login` などツール個別のログイン
 
 ## よく使うコマンド
 
