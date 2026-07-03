@@ -16,6 +16,7 @@
     gh
     ghq
     lazygit
+    lefthook
     ripgrep
     shellcheck
     starship
