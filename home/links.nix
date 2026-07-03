@@ -1,7 +1,9 @@
 # 既存の設定ファイルを Nix store に取り込まず、repo を直接 symlink する。
 # 編集は即反映（rebuild 不要）。repo の絶対パス（dotfilesDir）に依存する。
-{ config, dotfilesDir, ... }:
+# worktree での検証は `make check`（評価のみ）で行い、switch は main checkout から実行する。
+{ config, ... }:
 let
+  dotfilesDir = "${config.home.homeDirectory}/ghq/github.com/yuucu/dotfiles";
   link = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/${path}";
 in
 {

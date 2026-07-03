@@ -22,13 +22,10 @@
     }:
     let
       username = "s09104";
-      # mkOutOfStoreSymlink の実体参照先。worktree で検証する場合は一時的に書き換える
-      dotfilesDir = "/Users/${username}/ghq/github.com/yuucu/dotfiles";
     in
     {
       darwinConfigurations."yuucu-mac" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit username dotfilesDir; };
+        specialArgs = { inherit username; };
         modules = [
           ./darwin
           home-manager.darwinModules.home-manager
@@ -37,7 +34,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               backupFileExtension = "hm-backup";
-              extraSpecialArgs = { inherit dotfilesDir; };
+              extraSpecialArgs = { inherit username; };
               users.${username} = import ./home;
             };
           }

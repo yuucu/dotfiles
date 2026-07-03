@@ -9,19 +9,14 @@
       cleanup = "none"; # 安定後に "zap" へ変更を検討
     };
 
+    # casks で実際に参照している tap のみ宣言する
     taps = [
-      "aoki/redis-cli"
-      "entireio/tap"
-      "hashicorp/tap"
-      { name = "jordancoin/tap"; clone_target = "https://github.com/JordanCoin/homebrew-tap"; }
-      { name = "k1low/tap"; clone_target = "https://github.com/k1LoW/homebrew-tap"; }
-      "kayac/tap"
-      "nikitabobko/tap"
-      "trufflesecurity/trufflehog"
+      "entireio/tap" # entire
+      "nikitabobko/tap" # aerospace
     ];
 
     brews = [
-      "awscli"
+      # awscli は mise（config/mise/config.toml）で管理
       "bash-completion@2"
       "glib"
       "node"
@@ -33,7 +28,6 @@
       "coreutils"
       "deno"
       "ffmpeg"
-      "fnm"
       "git-lfs"
       "gitleaks"
       "go"
@@ -49,7 +43,6 @@
       "mkcert"
       "neovim"
       "ninja"
-      "node@20"
       "pandoc"
       "pipx"
       "pnpm"

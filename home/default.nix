@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
   imports = [ ./links.nix ];
 
-  home.username = "s09104";
-  home.homeDirectory = "/Users/s09104";
+  home.username = username;
+  home.homeDirectory = "/Users/${username}";
 
   # brew formula から段階的にここへ移行する（docs/design.md Phase 4）。
   # 移行したら darwin/homebrew.nix の brews から外し、brew uninstall する。
