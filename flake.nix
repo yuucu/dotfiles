@@ -22,6 +22,21 @@
     }:
     let
       username = "s09104";
+      # x86_64-linux は Phase 4 の Linux（home-manager 単体）対応を見据えた先行出力
+      forAllSystems =
+        f:
+        nixpkgs.lib.genAttrs [
+          "aarch64-darwin"
+          "x86_64-linux"
+        ] (system: f nixpkgs.legacyPackages.${system});
+      lintTools =
+        pkgs: with pkgs; [
+          deadnix
+          nixfmt
+          shellcheck
+          statix
+          stylua
+        ];
     in
     {
       darwinConfigurations."yuucu-mac" = nix-darwin.lib.darwinSystem {
@@ -40,5 +55,28 @@
           }
         ];
       };
+
+      # `nix fmt` で .nix ファイルを一括整形する
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-tree);
+
+      # lint ツールは flake.lock で固定し、CI・ローカルで同一バージョンを使う
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell { packages = lintTools pkgs ++ [ pkgs.gitleaks ]; };
+      });
+
+      # `nix flake check` の実体。shell / lua / nix をまとめて lint する。
+      # 対象は git 追跡ファイルのみ（flake source のコピー範囲）。
+      # 未追跡ファイルは pre-commit の lint-staged が拾う。
+      checks = forAllSystems (pkgs: {
+        lint = pkgs.runCommand "dotfiles-lint" { nativeBuildInputs = lintTools pkgs; } ''
+          cd ${self}
+          shellcheck scripts/*.sh
+          stylua --check config/nvim/
+          nixfmt --check flake.nix darwin/*.nix home/*.nix
+          statix check .
+          deadnix --fail .
+          touch $out
+        '';
+      });
     };
 }

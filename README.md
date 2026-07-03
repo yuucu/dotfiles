@@ -52,11 +52,15 @@ make switch
 | コマンド | 説明 |
 |---------|------|
 | `make switch` | flake の変更をシステムに適用 |
-| `make check` | 適用せずに評価チェック |
-| `make update` | flake inputs・Neovim プラグイン・mise の更新 |
-| `make ci-check` | CI と同じ lint チェック |
+| `make check` | 適用せずに評価チェック（shell / lua / nix の lint 込み） |
+| `make update` | flake inputs・Neovim プラグイン・mise の更新（check が通ってから switch） |
+| `make fmt` | nix ファイルの整形（`nix fmt`） |
+| `make gc` | 30 日より古い世代の削除と Nix store の GC |
+| `make ci-check` | CI と同じチェック（flake check + gitleaks） |
 | `make hook-install` | lefthook の git hook を有効化 |
 | `make status` | 環境の状態確認 |
+
+lint ツール（shellcheck / stylua / nixfmt / statix / deadnix）は flake の `checks` に組み込まれており、CI・ローカルとも flake.lock で固定された同一バージョンを使います。単発で使いたい場合は `nix develop` で devShell に入れます。
 
 `config/` 配下（nvim 設定など）の編集は symlink 経由で即反映されるため、`make switch` は不要です。ファイルの追加・削除・link 先の変更をしたときだけ `make switch` を実行します。
 

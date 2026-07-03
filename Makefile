@@ -1,7 +1,7 @@
 # Makefile for dotfiles management (nix-darwin + home-manager)
 # ================================
 
-.PHONY: help switch check update ci-check hook-install status
+.PHONY: help switch check update fmt gc ci-check hook-install status
 
 FLAKE_TARGET := yuucu-mac
 
@@ -26,12 +26,24 @@ check: ## 🔍 flake の評価チェック（適用はしない）
 update: ## 📦 flake inputs・Neovim プラグイン・mise ツールの更新
 	@echo "$(BLUE)📦 flake inputs を更新中...$(RESET)"
 	@nix flake update
+	@echo "$(BLUE)🔍 更新後の評価チェック（NG なら switch せず終了）...$(RESET)"
+	@$(MAKE) check
+	@git --no-pager diff --stat flake.lock
 	@$(MAKE) switch
 	@echo "$(BLUE)🔌 Neovim プラグインを更新中...$(RESET)"
 	@command -v nvim >/dev/null 2>&1 && nvim --headless "+Lazy! sync" +qa 2>/dev/null || true
 	@echo "$(BLUE)🔄 mise 管理ツールを更新中...$(RESET)"
 	@command -v mise >/dev/null 2>&1 && mise upgrade || true
 	@echo "$(GREEN)✅ 全体更新完了$(RESET)"
+
+fmt: ## 🎨 nix ファイルを整形（nix fmt）
+	@nix fmt
+
+# nix.enable = false（Determinate installer 管理）のため nix-darwin の
+# 自動 GC は使えない。unstable 追従で store が肥大するので定期的に実行する。
+gc: ## 🗑  30 日より古い世代を削除して Nix store を GC
+	@sudo nix-collect-garbage --delete-older-than 30d
+	@nix-collect-garbage --delete-older-than 30d
 
 ci-check: ## 🔍 CI と同じチェックをローカルで実行
 	@chmod +x scripts/ci-check.sh

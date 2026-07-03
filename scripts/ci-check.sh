@@ -12,39 +12,10 @@ EXIT_CODE=0
 
 echo -e "${BLUE}🔍 Dotfiles CI チェックを実行中...${RESET}"
 
-# 1. Shell script linting
-echo -e "${YELLOW}1. Shell script linting (shellcheck)...${RESET}"
-if command -v shellcheck >/dev/null 2>&1; then
-    if find scripts/ -name "*.sh" -exec shellcheck {} +; then
-        echo -e "  ✅ shellcheck passed"
-    else
-        echo -e "  ❌ shellcheck failed"
-        EXIT_CODE=1
-    fi
-else
-    echo -e "  ${YELLOW}⚠️  shellcheck not installed${RESET}"
-    echo -e "    ${BLUE}Install: home.packages 管理（make switch で導入）${RESET}"
-fi
-
-# 2. Lua formatting check
-echo -e "${YELLOW}2. Lua formatting check...${RESET}"
-if command -v stylua >/dev/null 2>&1; then
-    if [ -d "config/nvim" ]; then
-        if stylua --check config/nvim/; then
-            echo -e "  ✅ Lua formatting check passed"
-        else
-            echo -e "  ❌ Lua formatting check failed"
-            echo -e "    ${BLUE}Run: stylua config/nvim/${RESET}"
-            EXIT_CODE=1
-        fi
-    fi
-else
-    echo -e "  ${YELLOW}⚠️  stylua not installed${RESET}"
-    echo -e "    ${BLUE}Install: home.packages 管理（make switch で導入）${RESET}"
-fi
-
-# 3. Nix flake check
-echo -e "${YELLOW}3. Nix flake check...${RESET}"
+# 1. Nix flake check
+# checks.lint（shellcheck / stylua / nixfmt / statix / deadnix）を含む。
+# 対象は git 追跡ファイルのみ。未追跡ファイルは pre-commit の lint-staged が拾う。
+echo -e "${YELLOW}1. Nix flake check（lint 含む）...${RESET}"
 if command -v nix >/dev/null 2>&1; then
     if nix flake check; then
         echo -e "  ✅ nix flake check passed"
@@ -59,11 +30,12 @@ if command -v nix >/dev/null 2>&1; then
         EXIT_CODE=1
     fi
 else
-    echo -e "  ${YELLOW}⚠️  nix not installed（ローカルではスキップ可）${RESET}"
+    echo -e "  ${RED}❌ nix not installed（lint がスキップされるため必須）${RESET}"
+    EXIT_CODE=1
 fi
 
-# 4. Secret scan
-echo -e "${YELLOW}4. Secret scan (gitleaks)...${RESET}"
+# 2. Secret scan
+echo -e "${YELLOW}2. Secret scan (gitleaks)...${RESET}"
 if command -v gitleaks >/dev/null 2>&1; then
     if gitleaks git . --no-banner --redact; then
         echo -e "  ✅ gitleaks passed"
@@ -75,25 +47,6 @@ else
     echo -e "  ${YELLOW}⚠️  gitleaks not installed${RESET}"
     echo -e "    ${BLUE}Install: home.packages 管理（make switch で導入）${RESET}"
 fi
-
-# 5. Basic file structure check
-echo -e "${YELLOW}5. Basic file structure check...${RESET}"
-required_files=(
-    "README.md"
-    "Makefile"
-    "flake.nix"
-    "darwin/default.nix"
-    "home/default.nix"
-)
-
-for file in "${required_files[@]}"; do
-    if [ -f "$file" ]; then
-        echo -e "  ✅ $file"
-    else
-        echo -e "  ❌ $file (missing)"
-        EXIT_CODE=1
-    fi
-done
 
 # Summary
 echo -e "\n${BLUE}📊 CI Check Summary${RESET}"

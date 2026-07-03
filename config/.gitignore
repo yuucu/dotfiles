@@ -1,10 +1,8 @@
-# Created by https://www.toptal.com/developers/gitignore/api/macos,vim
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,vim
-
-# Ignore everything
+# 基本方針：全て ignore し、管理対象だけを明示的に許可する
+# （ツールが書き込む state・秘匿ファイルの誤コミット防止）
 *
 
-# But not these directories
+# 管理対象の許可リスト
 !nvim/
 !nvim/**
 !alacritty.toml
@@ -35,68 +33,14 @@
 !gwq/config.toml
 !gh/
 !gh/config.yml
-
-# And not this file
 !.gitignore
 
-# macOS system files
+# 許可したディレクトリ配下でも ignore するもの（後勝ちで上の ! を打ち消す）
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Icon must end with two \r
-Icon
-
-
-# Thumbnails
 ._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-### macOS Patch ###
-# iCloud generated files
-*.icloud
-
-### Vim ###
-# Swap files in nvim directory
-nvim/[._]*.s[a-v][a-z]
-nvim/[._]*.sw[a-p]
-nvim/[._]s[a-rt-v][a-z]
-nvim/[._]ss[a-gi-z]
-nvim/[._]sw[a-p]
-
-# General swap files (other directories)
-[._]*.s[a-v][a-z]
-!*.svg  # comment out if you don't need vector files
 [._]*.sw[a-p]
-[._]s[a-rt-v][a-z]
-[._]ss[a-gi-z]
-[._]sw[a-p]
-
-# Session
-Session.vim
-Sessionx.vim
-
-# Temporary
-.netrwhist
-*~
-# Auto-generated tag files
-tags
-# Persistent undo
 [._]*.un~
-
-# End of https://www.toptal.com/developers/gitignore/api/macos,vim
+*~
+Session.vim
+.netrwhist
+tags
