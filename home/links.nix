@@ -15,6 +15,13 @@ in
     "starship.toml".source = link "config/starship.toml";
     "alacritty.toml".source = link "config/alacritty.toml";
     "mise/config.toml".source = link "config/mise/config.toml";
+    # state を同居させるツールは設定ファイル単位で link する
+    # （lazygit: state.yml / worktrunk: approvals.toml / gh: hosts.yml は管理外）
+    "lazygit/config.yml".source = link "config/lazygit/config.yml";
+    "git/ignore".source = link "config/git/ignore";
+    "worktrunk/config.toml".source = link "config/worktrunk/config.toml";
+    "gwq/config.toml".source = link "config/gwq/config.toml";
+    "gh/config.yml".source = link "config/gh/config.yml";
   };
 
   home.file = {
@@ -22,9 +29,25 @@ in
     ".zshrc".source = link "config/zsh/zshrc";
     ".ideavimrc".source = link "config/ideavim/ideavimrc";
     ".claude/CLAUDE.md".source = link "config/claude/CLAUDE.md";
+    ".claude/settings.json".source = link "config/claude/settings.json";
     ".claude/scripts/deny-check.sh".source = link "config/claude/scripts/deny-check.sh";
+    ".claude/hooks/herdr-agent-state.sh".source = link "config/claude/hooks/herdr-agent-state.sh";
+    ".claude/agents".source = link "config/claude/agents";
+    ".claude/bin/learn".source = link "config/claude/bin/learn";
+    ".claude/bin/learn-edit".source = link "config/claude/bin/learn-edit";
+    ".claude/bin/learn-show".source = link "config/claude/bin/learn-show";
+    # skills/ は work repo への symlink 等が同居するため、汎用 skill だけ個別に link
+    ".claude/skills/ask-codex".source = link "config/claude/skills/ask-codex";
+    ".claude/skills/herdr".source = link "config/claude/skills/herdr";
+    ".claude/skills/skill-creator".source = link "config/claude/skills/skill-creator";
     # config.toml は Codex が動的更新する state（work パス含む）のため管理しない
+    # rules/default.rules も承認履歴の state（work 情報含む）のため管理しない
     ".codex/AGENTS.md".source = link "config/codex/AGENTS.md";
+    ".codex/hooks.json".source = link "config/codex/hooks.json";
+    ".codex/herdr-agent-state.sh".source = link "config/codex/herdr-agent-state.sh";
+    ".codex/scripts/notify.sh".source = link "config/codex/scripts/notify.sh";
+    ".codex/rules/commands.rules".source = link "config/codex/rules/commands.rules";
+    ".codex/keybindings.json".source = link "config/codex/keybindings.json";
 
     # work の identity・社内 URL を含むため local/（git 管理外）に実体を置く
     ".gitconfig".source = link "local/gitconfig";

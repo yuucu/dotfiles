@@ -1,0 +1,65 @@
+gui:
+  # Neovimをエディタとして使用
+  editor: nvim
+  # エディタのオプション
+  scrollHeight: 2
+  scrollPastBottom: true
+  mouseEvents: true
+  skipUnstageLineWarning: false
+  skipStashWarning: false
+  sidePanelWidth: 0.3333
+  expandFocusedSidePanel: false
+  mainPanelSplitMode: 'flexible'
+  language: 'auto'
+  timeFormat: '02 Jan 06 15:04 MST'
+  theme:
+    activeBorderColor:
+      - green
+      - bold
+    inactiveBorderColor:
+      - white
+    optionsTextColor:
+      - blue
+    selectedLineBgColor:
+      - blue
+    selectedRangeBgColor:
+      - blue
+
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+  commit:
+    signOff: false
+  merging:
+    # ネovimをマージツールとして使用
+    manualCommit: false
+    args: ''
+  log:
+    order: 'topo-order'
+    showGraph: 'always'
+  skipHookPrefix: WIP
+  autoFetch: true
+  branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --'
+  allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium'
+  overrideGpg: false
+  disableForcePushing: false
+
+os:
+  # ファイルを開くときにneovimを使用
+  editPreset: 'nvim'
+  openCommand: 'open {{filename}}'
+
+refresher:
+  refreshInterval: 10
+  fetchInterval: 60
+
+update:
+  method: prompt
+  days: 14
+
+confirmOnQuit: false
+quitOnTopLevelReturn: false
+
+notARepository: 'prompt'
+promptToReturnFromSubprocess: true

@@ -25,6 +25,16 @@
 !claude/**
 !codex/
 !codex/**
+!lazygit/
+!lazygit/config.yml
+!git/
+!git/ignore
+!worktrunk/
+!worktrunk/config.toml
+!gwq/
+!gwq/config.toml
+!gh/
+!gh/config.yml
 
 # And not this file
 !.gitignore
