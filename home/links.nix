@@ -29,9 +29,10 @@ in
     ".zshrc".source = link "config/zsh/zshrc";
     ".ideavimrc".source = link "config/ideavim/ideavimrc";
     ".claude/CLAUDE.md".source = link "config/claude/CLAUDE.md";
-    ".claude/settings.json".source = link "config/claude/settings.json";
-    ".claude/scripts/deny-check.sh".source = link "config/claude/scripts/deny-check.sh";
     ".claude/hooks/herdr-agent-state.sh".source = link "config/claude/hooks/herdr-agent-state.sh";
+    # 権限設定・deny パターンは攻撃者への設計図になるため local/（git 管理外）に置く
+    ".claude/settings.json".source = link "local/claude/settings.json";
+    ".claude/scripts/deny-check.sh".source = link "local/claude/deny-check.sh";
     ".claude/agents".source = link "config/claude/agents";
     ".claude/bin/learn".source = link "config/claude/bin/learn";
     ".claude/bin/learn-edit".source = link "config/claude/bin/learn-edit";
@@ -46,7 +47,7 @@ in
     ".codex/hooks.json".source = link "config/codex/hooks.json";
     ".codex/herdr-agent-state.sh".source = link "config/codex/herdr-agent-state.sh";
     ".codex/scripts/notify.sh".source = link "config/codex/scripts/notify.sh";
-    ".codex/rules/commands.rules".source = link "config/codex/rules/commands.rules";
+    ".codex/rules/commands.rules".source = link "local/codex/commands.rules";
     ".codex/keybindings.json".source = link "config/codex/keybindings.json";
 
     # work の identity・社内 URL を含むため local/（git 管理外）に実体を置く
