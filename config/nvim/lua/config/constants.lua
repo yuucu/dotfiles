@@ -10,12 +10,12 @@ M.NOTES_DIR = M.LIFE_REPO_ROOT .. '/docs/50_Notes/'
 M.TIMELINE_BASE_DIR = M.LIFE_REPO_ROOT .. '/docs/20_Timeline/'
 M.TEMPLATES_DIR = M.LIFE_REPO_ROOT .. '/Templates'
 
--- Daily notes configuration
+-- Daily notes configuration（年は起動時に動的解決）
 M.DAILY_NOTES = {
   -- Relative path from life repo root for obsidian
-  RELATIVE_FOLDER = 'docs/20_Timeline/2025/daily',
+  RELATIVE_FOLDER = 'docs/20_Timeline/' .. os.date('%Y') .. '/daily',
   -- Full path for other plugins
-  FULL_PATH = M.TIMELINE_BASE_DIR .. '2025/daily/',
+  FULL_PATH = M.TIMELINE_BASE_DIR .. os.date('%Y') .. '/daily/',
   DATE_FORMAT = '%Y%m%d',
 }
 
