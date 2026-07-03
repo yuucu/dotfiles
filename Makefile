@@ -55,7 +55,6 @@ clean: ## 🧹 一時ファイルとキャッシュのクリーンアップ
 	@find . -name "*.tmp" -delete 2>/dev/null || true
 	@find . -name ".DS_Store" -delete 2>/dev/null || true
 	@find . -name "*.log" -delete 2>/dev/null || true
-	@$(CHEZMOI) purge --force 2>/dev/null || true
 	@echo "$(GREEN)✅ クリーンアップ完了$(RESET)"
 
 status: ## 📊 現在の状態とヘルスチェック
