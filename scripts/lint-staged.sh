@@ -9,7 +9,7 @@ if [ -z "$staged_files" ]; then
   exit 0
 fi
 
-shell_files=$(echo "$staged_files" | rg '\.sh$' || true)
+shell_files=$(echo "$staged_files" | grep -E '\.sh$' || true)
 if [ -n "$shell_files" ] && command -v shellcheck >/dev/null 2>&1; then
   while IFS= read -r file; do
     [ -f "$file" ] || continue
@@ -17,7 +17,7 @@ if [ -n "$shell_files" ] && command -v shellcheck >/dev/null 2>&1; then
   done <<< "$shell_files"
 fi
 
-lua_files=$(echo "$staged_files" | rg '^config/nvim/.*\.lua$' || true)
+lua_files=$(echo "$staged_files" | grep -E '^config/nvim/.*\.lua$' || true)
 if [ -n "$lua_files" ] && command -v stylua >/dev/null 2>&1; then
   while IFS= read -r file; do
     [ -f "$file" ] || continue
