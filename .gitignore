@@ -1,13 +1,5 @@
 *.log
-raycast/
-.config/gcloud/
-.config/configstore/zenn-cli.json
-.config/gh/
-.config/gh-dash/
-.config/github-copilot/
-.config/gitui/
-.config/op/
-.config/alacritty/
+
 # マシンローカル設定（work の identity・社内 URL 等）
 local/
 
@@ -280,7 +272,4 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/vim,lua,windows,macos,intellij,go
 
-.config/lazygit/state.yml
 
-# Sensitive configuration files
-.zshrc

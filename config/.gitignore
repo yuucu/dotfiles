@@ -5,17 +5,10 @@
 *
 
 # But not these directories
-!cspell/
-!lazygit/
 !nvim/
 !nvim/**
-!alacritty.yml
 !alacritty.toml
 !starship.toml
-!.zshrc
-!zellij/
-!todotui/
-!todotui/*
 !tmux/
 !tmux/**
 !ccstatusline/
