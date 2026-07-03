@@ -15,7 +15,7 @@ echo -e "${BLUE}🔍 Dotfiles CI チェックを実行中...${RESET}"
 # 1. Shell script linting
 echo -e "${YELLOW}1. Shell script linting (shellcheck)...${RESET}"
 if command -v shellcheck >/dev/null 2>&1; then
-    if find scripts/ -name "*.sh" -exec shellcheck {} \; 2>/dev/null; then
+    if find scripts/ -name "*.sh" -exec shellcheck {} +; then
         echo -e "  ✅ shellcheck passed"
     else
         echo -e "  ❌ shellcheck failed"
@@ -30,7 +30,7 @@ fi
 echo -e "${YELLOW}2. Lua formatting check...${RESET}"
 if command -v stylua >/dev/null 2>&1; then
     if [ -d "config/nvim" ]; then
-        if stylua --check config/nvim/ 2>/dev/null; then
+        if stylua --check config/nvim/; then
             echo -e "  ✅ Lua formatting check passed"
         else
             echo -e "  ❌ Lua formatting check failed"
@@ -46,7 +46,7 @@ fi
 # 3. Nix flake check
 echo -e "${YELLOW}3. Nix flake check...${RESET}"
 if command -v nix >/dev/null 2>&1; then
-    if nix flake check 2>/dev/null; then
+    if nix flake check; then
         echo -e "  ✅ nix flake check passed"
     else
         echo -e "  ❌ nix flake check failed"

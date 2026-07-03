@@ -35,7 +35,7 @@ jobs:
         run: |
           set -e
           echo "📝 Checking shell scripts..."
-          find scripts/ -name "*.sh" -exec shellcheck {} \;
+          find scripts/ -name "*.sh" -exec shellcheck {} +
 
           echo "🎨 Checking Lua formatting..."
           stylua --check config/nvim/
