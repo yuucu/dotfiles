@@ -1,11 +1,12 @@
 # Homebrew の宣言的管理（brew bundle dump 2026-07-03 時点から生成）
-# cleanup = "none" のため、リストにないパッケージが消されることはない
+# cleanup = "uninstall" のため、宣言にない formula / cask は switch 時に削除される
 _: {
   homebrew = {
     enable = true;
     onActivation = {
       autoUpdate = false;
-      cleanup = "none"; # 安定後に "zap" へ変更を検討
+      # "zap" は cask の設定・データまで消すため "uninstall" に留める
+      cleanup = "uninstall";
     };
 
     # casks で実際に参照している tap のみ宣言する
@@ -49,9 +50,7 @@ _: {
       "codex"
       "docker-desktop"
       "entireio/tap/entire"
-      # フォントは設定が実際に参照するもののみ宣言する（alacritty.toml: Hack Nerd Font）。
-      # cleanup = "none" のためインストール済みの他フォントは消えない。
-      # 不要分は `brew uninstall --cask font-...-nerd-font` で手動削除する
+      # フォントは設定が実際に参照するもののみ宣言する（alacritty.toml: Hack Nerd Font）
       "font-hack-nerd-font"
       "gcloud-cli"
       "jordanbaird-ice"
