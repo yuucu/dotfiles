@@ -2,9 +2,9 @@ name: dotfiles CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
 
 jobs:
   lint:
@@ -22,7 +22,8 @@ jobs:
           sudo apt-get install -y shellcheck
 
           # Install stylua
-          STYLUA_VERSION="v2.1.0"
+          # home/default.nix の stylua（nixpkgs）とバージョンを揃えること
+          STYLUA_VERSION="v2.5.2"
           mkdir -p ~/.local/bin
           curl -L "https://github.com/JohnnyMorganz/StyLua/releases/download/${STYLUA_VERSION}/stylua-linux-x86_64.zip" -o stylua.zip
           unzip stylua.zip
