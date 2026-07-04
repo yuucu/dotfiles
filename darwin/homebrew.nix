@@ -38,7 +38,6 @@ _: {
       "herdr"
       "mise"
       "pipx"
-      "python@3.12"
       "rtk"
       "vips"
       "worktrunk"
