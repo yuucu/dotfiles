@@ -33,13 +33,20 @@
       ninja
       pandoc
       pnpm
+      prisma-language-server
       protobuf
       ripgrep
       shellcheck
       starship
       stylua
+      terraform-ls
       tmux
       tree
+      # nvim-treesitter (main branch) の parser ビルドに必要な CLI
+      tree-sitter
+      # nvim の LSP サーバー（jsonls / eslint は vscode-langservers-extracted）
+      vscode-langservers-extracted
+      yaml-language-server
       zoxide
     ];
   };
