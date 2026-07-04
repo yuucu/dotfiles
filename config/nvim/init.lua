@@ -4,13 +4,14 @@
 -- /_/_//_/_/\__(_)_/\_,_/\_,_/
 --
 
--- 共通のキーマップを読み込み
+-- 共通のキーマップ・ユーザーコマンドを読み込み
 require('core.keymaps')
+require('core.commands')
 
 if vim.g.vscode then
   require('core.vscode')
 else
-  require('core.autocmd')
-  require('core.lazyvim')
   require('core.options')
+  require('core.autocmd')
+  require('core.lazy')
 end

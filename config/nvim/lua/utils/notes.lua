@@ -1,6 +1,6 @@
 -- Notes utility functions
 local M = {}
-local constants = require('config.constants')
+local constants = require('core.constants')
 
 -- Helper function to get git repository root
 local function get_git_root(path)

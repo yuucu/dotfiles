@@ -59,7 +59,7 @@ return {
     'yuucu/minimemo.nvim',
     lazy = false,
     config = function()
-      local constants = require('config.constants')
+      local constants = require('core.constants')
       require('minimemo').setup({
         memo_dir = constants.DAILY_NOTES.FULL_PATH,
         display_timezone = 'Asia/Tokyo',

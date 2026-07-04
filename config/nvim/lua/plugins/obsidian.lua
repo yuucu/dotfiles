@@ -1,4 +1,4 @@
-local constants = require('config.constants')
+local constants = require('core.constants')
 
 return {
   'epwalsh/obsidian.nvim',
