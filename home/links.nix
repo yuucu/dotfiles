@@ -10,16 +10,14 @@ in
   xdg.configFile = {
     "nvim".source = link "config/nvim";
     "tmux".source = link "config/tmux";
-    # 例外：herdr は dir ごと link しているため session.json 等の state が
-    # repo 側に書かれる（config/.gitignore で除外済み）。config.toml 単位の
-    # link に揃える場合は herdr 停止中に state を ~/.config/herdr へ移すこと
-    "herdr".source = link "config/herdr";
     "ccstatusline".source = link "config/ccstatusline";
     "starship.toml".source = link "config/starship.toml";
     "alacritty.toml".source = link "config/alacritty.toml";
     "mise/config.toml".source = link "config/mise/config.toml";
     # state を同居させるツールは設定ファイル単位で link する
-    # （lazygit: state.yml / worktrunk: approvals.toml / gh: hosts.yml は管理外）
+    # （lazygit: state.yml / worktrunk: approvals.toml / gh: hosts.yml /
+    #   herdr: session.json・session-history.json は管理外）
+    "herdr/config.toml".source = link "config/herdr/config.toml";
     "lazygit/config.yml".source = link "config/lazygit/config.yml";
     "git/ignore".source = link "config/git/ignore";
     "worktrunk/config.toml".source = link "config/worktrunk/config.toml";
