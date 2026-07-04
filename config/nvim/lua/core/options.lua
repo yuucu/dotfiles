@@ -41,7 +41,6 @@ opt.softtabstop = 2
 -- Performance
 opt.updatetime = 250
 opt.timeoutlen = 300
-opt.lazyredraw = true
 
 -- Other
 opt.autoread = true

@@ -2,7 +2,7 @@
 vim.api.nvim_create_autocmd('BufReadPost', {
   pattern = '*',
   callback = function()
-    vim.api.nvim_exec('silent! normal! g`"zv', false)
+    vim.cmd([[silent! normal! g`"zv]])
   end,
 })
 
@@ -10,38 +10,18 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking text',
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
--- ファイルタイプ設定
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = '*.mdc',
-  callback = function()
-    vim.bo.filetype = 'markdown'
-  end,
-})
-
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = { '*.puml', '*.plantuml', '*.pu', '*.uml' },
-  callback = function()
-    vim.bo.filetype = 'plantuml'
-  end,
-})
-
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = '*.gd',
-  callback = function()
-    vim.bo.filetype = 'gdscript'
-  end,
-})
-
--- FileType 固有の設定
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'markdown', 'mdc' },
-  callback = function()
-    vim.opt_local.tabstop = 2
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.expandtab = true
-  end,
+-- 拡張子ベースのファイルタイプ判定
+vim.filetype.add({
+  extension = {
+    mdc = 'markdown',
+    puml = 'plantuml',
+    plantuml = 'plantuml',
+    pu = 'plantuml',
+    uml = 'plantuml',
+    gd = 'gdscript',
+  },
 })

@@ -1,11 +1,10 @@
 local M = {}
 -- サーバー個別設定は `after/lsp/<server>.lua` で管理する
+-- バイナリは nix（home/default.nix の home.packages）で提供する
 M.servers = {
   'denols',
-  'oxc_lsp',
   'lua_ls',
   'gopls',
-  'plantuml_lsp',
   'terraformls',
   'yamlls',
   'jsonls',
@@ -16,10 +15,10 @@ M.servers = {
 
 local formatters_by_ft = {
   go = { 'gopls' },
-  javascript = { 'oxc_lsp', 'typescript-tools', 'tsserver' },
-  javascriptreact = { 'oxc_lsp', 'typescript-tools', 'tsserver' },
-  typescript = { 'oxc_lsp', 'typescript-tools', 'tsserver' },
-  typescriptreact = { 'oxc_lsp', 'typescript-tools', 'tsserver' },
+  javascript = { 'typescript-tools', 'tsserver' },
+  javascriptreact = { 'typescript-tools', 'tsserver' },
+  typescript = { 'typescript-tools', 'tsserver' },
+  typescriptreact = { 'typescript-tools', 'tsserver' },
 }
 
 local organize_imports_filetypes = {
@@ -28,6 +27,8 @@ local organize_imports_filetypes = {
   typescript = true,
   typescriptreact = true,
 }
+
+local float_border = 'rounded'
 
 -- LSP capabilities の設定
 M.capabilities = function()
@@ -40,26 +41,26 @@ M.capabilities = function()
   return capabilities
 end
 
--- on_attach 共通設定
-M.on_attach = function(client, bufnr)
-  require('lsp-format').on_attach(client, bufnr)
-
-  -- セマンティックトークンを有効化
-  if client.server_capabilities.semanticTokensProvider then
-    vim.api.nvim_set_hl(0, '@lsp.type.namespace', { link = '@namespace' })
-    vim.api.nvim_set_hl(0, '@lsp.type.type', { link = '@type' })
-    vim.api.nvim_set_hl(0, '@lsp.type.class', { link = '@class' })
-    vim.api.nvim_set_hl(0, '@lsp.type.enum', { link = '@type' })
-    vim.api.nvim_set_hl(0, '@lsp.type.interface', { link = '@interface' })
-    vim.api.nvim_set_hl(0, '@lsp.type.struct', { link = '@structure' })
-    vim.api.nvim_set_hl(0, '@lsp.type.parameter', { link = '@parameter' })
-    vim.api.nvim_set_hl(0, '@lsp.type.variable', { link = '@variable' })
-    vim.api.nvim_set_hl(0, '@lsp.type.property', { link = '@property' })
-    vim.api.nvim_set_hl(0, '@lsp.type.enumMember', { link = '@constant' })
-    vim.api.nvim_set_hl(0, '@lsp.type.function', { link = '@function' })
-    vim.api.nvim_set_hl(0, '@lsp.type.method', { link = '@method' })
-    vim.api.nvim_set_hl(0, '@lsp.type.macro', { link = '@macro' })
-    vim.api.nvim_set_hl(0, '@lsp.type.decorator', { link = '@function' })
+-- セマンティックトークンのハイライトを treesitter のグループへリンク
+M.setup_semantic_highlights = function()
+  local links = {
+    ['@lsp.type.namespace'] = '@namespace',
+    ['@lsp.type.type'] = '@type',
+    ['@lsp.type.class'] = '@class',
+    ['@lsp.type.enum'] = '@type',
+    ['@lsp.type.interface'] = '@interface',
+    ['@lsp.type.struct'] = '@structure',
+    ['@lsp.type.parameter'] = '@parameter',
+    ['@lsp.type.variable'] = '@variable',
+    ['@lsp.type.property'] = '@property',
+    ['@lsp.type.enumMember'] = '@constant',
+    ['@lsp.type.function'] = '@function',
+    ['@lsp.type.method'] = '@method',
+    ['@lsp.type.macro'] = '@macro',
+    ['@lsp.type.decorator'] = '@function',
+  }
+  for group, link in pairs(links) do
+    vim.api.nvim_set_hl(0, group, { link = link })
   end
 end
 
@@ -67,34 +68,26 @@ end
 M.setup_diagnostics = function()
   vim.diagnostic.config({
     virtual_text = false,
-    signs = true,
+    signs = {
+      text = {
+        [vim.diagnostic.severity.ERROR] = '',
+        [vim.diagnostic.severity.WARN] = '',
+        [vim.diagnostic.severity.HINT] = '',
+        [vim.diagnostic.severity.INFO] = '',
+      },
+    },
     underline = true,
     update_in_insert = false,
     severity_sort = true,
     float = {
-      border = 'rounded',
-      source = 'always',
+      border = float_border,
+      source = true,
       header = '',
       prefix = '',
       focusable = false,
       max_width = 100,
     },
   })
-
-  -- 診断記号の設定
-  local signs = {
-    { name = 'DiagnosticSignError', text = '' },
-    { name = 'DiagnosticSignWarn', text = '' },
-    { name = 'DiagnosticSignHint', text = '' },
-    { name = 'DiagnosticSignInfo', text = '' },
-  }
-  for _, sign in ipairs(signs) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
-  end
-
-  -- ホバーウィンドウとシグネチャヘルプのボーダー設定
-  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
-  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
 end
 
 -- LSP キーマップ設定
@@ -106,7 +99,12 @@ M.setup_keymaps = function()
         gD = vim.lsp.buf.declaration,
         gd = vim.lsp.buf.definition,
         gi = vim.lsp.buf.implementation,
-        ['<C-k>'] = vim.lsp.buf.signature_help,
+        K = function()
+          vim.lsp.buf.hover({ border = float_border, max_width = 100 })
+        end,
+        ['<C-k>'] = function()
+          vim.lsp.buf.signature_help({ border = float_border })
+        end,
         ['<space>D'] = vim.lsp.buf.type_definition,
         ['<space>rn'] = vim.lsp.buf.rename,
         gr = vim.lsp.buf.references,
@@ -128,7 +126,7 @@ local function preferred_formatter_id(bufnr)
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
   for _, name in ipairs(preferred) do
     for _, client in ipairs(clients) do
-      if client.name == name and client.supports_method and client:supports_method('textDocument/formatting') then
+      if client.name == name and client:supports_method('textDocument/formatting') then
         return client.id
       end
     end
@@ -142,6 +140,18 @@ M.setup_format_on_save = function()
     callback = function(ev)
       local bufnr = ev.buf
       local ft = vim.bo[bufnr].filetype
+
+      -- フォーマット可能な LSP がいないバッファでは何もしない（警告メッセージ抑止）
+      local can_format = false
+      for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+        if client:supports_method('textDocument/formatting') then
+          can_format = true
+          break
+        end
+      end
+      if not can_format then
+        return
+      end
 
       if organize_imports_filetypes[ft] then
         pcall(vim.lsp.buf.code_action, {
@@ -162,12 +172,16 @@ end
 
 M.setup = function()
   M.setup_diagnostics()
+  M.setup_semantic_highlights()
+  vim.api.nvim_create_autocmd('ColorScheme', {
+    group = vim.api.nvim_create_augroup('LspSemanticHighlights', { clear = true }),
+    callback = M.setup_semantic_highlights,
+  })
   M.setup_keymaps()
   M.setup_format_on_save()
 
   vim.lsp.config('*', {
     capabilities = M.capabilities(),
-    on_attach = vim.schedule_wrap(M.on_attach),
   })
 
   for _, server in ipairs(M.servers) do

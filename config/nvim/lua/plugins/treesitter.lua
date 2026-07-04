@@ -1,55 +1,59 @@
+-- Highlight, edit, and navigate code
+-- main ブランチではモジュール設定が廃止されたため、
+-- parser の install と vim.treesitter.start() の呼び出しを自前で行う
+local parsers = {
+  'go',
+  'gosum',
+  'gomod',
+  'gowork',
+  'lua',
+  'python',
+  'rust',
+  'typescript',
+  'tsx',
+  'vimdoc',
+  'vim',
+  'kotlin',
+  'dockerfile',
+  'json',
+  'json5',
+  'terraform',
+  'hcl',
+  'bash',
+  'c',
+  'html',
+  'javascript',
+  'jsdoc',
+  'luadoc',
+  'luap',
+  'markdown',
+  'markdown_inline',
+  'query',
+  'regex',
+  'yaml',
+  'css',
+  'scss',
+}
+
 return {
-  -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   branch = 'main',
-  event = { 'BufReadPost', 'BufNewFile' },
+  lazy = false,
   build = ':TSUpdate',
-  cmd = { 'TSUpdateSync' },
   cond = function()
     return not vim.g.vscode
   end,
   config = function()
-    require('nvim-treesitter').setup({
-      ensure_installed = {
-        'go',
-        'gosum',
-        'gomod',
-        'gowork',
-        'lua',
-        'python',
-        'rust',
-        'typescript',
-        'tsx',
-        'vimdoc',
-        'vim',
-        'kotlin',
-        'dockerfile',
-        'json',
-        'json5',
-        'jsonc',
-        'terraform',
-        'hcl',
-        'bash',
-        'c',
-        'html',
-        'javascript',
-        'jsdoc',
-        'luadoc',
-        'luap',
-        'markdown',
-        'markdown_inline',
-        'query',
-        'regex',
-        'yaml',
-        'css',
-        'scss',
-      },
-    })
+    require('nvim-treesitter').install(parsers)
 
-    -- Diagnostic keymaps
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-    vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-    vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+    vim.api.nvim_create_autocmd('FileType', {
+      group = vim.api.nvim_create_augroup('TreesitterHighlight', { clear = true }),
+      callback = function(ev)
+        local lang = vim.treesitter.language.get_lang(ev.match)
+        if lang and vim.treesitter.language.add(lang) then
+          vim.treesitter.start(ev.buf, lang)
+        end
+      end,
+    })
   end,
 }
