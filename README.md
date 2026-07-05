@@ -12,6 +12,41 @@ nix-darwin + home-manager による個人開発環境設定です。
 - **config/** — nvim / tmux / zsh / starship 等の実体。**編集は即反映（rebuild 不要）**
 - **local/** — git 管理外。work の git identity・社内 URL 等のマシンローカル設定
 
+```mermaid
+flowchart TB
+    subgraph repo["dotfiles リポジトリ"]
+        flake["flake.nix<br/>(エントリポイント)"]
+        darwin["darwin/<br/>macOS 設定"]
+        brew["darwin/homebrew.nix<br/>cask・重量級 brew"]
+        home["home/default.nix<br/>CLI パッケージ (nixpkgs)"]
+        links["home/links.nix<br/>symlink 定義"]
+        config["config/<br/>設定の実体"]
+        local["local/<br/>(git 管理外)<br/>work 設定・secret"]
+    end
+
+    flake --> darwin
+    flake --> home
+    darwin --> brew
+    home --> links
+    links --> config
+    links --> local
+
+    switch(["make switch<br/>= darwin-rebuild switch"]) ==> flake
+    darwin -.->|OS 設定適用| macos["macOS<br/>(TouchID sudo 等)"]
+    brew -.->|cleanup=uninstall| brewpkg["Homebrew<br/>(GUI アプリ)"]
+    home -.->|インストール| nixpkg["~/.nix-profile<br/>(CLI ツール)"]
+    config -.->|"mkOutOfStoreSymlink で直接 link（編集は即反映・rebuild 不要）"| hometarget["~/.config, ~/.zshrc …"]
+    local -.->|"直接 link"| hometarget
+
+    classDef ext fill:#e8f4ff,stroke:#4a90d9,color:#1a1a1a;
+    classDef cmd fill:#fff3cd,stroke:#d9a441,color:#1a1a1a;
+    class macos,brewpkg,nixpkg,hometarget ext;
+    class switch cmd;
+```
+
+- **`.nix` を変更したとき**は `make switch` で反映（パッケージ・OS 設定・symlink 構成が更新される）
+- **`config/` 配下の設定ファイル**は repo を直接 symlink しているため、編集するだけで即反映（rebuild 不要）
+
 設計の詳細と移行計画は [docs/design.md](docs/design.md) を参照。
 
 ## セットアップ（新しい Mac）
