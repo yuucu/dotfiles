@@ -29,8 +29,6 @@
 !git/ignore
 !worktrunk/
 !worktrunk/config.toml
-!gwq/
-!gwq/config.toml
 !gh/
 !gh/config.yml
 !.gitignore

@@ -21,7 +21,6 @@ in
     "lazygit/config.yml".source = link "config/lazygit/config.yml";
     "git/ignore".source = link "config/git/ignore";
     "worktrunk/config.toml".source = link "config/worktrunk/config.toml";
-    "gwq/config.toml".source = link "config/gwq/config.toml";
     "gh/config.yml".source = link "config/gh/config.yml";
   };
 
