@@ -39,15 +39,16 @@ detach = "prefix+d"                  # tmux: prefix+d
 close_tab = "prefix+ampersand"       # tmux: prefix+&
 rename_tab = "prefix+comma"          # tmux: prefix+,
 
-# ペインフォーカス移動を矢印キーへ（prefix+l を lazygit に譲るため）
-focus_pane_left = "prefix+left"
-focus_pane_down = "prefix+down"
-focus_pane_up = "prefix+up"
-focus_pane_right = "prefix+right"
+# ペインフォーカス移動を vim ライクな hjkl へ（tmux の tmux.conf に合わせる）
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
 
-# prefix+l で lazygit をペインで開く
+# prefix+alt+g で lazygit をペインで開く（prefix+l は hjkl の右移動に譲った。
+# prefix+g=goto / prefix+shift+g=new_worktree は herdr 組み込みと衝突するため alt+g）
 [[keys.command]]
-key = "prefix+l"
+key = "prefix+alt+g"
 type = "pane"
 command = "lazygit"
 
