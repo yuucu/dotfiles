@@ -7,10 +7,6 @@
 
 snippets:
   # --- git ---
-  - name: git commit message
-    keyword: gcmsg
-    snippet: git commit -m '{{cursor}}'
-
   - name: git switch branch
     keyword: gsw
     snippet: git switch {{cursor}}
