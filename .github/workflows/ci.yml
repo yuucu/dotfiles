@@ -6,18 +6,30 @@ on:
   pull_request:
     branches: [main]
 
+# 同一ブランチで新しい実行が始まったら進行中の実行をキャンセルする
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# 既定は読み取りのみ。書き込みが必要な job で個別に補う
+permissions:
+  contents: read
+
 jobs:
   gitleaks:
     runs-on: ubuntu-latest
     name: Secret scan
+    permissions:
+      contents: read
+      pull-requests: write # gitleaks-action が PR にコメントを残すため
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           fetch-depth: 0 # 全履歴をスキャンする
 
       - name: Run gitleaks
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -26,10 +38,10 @@ jobs:
     name: Nix flake check
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v22
+        uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
 
       # checks.lint（shellcheck / stylua / nixfmt / statix / deadnix）も
       # ここでビルドされる。ツールのバージョンは flake.lock で固定
