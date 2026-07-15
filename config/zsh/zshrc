@@ -40,9 +40,17 @@ setopt no_beep
 # Zinit (Plugin Manager)
 # ============================================================================
 
+# サプライチェーン対策として zinit 本体・プラグインとも commit を固定する。
+# 更新手順: 上流で新しい commit を確認して SHA を書き換え、
+#   本体:       git -C ~/.local/share/zinit/zinit.git fetch && git -C ~/.local/share/zinit/zinit.git checkout <SHA>
+#   プラグイン: zinit update <plugin>（ver'' の SHA に checkout される）
+# `zinit self-update` は固定が外れるため使わない
+ZINIT_COMMIT='d38a3cc4f35f0c7e6892449c18783311ec246949' # v3.14.0 + fixes (2026-07 時点)
+
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
     command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
+    command git -C "$HOME/.local/share/zinit/zinit.git" checkout -q "$ZINIT_COMMIT"
 fi
 
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
@@ -52,10 +60,14 @@ autoload -Uz _zinit
 # zsh-completions ロード後に zicompinit で compinit を 1 回だけ実行。
 # syntax-highlighting は最後にロードするのが公式推奨
 zinit wait lucid light-mode for \
+    ver'85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5' \
     @'zsh-users/zsh-autosuggestions' \
+    ver'a223125abc3cbf72ceaf050ed7af944a1722f5ef' \
     @'paulirish/git-open' \
     blockf atpull'(zinit creinstall -q .)' atload'zicompinit; zicdreplay' \
+    ver'b2d0232473a3aa34e784be608735c281dab39d0f' \
     @'zsh-users/zsh-completions' \
+    ver'5eb677bb0fa9a3e60f0eff031dc13926e093df92' \
     @'zsh-users/zsh-syntax-highlighting'
 
 # ============================================================================
