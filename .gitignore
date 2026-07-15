@@ -13,6 +13,9 @@ node_modules/
 package-lock.json
 package.json
 
+# Python
+__pycache__/
+
 # macOS
 .DS_Store
 .AppleDouble
