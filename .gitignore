@@ -2,6 +2,7 @@
 
 # マシンローカル設定（work の identity・社内 URL 等）
 local/
+CLAUDE.local.md
 
 # Nix
 result
