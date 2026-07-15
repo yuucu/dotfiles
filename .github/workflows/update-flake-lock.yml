@@ -1,0 +1,32 @@
+name: Update flake.lock
+
+on:
+  # 毎週月曜の早朝（JST 09:00 = UTC 00:00）に実行する
+  schedule:
+    - cron: "0 0 * * 1"
+  # 手動実行も許可する
+  workflow_dispatch:
+
+# 最小限の権限のみ付与する
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-flake-lock:
+    runs-on: ubuntu-latest
+    name: Update flake.lock
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v22
+
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@v28
+        with:
+          pr-title: "chore(deps): flake.lock を更新"
+          pr-labels: dependencies
+          branch: chore/update-flake-lock
+          commit-msg: "chore(deps): flake.lock を更新"
