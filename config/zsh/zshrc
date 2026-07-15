@@ -72,6 +72,7 @@ fi
 #
 # キーバインド:
 #   space    : keyword を snippet に自動展開（auto-snippet）
+#   Enter    : keyword を展開してから実行（cursor 無しの snippet は即実行）
 #   Tab      : zeno-completion（未展開時は zsh 標準補完へフォールバック）
 #   Ctrl+R   : 履歴選択
 #   Ctrl+X X : snippet を fzf で選んで挿入
@@ -83,6 +84,7 @@ if command -v deno &> /dev/null; then
   zinit ice lucid depth'1' blockf \
     atload'
       bindkey " "   zeno-auto-snippet
+      bindkey "^m"  zeno-auto-snippet-and-accept-line
       bindkey "^i"  zeno-completion
       bindkey "^r"  zeno-history-selection
       bindkey "^xx" zeno-insert-snippet
@@ -118,7 +120,7 @@ alias gp='git push'
 alias gl='git pull'
 alias gd='git diff'
 alias glog='git log --oneline --graph'
-alias lg='lazygit'
+# lg（lazygit）は zeno snippet に移行（Enter で展開＋実行）
 
 # Navigation
 alias ..='cd ..'

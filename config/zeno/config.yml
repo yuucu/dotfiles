@@ -26,6 +26,21 @@ snippets:
     keyword: grbi
     snippet: git rebase -i HEAD~{{cursor}}
 
+  # --- worktrunk (wt) ---
+  - name: wt switch
+    keyword: wts
+    snippet: wt switch {{cursor}}
+
+  - name: wt switch --create
+    keyword: wtsc
+    snippet: wt switch --create {{cursor}}
+
+  # --- tools ---
+  # cursor を持たないため Enter（zeno-auto-snippet-and-accept-line）で即起動する
+  - name: lazygit
+    keyword: lg
+    snippet: lazygit
+
   # --- 汎用 ---
   - name: pipe to less
     keyword: L
