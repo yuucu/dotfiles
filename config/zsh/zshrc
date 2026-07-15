@@ -54,7 +54,7 @@ autoload -Uz _zinit
 zinit wait lucid light-mode for \
     @'zsh-users/zsh-autosuggestions' \
     @'paulirish/git-open' \
-    blockf atpull'zinit creinstall -q .' atload'zicompinit; zicdreplay' \
+    blockf atpull'(zinit creinstall -q .)' atload'zicompinit; zicdreplay' \
     @'zsh-users/zsh-completions' \
     @'zsh-users/zsh-syntax-highlighting'
 
