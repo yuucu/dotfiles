@@ -70,9 +70,11 @@
       checks = forAllSystems (pkgs: {
         lint = pkgs.runCommand "dotfiles-lint" { nativeBuildInputs = lintTools pkgs; } ''
           cd ${self}
-          shellcheck scripts/*.sh
+          # git 追跡ファイルのみ flake source にコピーされるため、
+          # find による全走査は git ls-files 相当（runCommand 内に git は無い）。
+          find . -type f -name '*.sh' -exec shellcheck {} +
           stylua --check config/nvim/
-          nixfmt --check flake.nix darwin/*.nix home/*.nix
+          find . -type f -name '*.nix' -exec nixfmt --check {} +
           statix check .
           deadnix --fail .
           touch $out
