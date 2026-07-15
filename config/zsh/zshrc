@@ -67,6 +67,21 @@ if command -v fzf &> /dev/null; then
   eval "$(fzf --zsh)"
 fi
 
+# zeno.zsh（Deno + fzf 製の snippet / 補完 / 履歴選択ツール）
+# キーバインドは控えめ運用: Ctrl+R の履歴選択と Ctrl+X X の snippet 挿入のみ。
+# space の auto-snippet 展開は有効化しない。
+# fzf の Ctrl+R バインドを上書きするため、fzf 初期化の後に読み込む。
+if command -v deno &> /dev/null; then
+  export ZENO_ENABLE_FZF_TMUX=1
+  export ZENO_FZF_TMUX_OPTIONS="-p 80%,80%"
+  zinit ice lucid depth'1' blockf \
+    atload'
+      bindkey "^r"  zeno-history-selection
+      bindkey "^xx" zeno-insert-snippet
+    '
+  zinit light yuki-yano/zeno.zsh
+fi
+
 # zoxide
 if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"

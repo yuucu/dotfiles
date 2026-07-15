@@ -31,6 +31,8 @@
 !worktrunk/config.toml
 !gh/
 !gh/config.yml
+!zeno/
+!zeno/config.yml
 !.gitignore
 
 # 許可したディレクトリ配下でも ignore するもの（後勝ちで上の ! を打ち消す）
