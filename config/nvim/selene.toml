@@ -1,0 +1,9 @@
+# selene: Neovim 設定（Lua）向けの lint 設定
+# std に lua51 と自前の vim 定義（vim.yml）を合成する。
+std = "lua51+vim"
+
+[rules]
+# lazy.nvim のプラグイン仕様は配列とキーが混在するテーブルが標準スタイルのため許可する。
+mixed_table = "allow"
+# alpha ダッシュボードから呼ぶ関数を _G に公開する箇所があるため許可する。
+global_usage = "allow"

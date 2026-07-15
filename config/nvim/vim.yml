@@ -1,0 +1,7 @@
+# selene 用の Neovim(vim) 標準ライブラリ定義。
+# vim.* の API は膨大なため、誤検知を避けて any として許可する。
+# これにより undefined_variable(`vim`) を防ぎつつ実バグ検出に集中できる。
+base: lua51
+globals:
+  vim:
+    any: true
