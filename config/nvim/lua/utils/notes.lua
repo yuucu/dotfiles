@@ -2,15 +2,6 @@
 local M = {}
 local constants = require('core.constants')
 
--- Helper function to get git repository root
-local function get_git_root(path)
-  local result = vim.fn.system('git -C ' .. vim.fn.shellescape(path) .. ' rev-parse --show-toplevel 2>/dev/null')
-  if vim.v.shell_error ~= 0 then
-    return nil
-  end
-  return result:gsub('\n', '')
-end
-
 -- Function to create a new note with date prefix
 function M.create_new_note()
   -- Get current date in YYYYMMDD format

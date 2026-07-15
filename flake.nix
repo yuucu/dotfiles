@@ -34,6 +34,7 @@
           actionlint
           deadnix
           nixfmt
+          selene
           shellcheck
           statix
           stylua
@@ -77,6 +78,8 @@
           # find による全走査は git ls-files 相当（runCommand 内に git は無い）。
           find . -type f -name '*.sh' -exec shellcheck {} +
           stylua --check config/nvim/
+          # selene は CWD の selene.toml / vim.yml を参照するため config/nvim/ 内で実行する
+          ( cd config/nvim && selene . )
           find . -type f -name '*.nix' -exec nixfmt --check {} +
           statix check .
           deadnix --fail .
