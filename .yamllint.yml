@@ -1,0 +1,15 @@
+# yamllint 設定（既存ファイルが通る最小限の緩和）
+extends: default
+
+rules:
+  # 行長はエディタ側で管理するため無効化
+  line-length: disable
+  # ドキュメント先頭の `---` を必須にしない
+  document-start: disable
+  # GitHub Actions の `on:` を truthy 扱いしない
+  truthy:
+    check-keys: false
+  # コメントのフォーマット差異は許容
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: disable

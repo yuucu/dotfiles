@@ -31,11 +31,14 @@
         ] (system: f nixpkgs.legacyPackages.${system});
       lintTools =
         pkgs: with pkgs; [
+          actionlint
           deadnix
           nixfmt
           shellcheck
           statix
           stylua
+          taplo
+          yamllint
         ];
     in
     {
@@ -75,6 +78,12 @@
           nixfmt --check flake.nix darwin/*.nix home/*.nix
           statix check .
           deadnix --fail .
+          # GitHub Actions ワークフロー（sandbox 内は git repo でないためファイルを明示）
+          actionlint .github/workflows/*.yml
+          # YAML lint（追跡中の .yml を find で走査。設定は .yamllint.yml）
+          find . -type f -name '*.yml' -print0 | xargs -0 yamllint -c .yamllint.yml
+          # TOML lint（構文チェックのみ。sandbox 内でネットワークに出ないようスキーマ検証はオフ）
+          find . -type f -name '*.toml' -print0 | xargs -0 taplo lint --no-schema
           touch $out
         '';
       });
