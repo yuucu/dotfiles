@@ -37,6 +37,7 @@ in
     # skills/ は work repo への symlink 等が同居するため、汎用 skill だけ個別に link
     ".claude/skills/ask-codex".source = link "config/claude/skills/ask-codex";
     ".claude/skills/herdr".source = link "config/claude/skills/herdr";
+    ".claude/skills/hunk-review".source = link "config/claude/skills/hunk-review";
     ".claude/skills/skill-creator".source = link "config/claude/skills/skill-creator";
     # config.toml は Codex が動的更新する state（work パス含む）のため管理しない
     # rules/default.rules も承認履歴の state（work 情報含む）のため管理しない
