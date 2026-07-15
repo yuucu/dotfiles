@@ -42,3 +42,5 @@
 Session.vim
 .netrwhist
 tags
+__pycache__/
+*.pyc
