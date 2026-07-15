@@ -1,9 +1,11 @@
 # zeno.zsh 設定
 # https://github.com/yuki-yano/zeno.zsh
 #
-# 控えめ運用: space での auto-snippet 展開は使わず、
-# Ctrl+X X（zeno-insert-snippet）で fzf から選んで挿入する。
-# {{カーソル}} は展開後のカーソル位置。
+# keyword を打って space で snippet に自動展開（auto-snippet）される。
+# Ctrl+X X（zeno-insert-snippet）で fzf から選んで挿入もできる。
+# {{cursor}} は展開後のカーソル位置。
+# 行頭に来ない keyword（L / G / null 等）は auto-snippet では発火せず、
+# Ctrl+X X 経由で挿入する用途。
 
 snippets:
   # --- git ---
@@ -15,8 +17,9 @@ snippets:
     keyword: gswc
     snippet: git switch -c {{cursor}}
 
+  # keyword は既存 alias（glog）と被らないよう glg にする
   - name: git log oneline
-    keyword: glog
+    keyword: glg
     snippet: git log --oneline --graph --decorate
 
   - name: git rebase interactive
