@@ -20,7 +20,7 @@ _: {
     # - awscli は mise（config/mise/config.toml）で管理
     # - node: ccusage（brew formula）の依存 + グローバル npm 用
     # - coreutils / grep: brew は g-prefix で共存、nixpkgs は無印で BSD コマンドを隠すため
-    # - herdr / rtk / worktrunk / chrome-cli: nixpkgs 未収載（tap・独自 formula）
+    # - herdr / rtk / worktrunk / chrome-cli / hunk: nixpkgs 未収載（tap・独自 formula）
     # - glib / pango / vips / ffmpeg / graphviz: ライブラリ・重量級のため当面 brew
     brews = [
       "bash-completion@2"
@@ -36,6 +36,7 @@ _: {
       "graphviz"
       "grep"
       "herdr"
+      "hunk"
       "mise"
       "pipx"
       "rtk"
