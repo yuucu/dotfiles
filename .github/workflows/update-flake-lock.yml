@@ -26,6 +26,9 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@834c491b2ece4de0bbd00d85214bb5e83b4da5c6 # v28
         with:
+          # デフォルトの GITHUB_TOKEN だと作成した PR に CI がトリガーされないため、
+          # fine-grained PAT（yuucu/dotfiles 限定、contents / pull-requests: write）を使う
+          token: ${{ secrets.UPDATE_FLAKE_LOCK_TOKEN }}
           pr-title: "chore(deps): flake.lock を更新"
           pr-labels: dependencies
           branch: chore/update-flake-lock
