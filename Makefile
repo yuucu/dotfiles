@@ -3,7 +3,11 @@
 
 .PHONY: help switch check update fmt gc ci-check hook-install status
 
-FLAKE_TARGET := yuucu-mac
+# username は実ログインユーザーに追従（flake.nix が DOTFILES_USER を参照）。
+# sudo 実行下でも元のユーザーを拾うため SUDO_USER を優先する。
+DOTFILES_USER := $(shell echo $${SUDO_USER:-$$(whoami)})
+FLAKE_TARGET := $(DOTFILES_USER)-mac
+export DOTFILES_USER
 
 # Colors for output
 GREEN := \033[32m
@@ -17,11 +21,11 @@ help: ## このヘルプメッセージを表示
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(GREEN)%-20s$(RESET) %s\n", $$1, $$2}'
 
 switch: ## 🔄 flake の変更をシステムに適用（darwin-rebuild switch）
-	@sudo /run/current-system/sw/bin/darwin-rebuild switch --flake .#$(FLAKE_TARGET)
+	@sudo DOTFILES_USER=$(DOTFILES_USER) /run/current-system/sw/bin/darwin-rebuild switch --impure --flake .#$(FLAKE_TARGET)
 
 check: ## 🔍 flake の評価チェック（適用はしない）
 	@nix flake check
-	@nix build .#darwinConfigurations.$(FLAKE_TARGET).system --dry-run
+	@nix build .#darwinConfigurations.$(FLAKE_TARGET).system --dry-run --impure
 
 update: ## 📦 flake inputs・Neovim プラグイン・mise ツールの更新
 	@echo "$(BLUE)📦 flake inputs を更新中...$(RESET)"
@@ -47,7 +51,7 @@ gc: ## 🗑  30 日より古い世代を削除して Nix store を GC
 
 ci-check: ## 🔍 CI と同じチェックをローカルで実行
 	@chmod +x scripts/ci-check.sh
-	@FLAKE_TARGET=$(FLAKE_TARGET) scripts/ci-check.sh
+	@scripts/ci-check.sh
 
 hook-install: ## 🪝 lefthook をインストール
 	@lefthook install

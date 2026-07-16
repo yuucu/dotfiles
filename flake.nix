@@ -21,7 +21,12 @@
       home-manager,
     }:
     let
-      username = "s09104";
+      # 実ログインユーザーに追従させる（新しい Mac でユーザー名が異なっても動く）。
+      # getEnv は impure なため、適用は `--impure` 付きで行う（make switch / bootstrap.sh が付与）。
+      # pure eval（`nix flake check`）では getEnv が "" を返すため、その場合は既定値へフォールバックする。
+      envUser = builtins.getEnv "DOTFILES_USER";
+      username = if envUser != "" then envUser else "s09104";
+      hostConfig = "${username}-mac";
       # x86_64-linux は Phase 4 の Linux（home-manager 単体）対応を見据えた先行出力
       forAllSystems =
         f:
@@ -43,7 +48,7 @@
         ];
     in
     {
-      darwinConfigurations."yuucu-mac" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations.${hostConfig} = nix-darwin.lib.darwinSystem {
         specialArgs = { inherit username; };
         modules = [
           ./darwin

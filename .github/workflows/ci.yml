@@ -45,7 +45,10 @@ jobs:
 
       # checks.lint（shellcheck / stylua / nixfmt / statix / deadnix）も
       # ここでビルドされる。ツールのバージョンは flake.lock で固定
+      # darwinConfigurations の attribute 名は username に追従して動的なため、
+      # 名前を決め打ちせず flake 自身に問い合わせてからビルドする
       - name: Flake check
         run: |
           nix flake check
-          nix build .#darwinConfigurations.yuucu-mac.system --dry-run
+          target=$(nix eval .#darwinConfigurations --apply 'cfgs: builtins.head (builtins.attrNames cfgs)' --raw)
+          nix build ".#darwinConfigurations.${target}.system" --dry-run

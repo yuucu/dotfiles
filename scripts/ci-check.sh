@@ -23,7 +23,10 @@ if command -v nix >/dev/null 2>&1; then
         echo -e "  ❌ nix flake check failed"
         EXIT_CODE=1
     fi
-    if nix build ".#darwinConfigurations.${FLAKE_TARGET:-yuucu-mac}.system" --dry-run; then
+    # nix build は pure eval のため attribute 名は flake の既定値に固定される。
+    # 名前を決め打ちせず flake 自身に問い合わせる（FLAKE_TARGET 指定時はそちらを優先）
+    FLAKE_TARGET="${FLAKE_TARGET:-$(nix eval .#darwinConfigurations --apply 'cfgs: builtins.head (builtins.attrNames cfgs)' --raw)}"
+    if nix build ".#darwinConfigurations.${FLAKE_TARGET}.system" --dry-run; then
         echo -e "  ✅ nix build dry-run passed"
     else
         echo -e "  ❌ nix build dry-run failed"
