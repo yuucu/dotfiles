@@ -51,7 +51,7 @@ gc: ## 🗑  30 日より古い世代を削除して Nix store を GC
 
 ci-check: ## 🔍 CI と同じチェックをローカルで実行
 	@chmod +x scripts/ci-check.sh
-	@FLAKE_TARGET=$(FLAKE_TARGET) scripts/ci-check.sh
+	@scripts/ci-check.sh
 
 hook-install: ## 🪝 lefthook をインストール
 	@lefthook install
