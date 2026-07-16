@@ -13,19 +13,6 @@ snippets:
     keyword: gsw
     snippet: git switch {{cursor}}
 
-  - name: git switch create
-    keyword: gswc
-    snippet: git switch -c {{cursor}}
-
-  # keyword は既存 alias（glog）と被らないよう glg にする
-  - name: git log oneline
-    keyword: glg
-    snippet: git log --oneline --graph --decorate
-
-  - name: git rebase interactive
-    keyword: grbi
-    snippet: git rebase -i HEAD~{{cursor}}
-
   # --- worktrunk (wt) ---
   - name: wt switch
     keyword: wts
