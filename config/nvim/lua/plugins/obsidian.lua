@@ -50,7 +50,7 @@ return {
       return date .. '_' .. suffix
     end,
     daily_notes = {
-      folder = constants.get_daily_relative_path('2025'),
+      folder = constants.DAILY_NOTES.RELATIVE_FOLDER,
       date_format = constants.DAILY_NOTES.DATE_FORMAT,
       template = nil,
     },

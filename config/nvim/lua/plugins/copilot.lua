@@ -4,8 +4,7 @@ return {
   cond = function()
     return not vim.g.vscode
   end,
-  filetypes = {
-    markdown = true,
-    help = true,
-  },
+  init = function()
+    vim.g.copilot_filetypes = { markdown = true, help = true }
+  end,
 }
