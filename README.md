@@ -51,6 +51,18 @@ flowchart TB
 
 ## セットアップ（新しい Mac）
 
+### ワンライナー
+
+Xcode CLT / Homebrew / Nix / clone / 初回適用までを bootstrap スクリプトが冪等に実行します。
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/yuucu/dotfiles/main/scripts/bootstrap.sh | bash
+```
+
+途中 Xcode CLT のインストールと `sudo` のパスワード入力で対話が入ります。何度実行しても既存分はスキップされます（冪等）。処理内容は [scripts/bootstrap.sh](scripts/bootstrap.sh) を参照。
+
+### 手動セットアップ（中身を把握したいとき）
+
 ```bash
 # 1. Xcode CLT と Homebrew（brew 管理のパッケージ用）
 xcode-select --install
