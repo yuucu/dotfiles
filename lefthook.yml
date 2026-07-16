@@ -8,5 +8,7 @@ pre-commit:
 
 pre-push:
   commands:
-    ci-check:
-      run: make ci-check
+    # lint 群（shellcheck / stylua / nixfmt / statix / deadnix）の最終確認。
+    # 重い build dry-run と全履歴 gitleaks は GitHub Actions に任せる。
+    flake-check:
+      run: nix flake check

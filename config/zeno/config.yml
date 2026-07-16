@@ -1,0 +1,42 @@
+# zeno.zsh 設定
+# https://github.com/yuki-yano/zeno.zsh
+#
+# keyword を打って space で snippet に自動展開（auto-snippet）される。
+# Ctrl+X X（zeno-insert-snippet）で fzf から選んで挿入もできる。
+# {{cursor}} は展開後のカーソル位置。
+# 行頭に来ない keyword（L / G / null 等）は auto-snippet では発火せず、
+# Ctrl+X X 経由で挿入する用途。
+
+snippets:
+  # --- git ---
+  - name: git switch branch
+    keyword: gsw
+    snippet: git switch {{cursor}}
+
+  # --- worktrunk (wt) ---
+  - name: wt switch
+    keyword: wts
+    snippet: wt switch {{cursor}}
+
+  - name: wt switch --create
+    keyword: wtsc
+    snippet: wt switch --create {{cursor}}
+
+  # --- tools ---
+  # cursor を持たないため Enter（zeno-auto-snippet-and-accept-line）で即起動する
+  - name: lazygit
+    keyword: lg
+    snippet: lazygit
+
+  # --- 汎用 ---
+  - name: pipe to less
+    keyword: L
+    snippet: '| less'
+
+  - name: pipe to grep
+    keyword: G
+    snippet: '| grep '
+
+  - name: redirect to null
+    keyword: 'null'
+    snippet: '> /dev/null 2>&1'
