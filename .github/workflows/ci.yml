@@ -45,7 +45,9 @@ jobs:
 
       # checks.lint（shellcheck / stylua / nixfmt / statix / deadnix）も
       # ここでビルドされる。ツールのバージョンは flake.lock で固定
+      # pure eval では flake.nix の username が既定値へフォールバックするため
+      # attribute 名は <既定ユーザー>-mac になる
       - name: Flake check
         run: |
           nix flake check
-          nix build .#darwinConfigurations.yuucu-mac.system --dry-run
+          nix build .#darwinConfigurations.s09104-mac.system --dry-run

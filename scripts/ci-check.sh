@@ -23,7 +23,7 @@ if command -v nix >/dev/null 2>&1; then
         echo -e "  ❌ nix flake check failed"
         EXIT_CODE=1
     fi
-    if nix build ".#darwinConfigurations.${FLAKE_TARGET:-yuucu-mac}.system" --dry-run; then
+    if nix build ".#darwinConfigurations.${FLAKE_TARGET:-s09104-mac}.system" --dry-run; then
         echo -e "  ✅ nix build dry-run passed"
     else
         echo -e "  ❌ nix build dry-run failed"
