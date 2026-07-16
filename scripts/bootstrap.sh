@@ -28,7 +28,10 @@ RESET='\033[0m'
 
 REPO_URL="https://github.com/yuucu/dotfiles"
 REPO_DIR="${HOME}/ghq/github.com/yuucu/dotfiles"
-FLAKE_TARGET="yuucu-mac"
+# username は実ログインユーザーに追従（flake.nix が DOTFILES_USER を参照）。
+DOTFILES_USER="$(whoami)"
+FLAKE_TARGET="${DOTFILES_USER}-mac"
+export DOTFILES_USER
 
 log() { echo -e "${BLUE}==> $*${RESET}"; }
 ok() { echo -e "  ${GREEN}✅ $*${RESET}"; }
@@ -108,14 +111,16 @@ fi
 # ----------------------------------------------------------------------------
 log "5/5 nix-darwin 初回適用（.#${FLAKE_TARGET}）"
 cd "${REPO_DIR}"
+# flake.nix は DOTFILES_USER を getEnv で参照するため --impure が必要。
+# sudo は環境変数を落とすので、DOTFILES_USER を明示的に引き渡す。
 if command -v darwin-rebuild >/dev/null 2>&1; then
-    ok "darwin-rebuild が既にある → make switch で適用"
-    sudo /run/current-system/sw/bin/darwin-rebuild switch --flake ".#${FLAKE_TARGET}"
+    ok "darwin-rebuild が既にある → switch で適用"
+    sudo DOTFILES_USER="${DOTFILES_USER}" /run/current-system/sw/bin/darwin-rebuild switch --impure --flake ".#${FLAKE_TARGET}"
 else
     warn "初回のため nix run で nix-darwin を適用します（sudo でパスワードを求められます）"
-    sudo nix run nix-darwin/master -- switch --flake ".#${FLAKE_TARGET}"
+    sudo DOTFILES_USER="${DOTFILES_USER}" nix run nix-darwin/master -- switch --impure --flake ".#${FLAKE_TARGET}"
 fi
-ok "適用完了"
+ok "適用完了（username: ${DOTFILES_USER}）"
 
 # ----------------------------------------------------------------------------
 # 完了 & 手作業の案内

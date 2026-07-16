@@ -76,14 +76,16 @@ mkdir -p ~/ghq/github.com/yuucu
 git clone https://github.com/yuucu/dotfiles ~/ghq/github.com/yuucu/dotfiles
 cd ~/ghq/github.com/yuucu/dotfiles
 
-# 4. flake.nix の username / darwinConfigurations 名をそのマシンに合わせて確認
+# 4. 適用（初回。dotfiles の symlink と brew パッケージ一式が入る）
+#    username は実ログインユーザーに追従するため（flake.nix が DOTFILES_USER を参照）、
+#    getEnv を使う都合で --impure を付ける。config 名も <ユーザー名>-mac になる。
+sudo DOTFILES_USER="$(whoami)" nix run nix-darwin/master -- switch --impure --flake ".#$(whoami)-mac"
 
-# 5. 適用（初回。dotfiles の symlink と brew パッケージ一式が入る）
-sudo nix run nix-darwin/master -- switch --flake .#yuucu-mac
-
-# 6. 以降の適用
+# 5. 以降の適用
 make switch
 ```
+
+> flake.nix の `username` は `DOTFILES_USER`（未設定なら実ログインユーザー）に追従します。以前必要だった「flake.nix の username を手で書き換える」手順は不要です。
 
 ### 適用後の手作業（最小限）
 
