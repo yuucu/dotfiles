@@ -1,3 +1,4 @@
+-- colorscheme (catppuccin, transparent)
 return {
   {
     'catppuccin/nvim',
@@ -11,6 +12,13 @@ return {
       term_colors = true,
       transparent_background = true,
       transparent_panel = true,
+      custom_highlights = {
+        Normal = { bg = 'NONE', ctermbg = 'NONE' },
+        NonText = { bg = 'NONE', ctermbg = 'NONE' },
+        LineNr = { bg = 'NONE', ctermbg = 'NONE' },
+        Folded = { bg = 'NONE', ctermbg = 'NONE' },
+        EndOfBuffer = { bg = 'NONE', ctermbg = 'NONE' },
+      },
       integrations = {
         alpha = true,
         cmp = true,
@@ -36,22 +44,9 @@ return {
         },
       },
     },
-    config = function()
-      if vim.g.vscode then
-        vim.cmd.colorscheme('')
-      else
-        vim.cmd.colorscheme('catppuccin')
-      end
-      if vim.g.vscode then
-        vim.cmd.colorscheme('')
-      else
-        vim.cmd.colorscheme('catppuccin')
-        vim.cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
-        vim.cmd([[highlight NonText guibg=NONE ctermbg=NONE]])
-        vim.cmd([[highlight LineNr guibg=NONE ctermbg=NONE]])
-        vim.cmd([[highlight Folded guibg=NONE ctermbg=NONE]])
-        vim.cmd([[highlight EndOfBuffer guibg=NONE ctermbg=NONE]])
-      end
+    config = function(_, opts)
+      require('catppuccin').setup(opts)
+      vim.cmd.colorscheme('catppuccin')
     end,
   },
 }

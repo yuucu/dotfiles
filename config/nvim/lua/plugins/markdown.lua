@@ -1,4 +1,14 @@
+-- markdown authoring: preview and marp slides
 return {
+  {
+    'iamcco/markdown-preview.nvim',
+    ft = { 'markdown', 'mdc' },
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    build = 'cd app && npm install',
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown', 'mdc' }
+    end,
+  },
   {
     'nwiizo/marp.nvim',
     ft = 'markdown',
