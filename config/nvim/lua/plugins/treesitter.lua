@@ -30,6 +30,7 @@ local parsers = {
   'markdown_inline',
   'query',
   'regex',
+  'sql',
   'yaml',
   'css',
   'scss',

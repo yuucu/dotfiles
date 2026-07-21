@@ -1,7 +1,8 @@
 onboarding = false
 [theme]
-name = "one-dark"
+name = "terminal"
 
+auto_switch = false
 [terminal]
 # 現在のシェルを引き継ぐ（zsh）
 default_shell = "zsh"
@@ -17,9 +18,10 @@ mouse_capture = true
 confirm_close = true
 
 show_agent_labels_on_pane_borders = true
-agent_panel_scope = "current"
 # タブ作成時に名前を聞かず、自動生成名で即作成する
 prompt_new_tab_name = false
+# エージェントパネルの並び: "spaces"=スペースごとにグループ化 / "priority"=フラットな注意度順
+agent_panel_sort = "priority"
 [ui.toast]
 # エージェントの完了を OS の通知サービスへ直接依頼する
 delivery = "system"
@@ -28,6 +30,14 @@ delay_seconds = 1
 [ui.sound]
 # エージェントの状態変化をサウンドで通知（全エージェント一律で鳴らす）
 enabled = true
+
+[ui.sidebar.agents]
+# 1 行目にタスク名（terminal title）、2 行目に場所。agent 名は全部 claude で無意味なので出さない
+row_gap = 1
+rows = [
+  ["state_icon", "terminal_title_stripped"],
+  ["workspace", "tab"],
+]
 
 [keys]
 # 日本語入力中も prefix コマンドを確実に効かせる（prefix モード中だけ英数入力へ切替、抜けたら元に戻す。macOS のみ best-effort）
@@ -40,7 +50,8 @@ close_tab = "prefix+ampersand"       # tmux: prefix+&
 rename_tab = "prefix+comma"          # tmux: prefix+,
 
 # ペインフォーカス移動を vim ライクな hjkl へ（tmux の tmux.conf に合わせる）
-focus_pane_left = "prefix+h"
+# h は Hunk レビュー（yuucu.hunk）に譲り、左移動は prefix+← へ
+focus_pane_left = "prefix+left"
 focus_pane_down = "prefix+j"
 focus_pane_up = "prefix+k"
 focus_pane_right = "prefix+l"
@@ -59,3 +70,17 @@ resume_agents_on_restore = true
 [experimental]
 # サーバー再起動後もペイン履歴を保持
 pane_history = true
+
+[[keys.command]]
+key = "prefix+h"
+type = "plugin_action"
+command = "yuucu.hunk.open-review"
+description = "Hunk review"
+
+# F2 = フォーカス中の pane に ^S を送る（Hunk のノート保存など。
+# Ctrl+S が IME やターミナル手前で潰れる環境向けの代替キー）
+[[keys.command]]
+key = "f2"
+type = "shell"
+command = "herdr pane list | python3 -c \"import sys,json;p=[x for x in json.load(sys.stdin)['result']['panes'] if x.get('focused')];print(p[0]['pane_id'])\" | xargs -I{} herdr pane send-keys {} ctrl+s"
+description = "send ^S to focused pane"
