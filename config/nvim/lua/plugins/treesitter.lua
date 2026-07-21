@@ -19,6 +19,7 @@ local parsers = {
   'json5',
   'terraform',
   'hcl',
+  'proto',
   'bash',
   'c',
   'html',
