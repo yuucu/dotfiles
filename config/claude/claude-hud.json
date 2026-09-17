@@ -26,6 +26,9 @@
     "rightAlign": [
       "project",
       "tools"
-    ]
+    ],
+    "showProject": false,
+    "showAddedDirs": false,
+    "sevenDayThreshold": 0
   }
 }
