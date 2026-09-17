@@ -1,0 +1,31 @@
+{
+  "elementOrder": [
+    "context",
+    "promptCache",
+    "project",
+    "usage",
+    "tools",
+    "agents",
+    "todos"
+  ],
+  "display": {
+    "showPromptCache": true,
+    "contextWarningThreshold": 20,
+    "contextCriticalThreshold": 50,
+    "mergeGroups": [
+      [
+        "context",
+        "promptCache",
+        "project"
+      ],
+      [
+        "usage",
+        "tools"
+      ]
+    ],
+    "rightAlign": [
+      "project",
+      "tools"
+    ]
+  }
+}

@@ -10,7 +10,6 @@ in
   xdg.configFile = {
     "nvim".source = link "config/nvim";
     "tmux".source = link "config/tmux";
-    "ccstatusline".source = link "config/ccstatusline";
     "starship.toml".source = link "config/starship.toml";
     "alacritty.toml".source = link "config/alacritty.toml";
     "mise/config.toml".source = link "config/mise/config.toml";
@@ -32,9 +31,14 @@ in
     ".claude/CLAUDE.md".source = link "config/claude/CLAUDE.md";
     ".claude/hooks/herdr-agent-state.sh".source = link "config/claude/hooks/herdr-agent-state.sh";
     # 権限設定・deny パターンは攻撃者への設計図になるため local/（git 管理外）に置く
+    # 注意: Claude Code は /config やプラグイン導入時に settings.json を実ファイルで
+    # 置き換えるため symlink が切れることがある。`ls -la ~/.claude/settings.json` で
+    # 定期確認し、実ファイル化していたら local/ へ退避してから rebuild する。
     ".claude/settings.json".source = link "local/claude/settings.json";
     ".claude/scripts/deny-check.sh".source = link "local/claude/deny-check.sh";
     ".claude/agents".source = link "config/claude/agents";
+    # claude-hud.json は plugin 側が O_NOFOLLOW で symlink を拒否するため link 不可。
+    # config/claude/claude-hud.json にコピーを置いて手動同期する。
     # skills/ は work repo への symlink 等が同居するため、汎用 skill だけ個別に link
     ".claude/skills/ask-codex".source = link "config/claude/skills/ask-codex";
     ".claude/skills/herdr".source = link "config/claude/skills/herdr";
