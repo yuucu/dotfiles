@@ -3,7 +3,6 @@
     "context",
     "promptCache",
     "project",
-    "usage",
     "tools",
     "agents",
     "todos"
@@ -15,20 +14,17 @@
     "mergeGroups": [
       [
         "context",
-        "promptCache",
-        "project"
+        "promptCache"
       ],
       [
-        "usage",
+        "project",
         "tools"
       ]
     ],
     "rightAlign": [
-      "project",
       "tools"
     ],
     "showProject": false,
-    "showAddedDirs": false,
-    "sevenDayThreshold": 0
+    "showAddedDirs": false
   }
 }

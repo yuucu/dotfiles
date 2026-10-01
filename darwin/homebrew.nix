@@ -48,6 +48,7 @@ _: {
       "nikitabobko/tap/aerospace"
       "claude-code@latest"
       "codex"
+      "codexbar"
       "docker-desktop"
       "entireio/tap/entire"
       # フォントは設定が実際に参照するもののみ宣言する（alacritty.toml: Hack Nerd Font）
