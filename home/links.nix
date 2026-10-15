@@ -36,14 +36,11 @@ in
     # 定期確認し、実ファイル化していたら local/ へ退避してから rebuild する。
     ".claude/settings.json".source = link "local/claude/settings.json";
     ".claude/scripts/deny-check.sh".source = link "local/claude/deny-check.sh";
-    ".claude/agents".source = link "config/claude/agents";
     # claude-hud.json は plugin 側が O_NOFOLLOW で symlink を拒否するため link 不可。
     # config/claude/claude-hud.json にコピーを置いて手動同期する。
     # skills/ は work repo への symlink 等が同居するため、汎用 skill だけ個別に link
-    ".claude/skills/ask-codex".source = link "config/claude/skills/ask-codex";
     ".claude/skills/herdr".source = link "config/claude/skills/herdr";
     ".claude/skills/hunk-review".source = link "config/claude/skills/hunk-review";
-    ".claude/skills/skill-creator".source = link "config/claude/skills/skill-creator";
     # config.toml は Codex が動的更新する state（work パス含む）のため管理しない
     # rules/default.rules も承認履歴の state（work 情報含む）のため管理しない
     ".codex/AGENTS.md".source = link "config/codex/AGENTS.md";
