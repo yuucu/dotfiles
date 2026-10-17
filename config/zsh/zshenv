@@ -2,10 +2,33 @@
 export EDITOR=nvim
 export VISUAL=nvim
 
+# 外部コマンドの init 出力をキャッシュする（起動ごとの fork を省く）
+# バイナリの実体パスか mtime が変わったら（nix / brew / self-update での更新時）再生成する
+# typeset 等が関数ローカルにならないよう、source は呼び出し側のトップレベルで行う
+# 使い方: _cached_eval <キャッシュ名> <コマンド> [引数...] && source $REPLY
+_cached_eval() {
+  local name=$1; shift
+  local bin
+  if [[ $1 == /* ]]; then bin=${1:A}; else bin=${commands[$1]:A}; fi
+  [[ -n $bin ]] || return 1
+  zmodload -F zsh/stat b:zstat
+  local mtime; zstat -A mtime +mtime -- $bin
+  local key="$bin:$mtime $*"
+  local cache=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/eval/$name.zsh
+  local cached_key
+  [[ -r $cache.key ]] && read -r cached_key < $cache.key
+  if [[ ! -s $cache || $cached_key != "$key" ]]; then
+    mkdir -p ${cache:h}
+    command "$@" >| $cache || { rm -f $cache; return 1; }
+    print -r -- $key >| $cache.key
+  fi
+  REPLY=$cache
+}
+
 # Homebrew
 # nix-darwin が /etc/zprofile を置き換えて path_helper が走らないため、ここで明示的に設定する
 if [[ -x /opt/homebrew/bin/brew && ":$PATH:" != *":/opt/homebrew/bin:"* ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+  _cached_eval brew-shellenv /opt/homebrew/bin/brew shellenv && source $REPLY
 fi
 
 # Rust

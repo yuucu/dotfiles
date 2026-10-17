@@ -76,7 +76,7 @@ zinit wait lucid light-mode for \
 
 # fzf
 if command -v fzf &> /dev/null; then
-  eval "$(fzf --zsh)"
+  _cached_eval fzf fzf --zsh && source $REPLY
 fi
 
 # zeno.zsh（Deno + fzf 製の snippet / 補完 / 履歴選択ツール）
@@ -106,12 +106,12 @@ fi
 
 # zoxide
 if command -v zoxide &> /dev/null; then
-  eval "$(zoxide init zsh)"
+  _cached_eval zoxide zoxide init zsh && source $REPLY
 fi
 
 # mise
 if command -v mise &> /dev/null; then
-  eval "$(mise activate zsh)"
+  _cached_eval mise mise activate zsh && source $REPLY
 fi
 
 # ============================================================================
@@ -169,7 +169,7 @@ function fgh() {
 # ============================================================================
 
 if command -v starship &> /dev/null; then
-  eval "$(starship init zsh)"
+  _cached_eval starship starship init zsh --print-full-init && source $REPLY
 fi
 
 # ============================================================================
@@ -186,7 +186,7 @@ if [ -d "/Applications/Godot_mono.app/Contents/MacOS" ]; then
 fi
 
 # worktrunk
-if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+if command -v wt >/dev/null 2>&1; then _cached_eval wt wt config shell init zsh && source $REPLY; fi
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
