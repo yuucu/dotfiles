@@ -13,7 +13,7 @@ M.servers = {
   'gdscript',
 }
 
-local formatters_by_ft = {
+local lsp_formatters_by_ft = {
   go = { 'gopls' },
   javascript = { 'typescript-tools', 'tsserver' },
   javascriptreact = { 'typescript-tools', 'tsserver' },
@@ -113,7 +113,7 @@ end
 
 local function preferred_formatter_id(bufnr)
   local ft = vim.bo[bufnr].filetype
-  local preferred = formatters_by_ft[ft]
+  local preferred = lsp_formatters_by_ft[ft]
   if not preferred then
     return nil
   end
@@ -129,40 +129,21 @@ local function preferred_formatter_id(bufnr)
   return nil
 end
 
-M.setup_format_on_save = function()
-  vim.api.nvim_create_autocmd('BufWritePre', {
-    group = vim.api.nvim_create_augroup('LspFormatOnSave', { clear = true }),
-    callback = function(ev)
-      local bufnr = ev.buf
-      local ft = vim.bo[bufnr].filetype
+-- conform.nvim の format_on_save から呼ばれる（plugins/conform.lua）
+-- 外部フォーマッターがない場合の LSP フォールバックでは、lsp_formatters_by_ft の優先 client だけを使う
+M.format_on_save_opts = function(bufnr)
+  if organize_imports_filetypes[vim.bo[bufnr].filetype] then
+    pcall(vim.lsp.buf.code_action, {
+      context = { only = { 'source.organizeImports' } },
+      apply = true,
+    })
+  end
 
-      -- フォーマット可能な LSP がいないバッファでは何もしない（警告メッセージ抑止）
-      local can_format = false
-      for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-        if client:supports_method('textDocument/formatting') then
-          can_format = true
-          break
-        end
-      end
-      if not can_format then
-        return
-      end
-
-      if organize_imports_filetypes[ft] then
-        pcall(vim.lsp.buf.code_action, {
-          context = { only = { 'source.organizeImports' } },
-          apply = true,
-        })
-      end
-
-      vim.lsp.buf.format({
-        async = false,
-        timeout_ms = 1000,
-        bufnr = bufnr,
-        id = preferred_formatter_id(bufnr),
-      })
-    end,
-  })
+  return {
+    timeout_ms = 1000,
+    lsp_format = 'fallback',
+    id = preferred_formatter_id(bufnr),
+  }
 end
 
 M.setup = function()
@@ -173,7 +154,6 @@ M.setup = function()
     callback = M.setup_semantic_highlights,
   })
   M.setup_keymaps()
-  M.setup_format_on_save()
 
   vim.lsp.config('*', {
     capabilities = M.capabilities(),
