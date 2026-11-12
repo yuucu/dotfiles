@@ -1,4 +1,4 @@
--- Common constants for obsidian and notes configuration
+-- Common constants for notes configuration
 local M = {}
 
 -- Base paths
@@ -12,9 +12,6 @@ M.TEMPLATES_DIR = M.LIFE_REPO_ROOT .. '/Templates'
 
 -- Daily notes configuration（年は起動時に動的解決）
 M.DAILY_NOTES = {
-  -- Relative path from life repo root for obsidian
-  RELATIVE_FOLDER = 'docs/20_Timeline/' .. os.date('%Y') .. '/daily',
-  -- Full path for other plugins
   FULL_PATH = M.TIMELINE_BASE_DIR .. os.date('%Y') .. '/daily/',
   DATE_FORMAT = '%Y%m%d',
 }
@@ -28,11 +25,6 @@ M.NOTES = {
 -- Get daily notes path for a specific year
 function M.get_daily_path(year)
   return M.TIMELINE_BASE_DIR .. year .. '/daily/'
-end
-
--- Get daily notes relative path for a specific year (for obsidian)
-function M.get_daily_relative_path(year)
-  return 'docs/20_Timeline/' .. year .. '/daily'
 end
 
 return M
