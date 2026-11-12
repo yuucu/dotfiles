@@ -13,7 +13,6 @@
       age
       bat
       cmake
-      deno
       eza
       fd
       fzf

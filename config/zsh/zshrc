@@ -1,9 +1,3 @@
-# OPENSPEC:START
-# OpenSpec shell completions configuration
-# compinit は zinit の atload（zicompinit）で 1 回だけ実行する
-fpath=("$HOME/.zsh/completions" $fpath)
-# OPENSPEC:END
-
 # ============================================================================
 # Zsh Configuration - シンプル版
 # ============================================================================
