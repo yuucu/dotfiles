@@ -40,8 +40,6 @@ rows = [
 ]
 
 [keys]
-# 日本語入力中も prefix コマンドを確実に効かせる（prefix モード中だけ英数入力へ切替、抜けたら元に戻す。macOS のみ best-effort）
-switch_ascii_input_source_in_prefix = true
 # tmux に合わせたキーバインド
 split_vertical = "prefix+v"
 split_horizontal = "prefix+minus"
@@ -50,8 +48,7 @@ close_tab = "prefix+ampersand"       # tmux: prefix+&
 rename_tab = "prefix+comma"          # tmux: prefix+,
 
 # ペインフォーカス移動を vim ライクな hjkl へ（tmux の tmux.conf に合わせる）
-# h は Hunk レビュー（yuucu.hunk）に譲り、左移動は prefix+← へ
-focus_pane_left = "prefix+left"
+focus_pane_left = "prefix+h"
 focus_pane_down = "prefix+j"
 focus_pane_up = "prefix+k"
 focus_pane_right = "prefix+l"
@@ -63,6 +60,13 @@ key = "prefix+alt+g"
 type = "pane"
 command = "lazygit"
 
+# herdr-bar（Cmd+K 風のタブ/エージェント検索）。prefix+k は focus_pane_up に使っているので ctrl+alt+k
+[[keys.command]]
+key = "ctrl+alt+k"
+type = "plugin_action"
+command = "herdr-bar.open"
+description = "command bar"
+
 [session]
 # サーバー再起動後にエージェントセッションを自動復元
 resume_agents_on_restore = true
@@ -70,17 +74,3 @@ resume_agents_on_restore = true
 [experimental]
 # サーバー再起動後もペイン履歴を保持
 pane_history = true
-
-[[keys.command]]
-key = "prefix+h"
-type = "plugin_action"
-command = "yuucu.hunk.open-review"
-description = "Hunk review"
-
-# F2 = フォーカス中の pane に ^S を送る（Hunk のノート保存など。
-# Ctrl+S が IME やターミナル手前で潰れる環境向けの代替キー）
-[[keys.command]]
-key = "f2"
-type = "shell"
-command = "herdr pane list | python3 -c \"import sys,json;p=[x for x in json.load(sys.stdin)['result']['panes'] if x.get('focused')];print(p[0]['pane_id'])\" | xargs -I{} herdr pane send-keys {} ctrl+s"
-description = "send ^S to focused pane"

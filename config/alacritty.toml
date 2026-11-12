@@ -64,3 +64,9 @@ args = ["--login"]
 [colors.cursor]
 text = '#CCD0DA'
 cursor = '#E64553'
+
+# Cmd+K を ctrl+alt+k（ESC + ^K）として送り、herdr-bar のコマンドバーを開く
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+chars = "\u001b\u000b"
