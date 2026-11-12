@@ -1,0 +1,47 @@
+# zabrze 設定
+# https://github.com/Ryooooooga/zabrze
+#
+# trigger を打って Space で展開、Enter で展開して実行。
+# global = true は行頭以外（パイプの後ろなど）でも展開される。
+
+# --- git ---
+[[snippets]]
+name = "git switch"
+trigger = "gsw"
+snippet = "git switch"
+
+# --- worktrunk (wt) ---
+[[snippets]]
+name = "wt switch"
+trigger = "wts"
+snippet = "wt switch"
+
+[[snippets]]
+name = "wt switch --create"
+trigger = "wtsc"
+snippet = "wt switch --create"
+
+# --- tools ---
+[[snippets]]
+name = "lazygit"
+trigger = "lg"
+snippet = "lazygit"
+
+# --- 汎用（global） ---
+[[snippets]]
+name = "pipe to less"
+trigger = "L"
+snippet = "| less"
+global = true
+
+[[snippets]]
+name = "pipe to grep"
+trigger = "G"
+snippet = "| grep"
+global = true
+
+[[snippets]]
+name = "redirect to null"
+trigger = "null"
+snippet = ">/dev/null 2>&1"
+global = true

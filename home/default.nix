@@ -48,6 +48,8 @@
       vscode-langservers-extracted
       yaml-language-server
       zoxide
+      # nixpkgs 未収載のため自前ビルド（home/pkgs/）
+      (callPackage ./pkgs/zabrze.nix { })
     ];
   };
 

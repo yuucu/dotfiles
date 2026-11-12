@@ -31,9 +31,9 @@
 !worktrunk/config.toml
 !gh/
 !gh/config.yml
-!zeno/
-!zeno/config.yml
 !.gitignore
+!zabrze/
+!zabrze/config.toml
 
 # 許可したディレクトリ配下でも ignore するもの（後勝ちで上の ! を打ち消す）
 .DS_Store

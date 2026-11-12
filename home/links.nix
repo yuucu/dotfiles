@@ -21,7 +21,7 @@ in
     "git/ignore".source = link "config/git/ignore";
     "worktrunk/config.toml".source = link "config/worktrunk/config.toml";
     "gh/config.yml".source = link "config/gh/config.yml";
-    "zeno/config.yml".source = link "config/zeno/config.yml";
+    "zabrze/config.toml".source = link "config/zabrze/config.toml";
   };
 
   home.file = {
