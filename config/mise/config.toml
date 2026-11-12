@@ -2,3 +2,4 @@
 # 更新手順: mise latest awscli で新バージョンを確認して書き換え、mise install を実行
 [tools]
 awscli = "2.35.15"
+gh = "2.102.0"
