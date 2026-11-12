@@ -3,7 +3,9 @@ return {
     'iamcco/markdown-preview.nvim',
     ft = { 'markdown', 'mdc' },
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    build = 'cd app && npm install',
+    -- npm install だと app/yarn.lock が書き換わり lazy の更新が止まるため、pnpm を使う。
+    -- yarn.lock を pnpm-lock.yaml に変換し、その固定バージョンでインストールする（追跡ファイルは変更しない）
+    build = 'cd app && pnpm import && pnpm install --frozen-lockfile',
     init = function()
       vim.g.mkdp_filetypes = { 'markdown', 'mdc' }
     end,
