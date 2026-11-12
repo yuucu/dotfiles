@@ -55,8 +55,8 @@
   "typescript-tools.nvim": { "branch": "master", "commit": "c2f5910074103705661e9651aa841e0d7eea9932" },
   "vim-fugitive": { "branch": "master", "commit": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0" },
   "vim-rhubarb": { "branch": "master", "commit": "5496d7c94581c4c9ad7430357449bb57fc59f501" },
-  "vimdoc-ja": { "branch": "master", "commit": "701d82b3f80af250ce4c02252a6b9c43a1a05e1c" },
+  "vimdoc-ja": { "branch": "master", "commit": "23bb2bcc8b4fdb90c126a01967fc29e22b516bbd" },
   "vscode-diff.nvim": { "branch": "main", "commit": "09d9ebef2cc5a5c04db7a349cd6c61bdf84ecc8e" },
-  "winresizer": { "branch": "master", "commit": "9bd559a03ccec98a458e60c705547119eb5350f3" },
+  "winresizer": { "branch": "master", "commit": "299076f7f79e2e2f7706b2dfacbb3c074ce53257" },
   "yank-for-claude.nvim": { "branch": "main", "commit": "5879059decfd16c2f983c0d27e0247fede5dff4d" }
 }
