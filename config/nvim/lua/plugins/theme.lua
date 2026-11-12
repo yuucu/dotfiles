@@ -13,7 +13,7 @@ return {
       transparent_panel = true,
       integrations = {
         alpha = true,
-        cmp = true,
+        blink_cmp = { style = 'bordered' },
         gitsigns = true,
         lsp_trouble = true,
         mason = true,

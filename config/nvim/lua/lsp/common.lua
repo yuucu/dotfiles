@@ -32,13 +32,8 @@ local float_border = 'rounded'
 
 -- LSP capabilities の設定
 M.capabilities = function()
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  -- snippet サポートを明示的に有効化
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = { 'documentation', 'detail', 'additionalTextEdits' },
-  }
-  return capabilities
+  -- snippet / resolveSupport などの補完 capability は blink.cmp 側で設定される
+  return require('blink.cmp').get_lsp_capabilities()
 end
 
 -- セマンティックトークンのハイライトを treesitter のグループへリンク
